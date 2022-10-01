@@ -27,8 +27,8 @@ theme:
 
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: light)"
-      primary: lime
-      accent: lime
+      primary: black
+      accent: deep purple
       scheme: slate
       toggle:
         icon: material/weather-sunny
