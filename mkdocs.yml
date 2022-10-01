@@ -5,7 +5,7 @@ site_description: >-
   Just for testing and playing around...
 
 # Repository
-repo_name: pwnosaurusrex/site
+repo_name: PwnosaurusRex
 repo_url: https://github.com/PwnosaurusRex/PwnosaurusRex.github.io
 edit_uri: edit/main/docs/
 
@@ -98,8 +98,8 @@ extra_javascript:
   - javascripts/tablesort.js
 
 # Extras
-extra:
-  generator: false
+#extra:
+#  generator: false
 
 plugins:
   - search
