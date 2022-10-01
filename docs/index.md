@@ -1,17 +1,8 @@
-# Testing GitHut Actions
+Welcome to whatever this site is :) 
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+I'll be playing around and testing workflows, and maybe documenting things that a quick search didn't reveal. Some useful keyboard shortcuts are...
+- `s` for **s**earch
+- or `f` for **f**ind
+- `n` for **n**ext page
+- `p` for **p**revious page
