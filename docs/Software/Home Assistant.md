@@ -2,7 +2,7 @@
 ## TTS alert to mobile on alarm channel
 The below is the YAML code from the *Actions* section of **Automation**.
 
-> [! fyi]
+> [!fyi]
 > This seems to not work anymore with the latest HA release. Need to check again.
 
 ```yaml
