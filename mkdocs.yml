@@ -1,3 +1,107 @@
-site_name: My Docs
+# Project Information
+site_name: PwnosaurusRex
+site_url: https://pwnosaurusrex.github.io/
+site_description: >-
+  Just for testing and playing around...
+
+# Repository
+repo_name: pwnosaurusrex/site
+repo_url: https://github.com/PwnosaurusRex/PwnosaurusRex.github.io
+edit_uri: edit/main/docs/
+
+# Configuration
 theme:
   name: material
+  font: #false
+    text: Open Sans
+  favicon: images/fav.png
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: white
+      accent: white
+      scheme: default
+      toggle:
+        icon: material/weather-night 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: light)"
+      primary: lime
+      accent: lime
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+  icon:
+    admonition:
+      bug: octicons/bug-16
+      caution: octicons/alert-16
+      danger: octicons/zap-16
+      done: octicons/check-16
+      error: octicons/stop-16
+      example: octicons/list-unordered-16
+      fail: octicons/stop-16
+      faq: octicons/question-16
+      help: octicons/question-16
+      hint: octicons/light-bulb-16
+      important: octicons/megaphone-16
+      info: octicons/info-16
+      missing: octicons/x-16
+      note: octicons/pencil-16
+      question: octicons/question-16
+      success: octicons/trophy-16
+      tip: octicons/flame-16
+      todo: octicons/tools-16
+      warning: octicons/alert-16
+    edit: material/file-edit
+    logo: fontawesome/solid/person-falling-burst
+
+  features:
+    - navigation.instant
+    - navigation.tabs
+#    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+#    - toc.integrate
+#    - navigation.expand
+
+# Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - nl2br
+  - footnotes
+  - pymdownx.details
+  - attr_list
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js
+
+# Extras
+extra:
+  generator: false
+
+plugins:
+  - search
+  - callouts
+  - glightbox
