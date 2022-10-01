@@ -1,12 +1,10 @@
 # Project Information
-site_name: PwnosaurusRex
-site_url: https://pwnosaurusrex.github.io/
-site_description: >-
-  Just for testing and playing around...
+site_name: wbste for notes
+site_url: https://wbste.github.io/
 
 # Repository
-repo_name: PwnosaurusRex
-repo_url: https://github.com/PwnosaurusRex/PwnosaurusRex.github.io
+repo_name: wbste
+repo_url: https://github.com/wbste/wbste.github.io
 edit_uri: edit/main/docs/
 
 # Configuration
@@ -18,7 +16,7 @@ theme:
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
-      primary: white
+      primary: deep purple
       accent: white
       scheme: default
       toggle:
@@ -98,8 +96,8 @@ extra_javascript:
   - javascripts/tablesort.js
 
 # Extras
-#extra:
-#  generator: false
+extra:
+  generator: false
 
 plugins:
   - search
