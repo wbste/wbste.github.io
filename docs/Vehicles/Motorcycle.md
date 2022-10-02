@@ -14,7 +14,7 @@ The rider will enter into a continuous turn, creating an unbroken circle, riding
 
 This is a typical entry-level student turning technique. The bike is steered into a turning position, but the rider remains completely neutral; usually out of fear that any shift of weight will lead to slipping on whatever godforsaken Teflon they find themselves traversing. This technique limits the rider to a very large turning radius, which can be tightened a bit by feathering the clutch and throttle. Careful though: Too slow, and the bike cannot be leaned at all. Remember to grip the bike with your legs, so that your hands are left only to steer and actuate the controls. (Bar risers, aftermarket footpegs and Rotating the Handlebars can help to relax your grip).
 
-### Stage 2: Getting your weight in to (out of) it
+### Stage 2: Shifting Weight
  ![](_assets/RidingTechStage02.png)
 
 While continuing the circle, the rider shifts their hip and shoulder weight toward the outside of the turn, leaning away from the motorcycle. The inside foot becomes light on the peg, while the outside foot bares nearly all the weight of the rider. This offers 2 benefits:
@@ -22,7 +22,7 @@ While continuing the circle, the rider shifts their hip and shoulder weight towa
 2. The shift in weight helps apply traction, as it places essential mass directly above the grip patch of the tire.
 This is one of the most counter-intuitive elements of Adventure Riding, since for most people the idea of ‘leaning out’ of a turn is completely foreign. We simply don’t employ this technique anywhere else, at least not that we’re aware of. But when done properly the machine will become more stable, and the turn radius will tighten.
 
-### Stage 3: The Toe Turn.
+### Stage 3: The Toe Turn
  ![](_assets/RidingTechStage03.png)
 
 Now the rider rotates their outside foot, lifting it from the peg and reapplying at a 45 degree (ish) angle. This allows the rider to press a knee into the tank and rotate their body mass even further from the machine. The additional counter-weighting allows the bike to be leaned more heavily into the turn, tightening the steering and narrowing the radius even further. The legs are ‘squeezed together’ in order to hold on to the bike, and lessen the grip on the handlebars.

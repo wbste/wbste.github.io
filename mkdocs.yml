@@ -25,7 +25,7 @@ theme:
 
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: light)"
-      primary: black
+      primary: yellow
       accent: deep purple
       scheme: slate
       toggle:

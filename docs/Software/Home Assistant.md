@@ -14,7 +14,7 @@ data:
     media_stream: "alarm_stream"
 ```
 
-Above is per: https://companion.home-assistant.io/docs/notifications/notifications-basic/
+Above is per this [link](https://companion.home-assistant.io/docs/notifications/notifications-basic/)
 
 ## Remote Access
 - Setup port forwarding for the HA Server to take TCP traffic from 443 > 8123

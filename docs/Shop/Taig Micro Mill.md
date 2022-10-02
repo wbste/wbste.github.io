@@ -3,6 +3,11 @@ Ordered a refurbished version of [this](https://taigtools.com/product/micro-mill
 
 ![](_assets/2019CR_2.jpg)
 
+## Links
+[Micro Machine Shop](https://www.micro-machine-shop.com/)  
+[Carter Tools](https://www.cartertools.com/)  
+[Taig Tools](https://taigtools.com/)  
+
 ## Description
 *Taken from link above*
 
@@ -183,7 +188,7 @@ The z-axis top gib screw. These screws position the z-axis gib in the same manne
 
 ![http://www.cartertools.com/cncml14.jpg](_assets/taigsetup_image025.jpg)
 
-Adjusting the clamping shoe for the z-axis. The factor recommends that you squeeze it together with hand pressure then tighten the screws, without mounting the motor yet. This is usually fine from the factory so don't worry about it unless you need to. There used to be a screw from the front of the slide for adjustment but the factory found hand pressure was better for thsi adjustment.
+Adjusting the clamping shoe for the z-axis. The factor recommends that you squeeze it together with hand pressure then tighten the screws, without mounting the motor yet. This is usually fine from the factory so don't worry about it unless you need to. There used to be a screw from the front of the slide for adjustment but the factory found hand pressure was better for this adjustment.
 
 ![http://www.cartertools.com/cncml15.jpg](_assets/taigsetup_image026.jpg)
 
@@ -196,6 +201,23 @@ X-axis gib, wider end.
 ![http://www.cartertools.com/cncml17.jpg](_assets/taigsetup_image028.jpg)
 
 X-axis gib narrower end. Both of these screws should be tight once the position of the gib is adjusted.
+
+### Column To Spindle Alignment
+Most guides use tramming to ensure alignment, but due to the Taig's design the below is another alignment concern that should be addressed.
+
+![](_assets/TaigAlignment.png)
+
+Vertically traveling up and down as show in the next two images will eliminate that issue.
+
+![](_assets/TaigAlignLR.png)
+
+If the front to back alignment is off:
+
+![](_assets/TaigAlignFR.png)
+
+Shimming may be required:
+
+![](_assets/TaigFRShim.png)
 
 ### CNC Stepper Motor Installation
 
