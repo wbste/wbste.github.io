@@ -9,6 +9,6 @@ Some useful keyboard shortcuts are...
 - `n` for **n**ext page
 - `p` for **p**revious page
 
-Want to see a cool random thing I found? Click the button below for a relaxing, or visit his blog on how he did this [here](https://incoherency.co.uk/blog/stories/nightdrive.html).
+Want to see something cool? Click the button below for a relaxing nighttime drive, or visit the creator's blog to learn how he did this [here](https://incoherency.co.uk/blog/stories/nightdrive.html).
 
 [Nightdrive](https://incoherency.co.uk/nightdrive/){ .md-button .md-button--primary }
