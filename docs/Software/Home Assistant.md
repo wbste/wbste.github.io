@@ -1,17 +1,33 @@
 # Home Assistant
 ## TTS alert to mobile on alarm channel
-The below is the YAML code from the *Actions* section of **Automation**.
-
-> [!fyi]
-> This seems to not work anymore with the latest HA release. Need to check again.
+The below is the complete YAML code from  **Automation**.
 
 ```yaml
-service: notify.mobile_app_[device name]
-data:
-  message: "TTS"
-  data:
-    tts_text: "Here is some text, and here's a variable{{states('variable.value')}}."
-    media_stream: "alarm_stream"
+alias: High Water Usage
+description: ""
+trigger:
+  - platform: numeric_state
+    entity_id: sensor.flume_sensor_home_60_minutes
+    above: "20"
+condition: []
+action:
+  - service: notify.mobile_app_[PHONENAME]
+    data:
+      message: >-
+        You are currently consuming
+        {{states('sensor.flume_sensor_home_60_minutes')}} GPM
+      title: High water usage detected
+  - service: notify.mobile_app_[PHONENAME]
+    data:
+      message: TTS
+      data:
+        tts_text: >-
+          High water usage detected. You are currently consuming
+          {{states('sensor.flume_sensor_home_60_minutes')}} gallons per minute.
+        media_stream: alarm_stream
+        priority: high
+        ttl: 0
+mode: single
 ```
 
 Above is per this [link](https://companion.home-assistant.io/docs/notifications/notifications-basic/)
@@ -32,3 +48,92 @@ http:
 - Restart HA.
 - Update home and away URLs to use HTTPS.
 - Good guide [here](https://djajafer.medium.com/setting-up-duckdns-in-home-assistant-io-14c23316fcff).
+
+## Commands
+### Home Assistant
+```bash
+ha core check
+ha core info
+ha core logs
+ha core options
+ha core rebuild
+ha core restart
+ha core start
+ha core stats
+ha core stop
+ha core update
+```
+
+### Supervisor
+
+```bash
+ha supervisor info
+ha supervisor logs
+ha supervisor reload
+ha supervisor update
+```
+
+### Host
+
+```bash
+ha host reboot
+ha host shutdown
+ha host update
+```
+
+### Hardware
+
+```bash
+ha hardware info
+ha hardware audio
+```
+
+### Example Updates
+
+`ha core update --version 2022.10.1`
+
+`ha os update --version 9.2`
+
+`ha supervisor update --version 2022.10.0`
+
+### HA Help Output
+```bash
+The Home Assistant CLI is a small and simple command line utility that allows
+you to control and configure different aspects of Home Assistant
+
+Usage:
+  ha [command]
+
+Available Commands:
+  addons         Install, update, remove and configure Home Assistant add-ons
+  audio          Audio device handling.
+  authentication Authentication for Home Assistant users.
+  backups        Create, restore and remove backups
+  banner         Prints the CLI Home Assistant banner along with some useful information
+  cli            Get information, update or configure the Home Assistant cli backend
+  core           Provides control of the Home Assistant Core
+  dns            Get information, update or configure the Home Assistant DNS server
+  docker         Docker backend specific for info and OCI configuration
+  hardware       Provides hardware information about your system
+  help           Help about any command
+  host           Control the host/system that Home Assistant is running on
+  info           Provides a general Home Assistant information overview
+  jobs           Get information and manage running jobs
+  multicast      Get information, update or configure the Home Assistant Multicast
+  network        Network specific for updating, info and configuration imports
+  observer       Get information, update or configure the Home Assistant observer
+  os             Operating System specific for updating, info and configuration imports
+  resolution     Resolution center of Supervisor, show issues and suggest solutions
+  supervisor     Monitor, control and configure the Home Assistant Supervisor
+
+Flags:
+      --api-token string   Home Assistant Supervisor API token
+      --config string      Optional config file (default is $HOME/.homeassistant.yaml)
+      --endpoint string    Endpoint for Home Assistant Supervisor (default is 'supervisor')
+  -h, --help               help for ha
+      --log-level string   Log level (defaults to Warn)
+      --no-progress        Disable the progress spinner
+      --raw-json           Output raw JSON from the API
+
+Use "ha [command] --help" for more information about a command.
+```
