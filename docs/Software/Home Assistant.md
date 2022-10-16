@@ -1,6 +1,7 @@
 # Home Assistant
+
 ## TTS alert to mobile on alarm channel
-The below is the complete YAML code from  **Automation**.
+The below is the complete YAML code from  **Automation**. It plays the alert on the same audio stream as the alarm does on android. That way you can keep the regular audio stream muted and still get these alerts.
 
 ```yaml
 alias: High Water Usage
@@ -40,17 +41,21 @@ Above is per this [link](https://companion.home-assistant.io/docs/notifications/
 	- Let's Encrypt, etc. aren't needed.
 - Set it up. Make sure to set `accept_terms` to `true` on the configuration screen.
 - Add the following to the `configuration.yaml`, which is generated after installing duckdns and running it.
+
 ```yaml
 http:   
  ssl_certificate: /ssl/fullchain.pem   
  ssl_key: /ssl/privkey.pem
 ```
+
 - Restart HA.
 - Update home and away URLs to use HTTPS.
 - Good guide [here](https://djajafer.medium.com/setting-up-duckdns-in-home-assistant-io-14c23316fcff).
 
 ## Commands
+
 ### Home Assistant
+
 ```bash
 ha core check
 ha core info
@@ -97,6 +102,7 @@ ha hardware audio
 `ha supervisor update --version 2022.10.0`
 
 ### HA Help Output
+
 ```bash
 The Home Assistant CLI is a small and simple command line utility that allows
 you to control and configure different aspects of Home Assistant

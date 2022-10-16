@@ -1,5 +1,7 @@
 # Affinity
+
 ## Designer
+
 ### Start New Line
 Double click on the last node of the pen tool to start a new line.
 
@@ -18,7 +20,3 @@ Double click on the last node of the pen tool to start a new line.
 
 The result will look like the below!
 ![FillLines](_assets/FillLines.png)
-
-## Photo
-
-## Publisher
