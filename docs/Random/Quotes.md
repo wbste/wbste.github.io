@@ -34,3 +34,4 @@
 
 `It has happened to me multiple times that I’ve been writing the documentation for a system I’ve created, and found that it’s hard to even describe how to use the system, let alone to actually use it. I think “why can’t the system do all this automatically for me?”, and I fix the system to do exactly that, and then I’m relieved of the burden of having to write any documentation for how to do it manually. And as a result the system is better and easier to use for everyone.`
 
+`75% of the Time We Spend With Our Kids in Our Lifetime Will Be Spent By Age 12`
