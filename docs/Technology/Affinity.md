@@ -22,6 +22,5 @@ Double click on the last node of the pen tool to start a new line.
 > With the redesign of Designer 2, you now have the extra step to right click on the shape in the canvas (make sure the layer is selected), **Geometry**, **Separate Curves**.
 > ![](_assets/SeperateCurves.png)
 
-The result will look like the below (after adding color...by default it will all be the same color).
-
+The result will look like the below!
 ![FillLines](_assets/FillLines.png)
