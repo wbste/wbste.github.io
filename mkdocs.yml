@@ -10,8 +10,8 @@ edit_uri: edit/main/docs/
 # Configuration
 theme:
   name: material
-  font: #false
-    text: Open Sans
+  font: false
+#    text: Open Sans
   favicon: images/favicon.png
   palette:
     # Palette toggle for light mode
@@ -58,13 +58,15 @@ theme:
 
   features:
     - navigation.instant
+    - navigation.indexes
     - navigation.tabs
-#    - navigation.tabs.sticky
     - navigation.sections
     - navigation.top
     - navigation.tracking
-#    - toc.integrate
-#    - navigation.expand
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
 
 # Extensions
 markdown_extensions:
@@ -89,15 +91,15 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
 
 extra_javascript:
-  - javascripts/mathjax.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-  - javascripts/tablesort.js
+#  - javascripts/mathjax.js
+#  - https://polyfill.io/v3/polyfill.min.js?features=es6
+#  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+#  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+#  - javascripts/tablesort.js
 
 # Extras
-extra:
-  generator: false
+# extra:
+#  generator: false
 
 plugins:
   - search

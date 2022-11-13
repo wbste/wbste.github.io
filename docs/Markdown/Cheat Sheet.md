@@ -4,6 +4,13 @@ Here's how to make **bold text** and _italicized text_
 
 > blockquote text is here.
 
+You can embed video with an HTML tag like so (but it should **NOT** be in the code block). The below HTML needs an extra `../` as shown.
+
+```html
+<video width="100%" controls>
+  <source src="../../_assets/VideoName.mp4" type="video/mp4">
+</video>
+```
 
 *This text will be italic*
 _This will also be italic_
@@ -65,34 +72,36 @@ Here's a simple footnote,[^1] and here's a longer one.[^bignote]
 You can also use inline footnotes. ^[notice that the carat goes outside of the brackets on this one.]
 
 [Mathjax](https://www.mathjax.org/#demo) for math like this!
-$$\begin{vmatrix}a & b\\
+
+$$
+\begin{vmatrix}a & b\\
 c & d
-\end{vmatrix}=ad-bc$$
+\end{vmatrix}=ad-bc
+$$
 
-Here is some inline comments: %%You can't see this text%% (Can't see it)
-
-Here is a block comment:
-%%
-It can span
-multiple lines
-%%
 
 > [!info]
 > You can use + to have it default open.
 > More valid types are note, abstract, summary, tldr, info, todo, tip, hint, important, success, check, done, question, help, faq, warning, caution, attention, failure, fail, missing, danger, error, bug, example, quote, cite
 
 
+Resized inline image:
 
-Resized inline image: 
 ![Engelbart|100](https://history-computer.com/ModernComputer/Basis/images/Engelbart.jpg)
+
+Numbered Lists
 
 1. First item
 2. Second item
 3. Third item
 
+Dashed Lists
+
 - First item
 - Second item
 - Third item
+
+Checkboxes
 
 - [x] Write the press release
 - [ ] Update the website
@@ -108,9 +117,9 @@ Resized inline image:
 }
 ```
 
-Link [title](https://www.google.com)
+Link [Google](https://www.google.com)
 
-Network link [Network Drive)](file:///\\\server\folder)
+Network link [Server Link](file:///\\\server\folder)
 
 | Syntax    | Description |
 | --------- | ----------- |
