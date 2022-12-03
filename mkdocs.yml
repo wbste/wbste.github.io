@@ -17,16 +17,16 @@ theme:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       primary: deep purple
-      accent: white
+      accent: deep purple
       scheme: default
       toggle:
         icon: material/weather-night 
         name: Switch to dark mode
 
     # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: light)"
-      primary: yellow
-      accent: deep purple
+    - media: "(prefers-color-scheme: dark)"
+      primary: light blue
+      accent: light blue
       scheme: slate
       toggle:
         icon: material/weather-sunny
@@ -100,6 +100,9 @@ extra_javascript:
 # Extras
 # extra:
 #  generator: false
+
+extra_css:
+  - stylesheets/extra.scss
 
 plugins:
   - search
