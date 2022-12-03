@@ -1,5 +1,7 @@
 # Links
+
 ## Unique Links
+
 - [Free AI Chest CT and Mammo](http://mammo.neuralrad.com:5300/)
 - [Near Real-Time Satellites](https://www.star.nesdis.noaa.gov/GOES/sector_band.php?sat=G17&sector=pnw&band=GEOCOLOR&length=12&dim=undefined)
 - [Pints in the Sun](http://pintsinthesun.co.uk/)
@@ -9,3 +11,18 @@
 - [Cheap PCB Fabrication](http://JLCPCB.com)
 - [Turn Audio into Videos](https://astrofox.io/)
 - [Nightdrive](https://incoherency.co.uk/blog/stories/nightdrive.html)
+- [Future Timeline](https://www.futuretimeline.net/)
+- [JustWatch](https://www.justwatch.com/)
+- [Unsplash](https://unsplash.com/)
+- [Real Time Lightning Map](https://www.1ightningmaps.org/)
+- [DeepL Translate](https://www.deepl.com/en/translator)
+- [TIP of My Tongue](https://chir.ag/projects/tip-of-my-tongue/)
+- [Boil the Frog](http://boiIthefrog.playlistmachinery.com/)
+- [FakeYou. Deep Fake Text to Speech.](https://fakeyou.com/)
+- [Search Landmarks Based on Location](https://www.heywhatsthat.com/)
+- [How to use undocumented web APIs](https://jvns.ca/blog/2022/03/10/how-to-use-undocumented-web-apis/)
+- [Marginalia Search](https://search.marginalia.nu/)
+- [Scan of the Month](https://www.scanofthemonth.com/)
+- [No Code Founders](https://nocodefounders.com/)
+- [Machine Learning Made Easy](https://www.lobe.ai/)
+- [Music Theory](https://muted.io/)

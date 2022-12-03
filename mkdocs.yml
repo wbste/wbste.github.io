@@ -62,7 +62,7 @@ theme:
     - navigation.tabs
     - navigation.sections
     - navigation.top
-    - navigation.tracking
+    #  - navigation.tracking
     - toc.follow
     - search.suggest
     - search.highlight
@@ -89,6 +89,8 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true
 
 extra_javascript:
 #  - javascripts/mathjax.js
@@ -96,18 +98,13 @@ extra_javascript:
 #  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 #  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
 #  - javascripts/tablesort.js
-
-# Extras
-# extra:
-#  generator: false
+  - javascripts/bundle.ts
 
 extra_css:
   - stylesheets/extra.scss
-
-extra_javascript:
-  - javascripts/bundle.ts
 
 plugins:
   - search
   - callouts
   - glightbox
+  - git-revision-date-localized

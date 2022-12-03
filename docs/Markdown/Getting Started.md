@@ -1,10 +1,12 @@
 # Getting Started
+
 The below has been taken from [here](https://www.markdownguide.org/getting-started/), which is an excellent guide and has more details worth reading. There's also a [60-second guide](https://commonmark.org/help/) for formatting.
 
 > [!example]
 > Want to **skip all the below** and dive right in? Check out this [free web editor](https://stackedit.io/app) (nothing to install) that instantly renders what you do!
 
 ## What is Markdown?
+
 Markdown is a lightweight markup language that you can use to add formatting elements to plaintext text documents. Simplifying it more, Markdown is a text file that uses certain characters in certain ways to create a "pretty" document.
 
 Using Markdown is different than using a [WYSIWYG](https://en.wikipedia.org/wiki/WYSIWYG) editor. In an application like Microsoft Word, you click buttons to format words and phrases, and the changes are visible immediately. Markdown isn’t like that. When you create a Markdown-formatted file, you add Markdown syntax to the text to indicate which words and phrases should look different.
@@ -47,6 +49,7 @@ In nearly every way, Markdown is the ideal syntax for taking notes. Sadly, [Eve
 If you can’t part with Evernote, check out [Marxico](https://marxi.co/), a subscription-based Markdown editor for Evernote, or use [Markdown Here](https://www.markdownguide.org/tools/markdown-here/) with the Evernote website.
 
 ## Syntax
+
 Learn everything you need to know [here](https://www.markdownguide.org/basic-syntax/). For Obsidian Notes specifics check out [this link](https://help.obsidian.md/How+to/Format+your+notes).
 
 > [!warning]

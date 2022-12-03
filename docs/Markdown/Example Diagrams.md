@@ -1,6 +1,7 @@
 # Example Diagrams
 
 ## Flow Chart
+
 ```mermaid
 flowchart LR
 A[Hard edge] -->|Link text| B(Round edge)
@@ -10,6 +11,7 @@ C -->|Two| E[Result two]
 ```
 
 ## Sequence Diagram
+
 ```mermaid
 sequenceDiagram
 Alice ->> Bob: Hello Bob, how are you?
@@ -23,6 +25,7 @@ Alice->John: Yes... John, how are you?
 ```
 
 ## Class Diagram
+
 ```mermaid
 classDiagram
 Animal <|-- Duck
@@ -48,6 +51,7 @@ class Zebra{
 ```
 
 ## State Diagram
+
 ```mermaid
 stateDiagram-v2
 [*] --> Still
@@ -60,6 +64,7 @@ Crash --> [*]
 ```
 
 ## Entity Relationship Diagram
+
 ```mermaid
 erDiagram
 CAR ||--o{ NAMED-DRIVER : allows
@@ -79,6 +84,7 @@ PERSON {
 ```
 
 ## User Journey
+
 ```mermaid
 journey
 title My working day
@@ -92,6 +98,7 @@ section Go home
 ```
 
 ## Gantt
+
 ```mermaid
 gantt
 dateFormat  YYYY-MM-DD
@@ -126,6 +133,7 @@ Add another diagram to demo page    :48h****
 ```
 
 ## Pie Chart
+
 ```mermaid
 pie title NETFLIX
 "Time spent looking for movie" : 90
@@ -133,6 +141,7 @@ pie title NETFLIX
 ```
 
 ## Requirements Diagram
+
 ```mermaid
 requirementDiagram
 
@@ -151,6 +160,7 @@ test_entity - satisfies -> test_req
 ```
 
 ## Gitgraph Diagram
+
 ```mermaid
 gitGraph
 commit
@@ -164,4 +174,3 @@ merge develop
 commit
 commit
 ```
-

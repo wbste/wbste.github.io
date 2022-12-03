@@ -1,5 +1,7 @@
 # GFC
+
 ## Foam Density
+
 - For any one that wants the exact specs of the stock foam it's a 2# polyurethane 35 ILD. If you want softer get a lower ILD but don't go too low or you'll just bottom out. Higher if you want more firm.
 - 50" x 90" sleeping platform
 - If opening is 13", panel is 50"x12"
@@ -7,6 +9,7 @@
 - Another source says 2.8 lb density.
 
 ## Dimensions
+
 - Sleeping platform: 50” x 90” interior for Mid Size Trucks, 53” x 93” exterior (excluding corner brackets)
 - 56” x 90” for Full Size Trucks.
 - 1” of space between mattress & roof panel when closed, 6” thick closed (exterior)
@@ -15,13 +18,16 @@
 - Weight: 275-300 lbs (depending on vehicle)
 
 ## Construction
+
 - DOM tube space frame, in [orange or forge gray powder coat](https://www.tacomaworld.com/posts/17083675)
 - [0.080” 5052 aluminum](https://www.tacomaworld.com/posts/17023061) sheet doors, [construction details](https://www.tacomaworld.com/posts/17110831)
 - [Attachment method](https://www.tacomaworld.com/posts/17068529) to truck bed
 - [Panel attachment](https://www.tacomaworld.com/posts/16468133) to space-frame
 
 # Electronics
+
 ## Headunit
+
 ![HeadunitWiring](_assets/HeadunitWiring.jpg)
 ![MoreHeadunitWiring](_assets/MoreHeadunitWiring.jpg)
 
@@ -31,20 +37,24 @@
 - If no video going at speed, might need to add switch to pin 17: [https://www.tacomaworld.com/threads/3rd-gen-tacoma-front-rear-camera-navigation-bypass-homelink-smartphone-mirroring-mod.473033/page-5#post-15223124](https://www.tacomaworld.com/threads/3rd-gen-tacoma-front-rear-camera-navigation-bypass-homelink-smartphone-mirroring-mod.473033/page-5#post-15223124)
 
 ## Standards
+
 - GPT wire (SAE J1128-GPT) - General Purpose Wire rated -40F to 176F (Generic wire found in most auto parts stores)
 - GXL (SAE J1128-GXL) - Thin insulation, Automotive Cross-link Wire rated -49F to 257F
 - TXL (SAE J1128-TXL) - Extra thin insulation, Automotive Cross-link Wire rated -49F to 257F
 
 # Parts
+
 85212-0E050 - Blade, Wiper RH
 85222-04040 - Blade, Wiper LH
 85214-0E140 - Insert
 85214-04030 - Insert
 
 ## Seat Covers
+
 Covercraft, but maybe get [these](https://coverking.com/products/2017-toyota-tacoma-seat-cover?variant=41410841182370&sub=SR5&main=seat-cover-ballistic-tactical) next time.
 
 ## Road Shower
+
 ![](_assets/RoadShower.png)
 - Dimensions: 56.5" x 7" x 5".
 - Slot Channel is 55" long and the mounting bolts can be moved over this entire length.
@@ -61,9 +71,11 @@ Covercraft, but maybe get [these](https://coverking.com/products/2017-toyota-tac
 - Intake air valve is Shrader valve. Road Shower 2 uses a 1/4" NPT thread. It is very tough.
 
 ## Repair
+
 All from a 2nd gen forum, but probably close for 3rd: https://www.tacomaworld.com/threads/complete-list-of-tools-sockets-and-wrenches-for-2nd-gen-tacoma.158302/
 
 ### Metric sockets
+
 - 5.5 mm, blower motor resistor screws.
 - 8 mm, Running boards if you have them.
 - 10 mm, Center console bolts, Stereo, engine cover, tail lights, interior
@@ -82,9 +94,11 @@ All from a 2nd gen forum, but probably close for 3rd: https://www.tacomaworld.co
 - 35 mm, front Axle nut
 
 ### SAE sockets
+
 - 7/32 socket for Blower Motor Resistor screws, 5.5mm works too.
 
 ### Metric Hex Sockets (Same as Allen Keys)
+
 - 5 mm, Seat, transmission overflow plug
 - 6 mm, Suspension, Front Axle
 - 8 mm, 1GR-FE ENGINE CONTROL SYSTEM
@@ -92,6 +106,7 @@ All from a 2nd gen forum, but probably close for 3rd: https://www.tacomaworld.co
 - 12 mm, Front Diff Removal
 
 ### Torx Sockets
+
 - T20, Audio / Visual
 - T25, mirrors
 - T30, Steering Column, SRS, Wiper and Wahser, Seat, tailgate bolts
@@ -99,10 +114,12 @@ All from a 2nd gen forum, but probably close for 3rd: https://www.tacomaworld.co
 - T55, Bed bolts
 
 ### External / Interior / Female Torx Sockets
+
 - E7 Torx socket to remove the 2 studs from the intake manifold
 - E14 Torx (diff removal)
 
 ### Other
+
 - Drive shaft bolts are M11 x 1.0 x 30mm
 - Toyota uses 7/16-20 SAE fine thread for seat belt bolt hardware if your shopping for replacements.
 - 10 mm flare nut wrench (brake lines)

@@ -1,14 +1,17 @@
 # Taig Micro Mill
+
 Ordered a refurbished version of [this](https://taigtools.com/product/micro-mill-2019cr/).
 
 ![](_assets/2019CR_2.jpg)
 
 ## Links
+
 [Micro Machine Shop](https://www.micro-machine-shop.com/)  
 [Carter Tools](https://www.cartertools.com/)  
 [Taig Tools](https://taigtools.com/)  
 
 ## Description
+
 *Taken from link above*
 
 The Micro Mill is a very rigid and precise machine that uses some of the most advanced techniques compared to its competitors. The Y-axis and Z-axis are supported on 2 1/2 inch square steel tubing to provide a very solid feel. The leadscrews are all 1/2-20 unlike a lot of machines of similar size that use 1/4 inch leadscrews. TAIG prefers to provide added mechanical features to allow the mill to be more useful without raising the price. Being an aerospace manufacturer for over 18 years our machinists know the importance of table back-lash compensation and full gib adjustments for wear as employed in the manufacture of the Micro Mill. Basically, the Micro Mill was designed by machinists and built by machinists. Overall working accuracy should exceed .0005 in. All machines are sold with a 14 day refund and a full 2 year factory warranty on all Mill components and accessories.
@@ -203,6 +206,7 @@ X-axis gib, wider end.
 X-axis gib narrower end. Both of these screws should be tight once the position of the gib is adjusted.
 
 ### Column To Spindle Alignment
+
 Most guides use tramming to ensure alignment, but due to the Taig's design the below is another alignment concern that should be addressed.
 
 ![](_assets/TaigAlignment.png)
@@ -306,4 +310,5 @@ If you can get it to within .001 over 8"-12" you can call yourself an expert. I 
 You want the tip of the indicator to be roughly parallel to the work surface to be gaged. You can read all about Cosine error [here](http://www.longislandindicator.com/p21.html)...if you don't have enough to think about already.
 
 ### Backlash Adjustment
+
 ![http://www.cartertools.com/Step1.jpg](_assets/taigsetup_image050.jpg)![http://www.cartertools.com/Step2.jpg](_assets/taigsetup_image051.jpg)![http://www.cartertools.com/Step3.jpg](_assets/taigsetup_image052.jpg)![http://www.cartertools.com/Step4.jpg](_assets/taigsetup_image053.jpg)![http://www.cartertools.com/Step5.jpg](_assets/taigsetup_image054.jpg)![http://www.cartertools.com/Step6.jpg](_assets/taigsetup_image055.jpg)![http://www.cartertools.com/Step7.jpg](_assets/taigsetup_image056.jpg)![http://www.cartertools.com/Step8.jpg](_assets/taigsetup_image057.jpg)![http://www.cartertools.com/Step9.jpg](_assets/taigsetup_image058.jpg)![http://www.cartertools.com/Step10.jpg](_assets/taigsetup_image059.jpg)

@@ -1,3 +1,5 @@
+# Example Callouts
+
 > [!bug]
 
 > [!caution]

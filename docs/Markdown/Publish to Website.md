@@ -1,6 +1,7 @@
 # Publish to Website
 
 ## Prerequisites
+
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - [GIT](https://git-scm.com/download/win)
 - [Python 3.10+](https://www.python.org/downloads/)
@@ -44,6 +45,7 @@ plugins:
 To enable table sorting and mathjax support, I also added some JavaScript files to `/docs/javascripts/`, labeled `mathjax.js` and `tablesort.js`. See the [Reference section](https://squidfunk.github.io/mkdocs-material/reference/) for the code. A `favicon.png` was added to `/docs/images/` and a matching `logo.svg` was added to the `/docs/` folder.
 
 ## Commands
+
 -   `mkdocs new [dir-name]` - Create a new project.
 -   `mkdocs serve` - Start the live-reloading docs server.
 -   `mkdocs build` - Build the documentation site.
@@ -53,6 +55,7 @@ To enable table sorting and mathjax support, I also added some JavaScript files 
 > no need to ever really build with GitHub actions, as it does it when you upload.
 
 ## Folder Structure
+
 ```
 mkdocs.yml                                       # The configuration file.
 .github/
@@ -75,6 +78,7 @@ docs/
 ```
 
 ## GitHub Actions
+
 ```yml
 name: ci 
 on:
@@ -98,6 +102,7 @@ jobs:
 ```
 
 ## Azure Pipeline
+
 Add the following into the `yml` file generated when creating a static web app
 
 ```yml
@@ -123,6 +128,7 @@ Add the following into the `yml` file generated when creating a static web app
 ```
 
 ## Azure AAD
+
 Add or create a `staticwebapp.config.json` file, and add the following so only specified users can access the website
 
 ```yml
@@ -164,6 +170,7 @@ Add or create a `staticwebapp.config.json` file, and add the following so only s
 ```
 
 ## Formatting
+
 `mkdocs.yml` controls a lot of stuff. Read the documentation in the Reference section above. Here's what I'm using so far. To remove downloading external stuff like fonts, I send `font: false` so it won't download from Google Fonts. Also disabled Mathjax as I'm not using that anymore, and TableSort really need yet.
 
 ```yml
@@ -274,4 +281,5 @@ To use a red for example, here's what the `extra.css` looks like:
 ```
 
 ## Anchors
+
 `mkdocs` converts all anchors to lower case, and defaults to removing special characters and spaces for `-`. That means, even if the header you're linking to is `# Header Text`, the link needs to be `#header-text`.

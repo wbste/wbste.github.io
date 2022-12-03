@@ -1,6 +1,7 @@
 # Conversion
 
 ## Convert Word to Markdown
+
 Navigate to the folder where the Word file is, and run this after changing the names:
 
 `pandoc --extract-media=./_assets -s convert.docx  --wrap=none -t markdown -o convert.md`
@@ -8,7 +9,6 @@ Navigate to the folder where the Word file is, and run this after changing the n
 After that, you can Find/Replace a regex of `\{(.+)\}` to remove the dimensions for images.
 
 Finally run a Find/Replace for `./_assets/media/` to `./_assets/` to align the images (and move the images!) so they're in the same structure as current notes.
-
 
 ## Convert Markdown to...
 
@@ -20,6 +20,7 @@ Make sure you have the following installed:
 You'll need to tweak the Mermaid Filter above to get it to look better. Go to `%APPDATA%\nvm\v16.13.2\node_modules\mermaid-filter\index.js`, and update the line ~36 `MERMAID_FILTER_SCALE` to `2`. To make things look a bit nicer, change `MERMAID_FILTER_THEME` to `neutral`, and `MERMAID_FILTER_BACKGROUND` to `transparent`. Couldn't get SVG to work in DOCx.
 
 ### Word
+
 This will create a Word document with Mermaid diagrams loaded as PNG (see [Mermaid Diagrams](#Mermaid%20Diagrams) above to make sure that words/looks good).
 
 > [!missing]
@@ -110,6 +111,6 @@ Remove-Item combined.txt
 ```
 
 ### PDF
+
 > [!success]
 > Pandoc won't output good looking **tables**, and [**callouts**](https://help.obsidian.md/How+to/Use+callouts) with native Obsidian Notes syntax doesn't work. However mermaid graphs look okay, and table of contents works. **Too** many things broken, better to export to Word, then PDF from there. Can create bookmarks based on Headings in the **Options** menu.
-
