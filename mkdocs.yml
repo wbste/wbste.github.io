@@ -104,6 +104,9 @@ extra_javascript:
 extra_css:
   - stylesheets/extra.scss
 
+extra_javascript:
+  - javascripts/bundle.ts
+
 plugins:
   - search
   - callouts
