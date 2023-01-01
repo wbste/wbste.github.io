@@ -1,7 +1,3 @@
----
-ᴴₒᴴₒᴴₒ: true
----
-
 Welcome to whatever this site is :)
 
 
