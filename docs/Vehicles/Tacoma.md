@@ -1,6 +1,8 @@
-# GFC
+# Tacoma
 
-## Foam Density
+## GFC
+
+### Foam Density
 
 - For any one that wants the exact specs of the stock foam it's a 2# polyurethane 35 ILD. If you want softer get a lower ILD but don't go too low or you'll just bottom out. Higher if you want more firm.
 - 50" x 90" sleeping platform
@@ -8,7 +10,7 @@
 - 50"x90" mattress (76"), actual 48" wide pad
 - Another source says 2.8 lb density.
 
-## Dimensions
+### Dimensions
 
 - Sleeping platform: 50” x 90” interior for Mid Size Trucks, 53” x 93” exterior (excluding corner brackets)
 - 56” x 90” for Full Size Trucks.
@@ -17,16 +19,16 @@
 - Canopy/cargo space (from truck bed floor): 41”
 - Weight: 275-300 lbs (depending on vehicle)
 
-## Construction
+### Construction
 
 - DOM tube space frame, in [orange or forge gray powder coat](https://www.tacomaworld.com/posts/17083675)
 - [0.080” 5052 aluminum](https://www.tacomaworld.com/posts/17023061) sheet doors, [construction details](https://www.tacomaworld.com/posts/17110831)
 - [Attachment method](https://www.tacomaworld.com/posts/17068529) to truck bed
 - [Panel attachment](https://www.tacomaworld.com/posts/16468133) to space-frame
 
-# Electronics
+## Electronics
 
-## Headunit
+### Headunit
 
 ![HeadunitWiring](_assets/HeadunitWiring.jpg)
 ![MoreHeadunitWiring](_assets/MoreHeadunitWiring.jpg)
@@ -36,24 +38,26 @@
 - If ebrake light comes on, cut pin 15: [https://www.tacomaworld.com/threads/3rd-gen-tacoma-front-rear-camera-navigation-bypass-homelink-smartphone-mirroring-mod.473033/page-6#post-15365053](https://www.tacomaworld.com/threads/3rd-gen-tacoma-front-rear-camera-navigation-bypass-homelink-smartphone-mirroring-mod.473033/page-6#post-15365053)
 - If no video going at speed, might need to add switch to pin 17: [https://www.tacomaworld.com/threads/3rd-gen-tacoma-front-rear-camera-navigation-bypass-homelink-smartphone-mirroring-mod.473033/page-5#post-15223124](https://www.tacomaworld.com/threads/3rd-gen-tacoma-front-rear-camera-navigation-bypass-homelink-smartphone-mirroring-mod.473033/page-5#post-15223124)
 
-## Standards
+### Standards
 
 - GPT wire (SAE J1128-GPT) - General Purpose Wire rated -40F to 176F (Generic wire found in most auto parts stores)
 - GXL (SAE J1128-GXL) - Thin insulation, Automotive Cross-link Wire rated -49F to 257F
 - TXL (SAE J1128-TXL) - Extra thin insulation, Automotive Cross-link Wire rated -49F to 257F
 
-# Parts
+## Parts
+
+### Wipers
 
 85212-0E050 - Blade, Wiper RH
 85222-04040 - Blade, Wiper LH
 85214-0E140 - Insert
 85214-04030 - Insert
 
-## Seat Covers
+### Seat Covers
 
 Covercraft, but maybe get [these](https://coverking.com/products/2017-toyota-tacoma-seat-cover?variant=41410841182370&sub=SR5&main=seat-cover-ballistic-tactical) next time.
 
-## Road Shower
+### Road Shower
 
 ![](_assets/RoadShower.png)
 - Dimensions: 56.5" x 7" x 5".
