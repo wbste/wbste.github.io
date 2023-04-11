@@ -1,0 +1,86 @@
+# Project Information
+site_name: Notes
+site_url: https://rs.omg.lol/
+
+# Configuration
+theme:
+  name: material
+  font: false
+  favicon: images/favicon.png
+  palette:
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: light blue
+      accent: light blue
+      scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+        
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: light blue
+      accent: light blue
+      scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+
+  icon:
+    logo: fontawesome/solid/person-falling-burst
+
+  features:
+    - navigation.instant
+    - navigation.indexes
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+
+# Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  # - pymdownx.arithmatex:
+  #     generic: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - nl2br
+  - footnotes
+  - pymdownx.details
+  - attr_list
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences:
+  #     custom_fences:
+  #       - name: mermaid
+  #         class: mermaid
+  #         format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true
+
+extra_javascript:
+#  - javascripts/model-viewer.min.js 
+#  - javascripts/mathjax.js
+#  - https://polyfill.io/v3/polyfill.min.js?features=es6
+#  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+#  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+#  - javascripts/tablesort.js
+#  - javascripts/bundle.ts turn on with extra.scss
+
+extra_css:
+#  - stylesheets/extra.scss, add ᴴₒᴴₒᴴₒ: true to frontmatter to turn on.
+ - stylesheets/modelviewer.css
+
+plugins:
+  - search
+  - callouts
+  - glightbox
+  - awesome-pages
+  - git-revision-date-localized

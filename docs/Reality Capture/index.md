@@ -1,0 +1,5 @@
+# Reality Capture
+
+Reality capture involves the use of advanced technologies like 3D laser scanners, photogrammetry, and high definition 360-degree cameras to collect existing conditions. Certain Apple productions contain LiDAR (Light Detection And Ranging) sensors which enable the capturing of 3D information. That information can then be processed as a mesh or point cloud. A point cloud is simply a set of points (in many cases hundreds of thousands or more), which each point occupying a 3D point in space. A mesh is what would happen if you tried to "shrink wrap", or put fabric over all those points and and pulled it tight. Depending on their use case, what was captured, and other variables, each has their pros and cons.
+
+See the [Capture](Capture.md) page for how to use that device to capture both point clouds and meshes, [Display](Display.md) for how to show that content in a web browser (or with mkdocs!), and [Review and Edit](Review%20and%20Edit.md) for how to edit or combine different data types (i.e. point clouds and 3D models).
