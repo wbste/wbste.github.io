@@ -2,7 +2,37 @@
 
 ## Git
 
+### Shrink local files
+
 - To shrink local .git folder, run `git repack -a -d -f --depth=250 --window=250`
+
+### Remove all history
+
+Make sure there are no protection rules under **Settings > Branches** first.
+
+1.  Checkout
+
+`git checkout --orphan latest_branch`
+
+2.  Add all the files
+
+`git add -A`
+
+3.  Commit the changes
+
+`git commit -am "commit message"`
+
+4.  Delete the branch
+
+`git branch -D main`
+
+5.  Rename the current branch to main
+
+`git branch -m main`
+
+6.  Finally, force update your repository
+
+`git push -f origin main`
 
 ## Python
 
