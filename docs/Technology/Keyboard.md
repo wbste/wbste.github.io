@@ -25,7 +25,7 @@ https://choc.brianlow.com/ - useful but outdated.
 All based on the great guide [here](https://docs.qmk.fm/#/newbs_getting_started). I couldn't get QMK toolbox to flash correctly so I just used MSYS.
 
 > [!info]
-> In `../sofle/keymaps/via/rules.mk`, setting `RGBLIGHT_ENABLE = no` and `WPM_ENABLE = yes` saved a lot of space. I don't have any RGB so no issues there.
+> In `../sofle/keymaps/via/rules.mk`, setting `RGBLIGHT_ENABLE = no` saved a lot of space. I don't have any RGB so no issues there.
 
 1. Open [VIA](https://www.caniusevia.com/) in Chrome, backup your layout.
 2. Clone the official QMK [repo](https://github.com/qmk/qmk_firmware).
@@ -36,20 +36,88 @@ All based on the great guide [here](https://docs.qmk.fm/#/newbs_getting_started)
 7. Make some tweaks. Even thought I have the Sofle V1 *choc* version, the [Sofle V1 VIA](https://github.com/qmk/qmk_firmware/tree/master/keyboards/sofle/keymaps/via) version worked fine.
 9. Run `qmk compile` when done. Note this compiles based on the defaults set earlier.
 10. Some sites say to disconnect the cable connecting the two halves, others don't. I had no problem keeping them connected.
-11. Now run `qmk flash`, which will flash the firmware you just built.
-12. Disconnect the USB cable and reconnect to the other half.
-13. Run it again.
-14. Disconnect and reconnect to left half.
-15. Open VIA and import your saved layout.
-16. Done!
+11. I only have to hit the reset button **Once** to get it into bootloader mode to flash.
+12. Now run `qmk flash`, which will flash the firmware you just built.
+13. Disconnect the USB cable and reconnect to the other half.
+14. Run it again.
+15. Disconnect and reconnect to left half.
+16. Open VIA and import your saved layout.
+17. Done!
 
-## Custom Logo
+## Custom Display
 
-## Links
+### Links
 
 - https://joric.github.io/qle/
 - https://javl.github.io/image2cpp/
 - https://docs.splitkb.com/hc/en-us/articles/360013811280-How-do-I-convert-an-image-for-use-on-an-OLED-display-
+
+### WPM
+
+To get WPM to show up correctly, had to add `#define SPLIT_WPM_ENABLE` to `config.h`. Then in `oled.c` can output the value with `oled_write(get_u8_str(get_current_wpm(), '0'), false);`. Had to flash both sides before it stopped freaking out.
+
+Final readout looks like this:
+
+```c
+static void print_status_narrow(void) {
+    // Print current mode
+    oled_write_P(PSTR("\n\n"), false);
+    oled_write_ln_P(PSTR("MODE"), false);
+    oled_write_P(PSTR("\n"), false);
+
+    switch (get_highest_layer(layer_state)) {
+        case 0:
+            oled_write_ln_P(PSTR("base"), false);
+            break;
+        case 1:
+            oled_write_ln_P(PSTR("alt"), false);
+            break;
+        default:
+            oled_write_P(PSTR("mod\n"), false);
+            break;
+    }
+    oled_write_P(PSTR("\n\n"), false);
+    oled_write_ln_P(PSTR("WPM"), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write(get_u8_str(get_current_wpm(), '0'), false);
+}
+```
+
+### Animation
+
+Added a cool rocket animation from [github](https://github.com/JBaguley/qmk_firmware/blob/crkbd-retrograde-keymap/keyboards/crkbd/keymaps/retrograde/keymap.c). Just add the content between the comment blocks the author added. Set mine to display on the slave side, which needs `#define SPLIT_WPM_ENABLE` in `config.h`.
+
+### Replace Default
+
+Swap out this in `oled.c`:
+
+```c
+    static const char PROGMEM qmk_logo[] = {
+        0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
+        0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
+        0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0
+    };
+    oled_write_P(qmk_logo, false);
+}
+```
+
+To this:
+
+```c
+    static const char PROGMEM qmk_logo[] = {
+		BIG BLOCK OF BYTECODE HERE
+    };
+  oled_write_raw_P(qmk_logo, sizeof(qmk_logo));
+}
+```
+
+### Discord Chat
+
+From this discussion: https://discord.com/channels/440868230475677696/440868230475677698/988633092124205096
+
+There are some distinction here. The default `qmk_logo[]`content are actually reference to the image stored in `glcdfont.c` file. 0x80 refers to the start of the image in that file. Hence you'll use `oled_write_P` function with that variable syntax. Now that you intend to generate your own image to store inside your own array, that array content is the image itself, not a reference. So you'll need to use `oled_write_raw_P` to render that array, with a different variable syntax.
+
+More specifically: oled_write(_P) writes out blocks, aka "characters" from the oled font file. oled_write_raw(_P) writes out the actual pixel values (the "raw" values) to be rendered to the screen.
 
 ## Layers
 
@@ -95,6 +163,24 @@ Smush MO and TG together and you get this. holding a key down activates the laye
 For a list of supported keys, look [here](https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes_basic.md).
 
 ![](_assets/VIAMap.png)
+
+### Correct Jumping
+
+Initially the keyboard jumped around with the encoders more than I wanted. Fixed by setting the resolution to 4 in `info.json` from the value 2 it was set at.
+
+```json
+    "encoder": {
+        "rotary": [
+            {"pin_a": "F5", "pin_b": "F4", "resolution": 4}
+        ]
+    },
+    "split": {
+        "soft_serial_pin": "D2",
+        "encoder": {
+            "right": {
+                "rotary": [
+                    {"pin_a": "F4", "pin_b": "F5", "resolution": 4}
+```
 
 ### Audio Control
 
@@ -213,56 +299,3 @@ if (clockwise) {
   tap_code16(S(KC_F3));  
 }
 ```
-
-## Cheat Sheet
-
-### Step 1: Declare
-
-Create each layer as an entry in an enum. Replace YOUR_LAYER_1, YOUR_LAYER_2, etc., below, with names of your layers.
-
-in keymap.c:
-
-```c
-// Layer Declarations
-enum {
-    YOUR_LAYER_1 = 0,
-    YOUR_LAYER_2,
-    // ..., the rest of your layers
-};
-```
-
-### Step 2: Define
-
-Add the keycodes for each layer into the keymaps array, by calling KEYMAP() for each layer.
-
-in keymap.c, create your KEYMAPs:
-
-```c
-// Layer Definitions
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-  [YOUR_LAYER_1] = KEYMAP(
-    // ... list all your keycodes here, separating each with comma
-  ),
-
-  [YOUR_LAYER_2] = KEYMAP(
-    // ... list all your keycodes here, separating each with comma
-  ),
-
-  // ..., the rest of your layers
-
-};
-```
-
-### Step 3: Use
-
-Here are a variety of ways to change the layer.
-
-|Keycode<br><br>to be added to your call to KEYMAP()|Description|
-|---|---|
-|```c<br>MO(YOUR_LAYER)<br>```|While held, MOmentarily switch to YOUR_LAYER.|
-|```c<br>LT(YOUR_LAYER, KC_XXXX)<br>```|Layer Tap. When held: go to YOUR_LAYER.  <br>When tapped: send KC_XXXX|
-|```c<br>TG(YOUR_LAYER)<br>```|Layer Toggle. When tapped, toggles YOUR_LAYER on or off|
-|```c<br>TO(YOUR_LAYER)<br>```|When tapped, goes to YOUR_LAYER|
-|```c<br>TT(YOUR_LAYER)<br>```|When tapped, toggles YOUR_LAYER on or off.  <br>When held, activates YOUR_LAYER.|
-|```c<br>OSL(YOUR_LAYER)<br>```|One-Shot Layer. Goes to YOUR_LAYER for the next keypress|
