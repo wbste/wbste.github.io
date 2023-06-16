@@ -87,6 +87,8 @@ static void print_status_narrow(void) {
 
 Added a cool rocket animation from [github](https://github.com/JBaguley/qmk_firmware/blob/crkbd-retrograde-keymap/keyboards/crkbd/keymaps/retrograde/keymap.c). Just add the content between the comment blocks the author added. Set mine to display on the slave side, which needs `#define SPLIT_WPM_ENABLE` in `config.h`.
 
+To make sure that the animation screen goes dark when the static one does, add `#define SPLIT_OLED_ENABLE` to `config.h`.
+
 ### Replace Default
 
 Swap out this in `oled.c`:
