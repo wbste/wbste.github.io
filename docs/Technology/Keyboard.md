@@ -3,13 +3,15 @@
 ## Specs
 
 - Sofle V1
-- Kailh Low Profile Choc Switches (V1) – Brown(Tactile)
-- MoErgo [MCC](https://www.moergo.com/collections/mcc-keycaps) Low Profile Split Ergo Keycaps
+	- [Mechboards](https://mechboards.co.uk/products/sofle-choc-hotswap-kit-pre-build)
+- Kailh Low Profile Choc Switches (V1)
+	- Brown (Tactile)
+	- Choc Hotswap Sockets
+- MoErgo POM [MCC](https://www.moergo.com/collections/mcc-keycaps) Low Profile Split Ergo Keycaps, AMOERKC1116072
 - OLED Screens
 	- 128×32 I2C OLED graphic display
 - Pro Micro Type C Controllers
 	- AVR ATmega32u4 8-bit microcontroller
-- Choc Hotswap Sockets
 - QMK firmware
 	- Compatible with VIA
 	- https://github.com/qmk/qmk_firmware/tree/master/keyboards/sofle
