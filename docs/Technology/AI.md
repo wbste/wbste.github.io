@@ -183,3 +183,45 @@ The perplexity measurements in table above are done against the `wikitext2` test
 	- Llama 2 Chat 13B q5_k_m ggml
 		- First token: 18.58 s
 		- Speed: 3.68 tok/s
+
+## Llama.cpp
+
+This covers how to build for Windows (or at least what worked for me) if you have an NVIDIA GPU. You'll also need [Git](https://git-scm.com/download/win) installed.
+
+1. Install [Visual Studio 2022 Community](https://visualstudio.microsoft.com/vs/community/)
+	1. Install **Desktop development with C++**, with the *Optional* features:
+		1. `MSVC v143 - VS Code C++ x64/x86 build tools (latest)`
+		2. `C++ CMake tools for Windows`
+		3. `C++ AddressSanitizer`
+		4. `Windows 11 SDK...`
+2. Install the [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
+3. I had to copy the 4 files from CUDA to VS manually
+	1. Copy the files from `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\extras\visual_studio_integration\MSBuildExtensions`
+	2. To `C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations`
+4. Navigate to where you want the files extracted.
+5. Run `git clone https://github.com/ggerganov/llama.cpp`, then `cd llama.cpp`
+6. Finally run the below.
+
+```bash
+mkdir build
+cd build
+cmake .. -DLLAMA_CUBLAS=ON
+cmake --build . --config Release
+```
+
+Once installed I ran a script like this: `D:\AI\llama.cpp\build\bin\Release\server.exe -c 4096 -ngl 100 --host 0.0.0.0 -t 16 --mlock --threads 6 -m "D:\AI\TheBloke\phind-codellama-34B-v2-GGUF\phind-codellama-34b-v2.Q4_K_M.gguf"`
+
+All this was to get a server so I could use [Continue](https://continue.dev/) on VS Code. You can see examples of what it can do [here](https://continue.dev/docs/how-to-use-continue). The `config.py` looks like the below, which is slightly different than the [docs](https://continue.dev/docs/customization#llamacpp). Note the `server_url`.
+
+```python
+
+config = ContinueConfig(
+    allow_anonymous_telemetry=False,
+    models=Models(default=LlamaCpp(context_length=4096, model="llamacpp", timeout=300, prompt_templates={'edit': '[INST] Consider the following code:\n```\n{{code_to_edit}}\n```\nEdit the code to perfectly satisfy the following user request:\n{{user_input}}\nOutput nothing except for the code. No code block, no English explanation, no start/end tags.\n[/INST]'}, server_url="http://localhost:8080", llama_cpp_args={'stop': ['[INST]']}), unused=[]),
+    system_message="",
+    temperature=0.5,
+    custom_commands=[
+        CustomCommand(
+            name="test",
+```
+
