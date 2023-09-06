@@ -2,15 +2,21 @@
 
 Stable Diffusion is a deep learning, text-to-image model released in 2022. It is primarily used to generate detailed images conditioned on text descriptions, though it can also be applied to other tasks such as inpainting, outpainting, and generating image-to-image translations guided by a text prompt.
 
+**Want the TL;DR on how to run a model 100% locally?**
+
+1. Install  Stable Diffusion web UI by following the steps [here](https://github.com/AUTOMATIC1111/stable-diffusion-webui#installation-and-running).
+2. Download [sd_xl_base_1.0_0.9vae.safetensors](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0) and [sd_xl_refiner_1.0_0.9vae.safetensors](https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0). Save to where you extracted #1 to, at `.\stable_diffusion\webui\models\Stable-diffusion`. I think they're actually supposed to go to `.\stable_diffusion\webui\models\VAE` but I haven't tried and it doesn't seem to matter.
+3. Double-click `run.bat` to run the web interface!
+
 ## Installation
 
-One of the more popular interfaces, read about AUTOMATIC1111's (A1111) Stable Diffusion web UI [here](https://github.com/AUTOMATIC1111/stable-diffusion-webui). Other options include [InvokeAI](https://github.com/invoke-ai/InvokeAI) and [StableStudio](https://github.com/Stability-AI/StableStudio). To run the latter 100% local you'll still need AUTOMATIC1111's tool in the first link. Details how how to set them up [here](https://github.com/Stability-AI/StableStudio/blob/main/packages/stablestudio-plugin/README.md). InvokeAI has a nicer interface but lacks some nice plugins, and StableStudio doesn't have many options (even the most basic).
+AUTOMATIC1111's (A1111) Stable Diffusion web UI [here](https://github.com/AUTOMATIC1111/stable-diffusion-webui) is one of the more popular interfaces. Other options include [InvokeAI](https://github.com/invoke-ai/InvokeAI) and [StableStudio](https://github.com/Stability-AI/StableStudio). To run the latter 100% local you'll still need AUTOMATIC1111's tool in the first link. Details how how to set them up [here](https://github.com/Stability-AI/StableStudio/blob/main/packages/stablestudio-plugin/README.md). InvokeAI has a nicer interface but lacks some nice plugins, and StableStudio doesn't have many options (even the most basic).
 
 A1111 has some very nice extensions. I recommend *StyleSelectorXL*, which has a number of predefined styles. Also a good idea to modify `webui-user.bat` and replace the existing `set COMMANDLINE_ARGS` with `set COMMANDLINE_ARGS=--no-half-vae --xformers --autolaunch`.
 
 ## Models
 
-There are custom models everywhere. The best all purpose thus far seems to be [SD XL](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0). You'll want both `sd_xl_base_1.0_0.9vae.safetensors` and the [refiner](https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0) of the same type (` sd_xl_refiner_1.0_0.9vae.safetensors`). The `VAE` version seems to result in better color and saturation, and the refiner adds more detail as the image completes.
+There are custom models everywhere. The best all purpose thus far seems to be [SD XL](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0). You'll want both `sd_xl_base_1.0_0.9vae.safetensors` and the [refiner](https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0) of the same type (`sd_xl_refiner_1.0_0.9vae.safetensors`). The `VAE` version seems to result in better color and saturation, and the refiner adds more detail as the image completes.
 
 ## Styles
 

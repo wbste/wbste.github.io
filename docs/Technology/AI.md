@@ -1,24 +1,24 @@
 # AI
 
-This section has to do with text generation models. Same ideas as ChatGPT. See [Stable Diffusion](Stable%20Diffusion.md) for the drawing bit of AI.
+This section has to do with text generation models (same ideas as ChatGPT). See [Stable Diffusion](Stable%20Diffusion.md) for the drawing bit of AI.
 
 **Want the TL;DR on how to run a model 100% locally?**
 
-1. Regardless if you have a CPU or GPU, download [this](https://lmstudio.ai/).
-2. Open the app, and search for *TheBloke/CodeLlama-7B-Instruct-GGUF* for coding, or *TheBloke/Llama-2-7B-Chat-GGM* for general chat.
-3. Download the model **Quantization Q4_K_M** to start with.
-4. After it's downloaded, you should see it after clicking on the folder icon in the app.
+1. Regardless if you have a CPU or GPU, download [LM Studio](https://lmstudio.ai/). It's the best GUI I've found, and integrates with HuggingFace, can act as a API server, and allows for running on CPU, GPU, or a mix of both.
+2. Open the app, and search (for example) *TheBloke/CodeLlama-7B-Instruct-GGUF* for coding, or *TheBloke/Llama-2-7B-Chat-GGM* for general chat.
+3. Download the model **Quantization Q4_K_M** to start with. We can get smaller or larger ones after seeing how this one performs.
+4. After it's downloaded it will appear in LM Studio under the 📂 icon in the app.
 5. Make sure the code one says **CodeLlama Instruct** and the chat says **MetaAI Llama 2 Chat** in the dropdown. This loads some settings on how to interact with the model.
-6. Open the chat bubble, **New Chat**.
-7. On the right you may want to select *GPU Acceleration* under **Model Initialization** if you have one, and start with **10 layers** (we can always increase later).
+6. Click on the 💬 icon, **New Chat**.
+7. On the right you may want to select *GPU Acceleration* under **Model Initialization** if you have one, and start with **10 layers** (we can always modify later).
 8. From the top, select one of the models you downloaded and load it.
 9. Chat away!
 
 > [!tip]
-> This app can run GGML and GGUF models (GGUF is the new format, while GGML is being phased out). Anything from [TheBloke](https://huggingface.co/TheBloke) seems to be good. You can add layer to the GPU if you have one. You'll notice a point of no returns as you tweak it. For a 3060 TI (8 GB), I got to about 35 layers on average before it didn't matter. For a 3090 (24 GB) I'm at 100, but I didn't creep up to it at all so the real number of layers is likely much less.
+> This app can run GGML and GGUF models (GGUF is the new format, while GGML is being phased out). Anything from [TheBloke](https://huggingface.co/TheBloke) seems to be good. You can add layers to the GPU if you have one. You'll notice a point of no returns as you tweak it. For a 3060 TI (8 GB), I got to about 35 layers on average before it didn't matter. For a 3090 (24 GB) I'm at 100, but I didn't creep up to it at all so the real number of layers is likely much less.
 
 > [!info]
-> There is another format called GPTQ that this software can't run. GPTQ is meant for 100% GPU, while the others can be a mix (or 100% CPU). [Oobaboga](https://github.com/oobabooga/text-generation-webui) can run those, but I don't like the GUI or UX as much. I have 32 GB ram which helps a lot for larger models to load into memory.
+> There is another format called GPTQ that this software can't run. GPTQ is meant for 100% GPU, while the others can be a mix (or 100% CPU). [Oobaboga](https://github.com/oobabooga/text-generation-webui) and [ExLlama](https://github.com/turboderp/exllama) can run those, but I don't like the GUI or UX as much. I have 32 GB ram which helps a lot for larger models to load into memory.
 
 > [!example]
 > On the 3060 TI, 7B of any quantization is great. I could do up to 13B at Q4_K_M and it was good too (started quick and wrote faster than I could read). Above that quant. or higher parameters was not great. On the 3090 Any of the 30-34B Q4_K_M are super fast.
@@ -59,18 +59,39 @@ Good read on what this means [here](https://postgresml.org/blog/announcing-gptq-
 
 Note the RAM below can be split between GPU and "CPU" RAM, depending on the quantization method used. The below is an extract on a specific model, but should serve as a good guideline.
 
-| Quant method | Bits | Max RAM required | Use case                                                 |
-| ------------ | ---- | ---------------- | -------------------------------------------------------- |
-| Q2_K         | 2    | 16.71 GB         | smallest, significant quality loss - not recommended     |
-| Q3_K_S       | 3    | 17.11 GB         | very small, high quality loss                            |
-| Q3_K_M       | 3    | 18.78 GB         | very small, high quality loss                            |
-| Q3_K_L       | 3    | 20.27 GB         | small, substantial quality loss                          | 
-| Q4_K_S       | 4    | 21.65 GB         | small, greater quality loss                              |
-| Q4_K_M       | 4    | 22.72 GB         | medium, balanced quality - **recommended**               |
-| Q5_K_S       | 5    | 25.74 GB         | large, low quality loss - **recommended**                |
-| Q5_K_M       | 5    | 26.34 GB         | large, very low quality loss - **recommended**           |
-| Q6_K         | 6    | 30.18 GB         | very large, extremely low quality loss                   |
-| Q8_0         | 8    | 38.29 GB         | very large, extremely low quality loss - not recommended |
+| Quant method | Bits | Use case                                                 |
+| ------------ | ---- | -------------------------------------------------------- |
+| Q2_K         | 2    | smallest, significant quality loss - not recommended     |
+| Q3_K_S       | 3    | very small, high quality loss                            |
+| Q3_K_M       | 3    | very small, high quality loss                            |
+| Q3_K_L       | 3    | small, substantial quality loss                          |
+| Q4_K_S       | 4    | small, greater quality loss                              |
+| Q4_K_M       | 4    | medium, balanced quality - **recommended**               |
+| Q5_K_S       | 5    | large, low quality loss - **recommended**                |
+| Q5_K_M       | 5    | large, very low quality loss - **recommended**           |
+| Q6_K         | 6    | very large, extremely low quality loss                   |
+| Q8_0         | 8    | very large, extremely low quality loss - not recommended |
+
+The following new quantization types are added to `ggml`:
+
+- `GGML_TYPE_Q2_K` - "type-1" 2-bit quantization in super-blocks containing 16 blocks, each block having 16 weight. Block scales and mins are quantized with 4 bits. This ends up effectively using `2.5625` bits per weight (bpw)
+- `GGML_TYPE_Q3_K` - "type-0" 3-bit quantization in super-blocks containing 16 blocks, each block having 16 weights. Scales are quantized with 6 bits. This end up using `3.4375` bpw.
+- `GGML_TYPE_Q4_K` - "type-1" 4-bit quantization in super-blocks containing 8 blocks, each block having 32 weights. Scales and mins are quantized with 6 bits. This ends up using `4.5` bpw.
+- `GGML_TYPE_Q5_K` - "type-1" 5-bit quantization. Same super-block structure as `GGML_TYPE_Q4_K` resulting in `5.5` bpw
+- `GGML_TYPE_Q6_K` - "type-0" 6-bit quantization. Super-blocks with 16 blocks, each block having 16 weights. Scales are quantized with 8 bits. This ends up using `6.5625` bpw
+- `GGML_TYPE_Q8_K` - "type-0" 8-bit quantization. Only used for quantizing intermediate results. The difference to the existing `Q8_0` is that the block size is 256. All 2-6 bit dot products are implemented for this quantization type.
+
+This is exposed via `llama.cpp` quantization types that define various "quantization mixes" as follows:
+
+- `LLAMA_FTYPE_MOSTLY_Q2_K` - uses `GGML_TYPE_Q4_K` for the `attention.vw` and `feed_forward.w2` tensors, `GGML_TYPE_Q2_K` for the other tensors.
+- `LLAMA_FTYPE_MOSTLY_Q3_K_S` - uses `GGML_TYPE_Q3_K` for all tensors
+- `LLAMA_FTYPE_MOSTLY_Q3_K_M` - uses `GGML_TYPE_Q4_K` for the `attention.wv`, `attention.wo`, and `feed_forward.w2` tensors, else `GGML_TYPE_Q3_K`
+- `LLAMA_FTYPE_MOSTLY_Q3_K_L` - uses `GGML_TYPE_Q5_K` for the `attention.wv`, `attention.wo`, and `feed_forward.w2` tensors, else `GGML_TYPE_Q3_K`
+- `LLAMA_FTYPE_MOSTLY_Q4_K_S` - uses `GGML_TYPE_Q4_K` for all tensors
+- `LLAMA_FTYPE_MOSTLY_Q4_K_M` - uses `GGML_TYPE_Q6_K` for half of the `attention.wv` and `feed_forward.w2` tensors, else `GGML_TYPE_Q4_K`
+- `LLAMA_FTYPE_MOSTLY_Q5_K_S` - uses `GGML_TYPE_Q5_K` for all tensors
+- `LLAMA_FTYPE_MOSTLY_Q5_K_M` - uses `GGML_TYPE_Q6_K` for half of the `attention.wv` and `feed_forward.w2` tensors, else `GGML_TYPE_Q5_K`
+- `LLAMA_FTYPE_MOSTLY_Q6_K`- uses 6-bit quantization (`GGML_TYPE_Q8_K`) for all tensors
 
 As the models are currently fully loaded into memory, you will need adequate disk space to save them and sufficient RAM to load them. At the moment, memory and disk requirements are the same.
 
@@ -81,7 +102,13 @@ As the models are currently fully loaded into memory, you will need adequate dis
 | 30B    | 60 GB          | 19.5 GB                |
 | 65B    | 120 GB         | 38.5 GB                |
 
-Several quantization methods are supported. They differ in the resulting model disk size and inference speed.
+### Perplexity
+
+Simply, perplexity means to be surprised. We measure how much the model is surprised by seeing new data. The lower the perplexity, the better the training is. The take away here is it's *always* better to use a larger model, even if the quantization is greater. From a functional perspective, get the largest model (parameter-wise) you can, with the largest bit quantization until it's too slow for you to want to use.
+
+![](_assets/Perplexity.png)
+
+Here are a few charts showing various models and quantization levels.
 
 | Model | Measure      | F16    | Q4_0   | Q4_1   | Q5_0   | Q5_1   | Q8_0   |
 | ----- | ------------ | ------ | ------ | ------ | ------ | ------ | ------ |
@@ -96,16 +123,22 @@ Several quantization methods are supported. They differ in the resulting model d
 | 13B   | ms/tok @ 8th | -      | 73     | 82     | 98     | 105    | 128    |
 | 13B   | bits/weight  | 16.0   | 4.5    | 5.0    | 5.5    | 6.0    | 8.5    |
 
+Shown another way...
 
 | Model  | Measure     | Q2_K    | Q3_K_S  | Q3_K_M  | Q3_K_L  | Q4_0    | Q4_1    | Q4_K_S  | Q4_K_M  | Q5_0    | Q5_1    | Q5_K_S  | Q5_K_M  | Q6_K    | Q8_0    | F16    |
 |--------|-------------|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|--------|
 | 7B     | perplexity  | 6.7764  | 6.4571  | 6.1503  | 6.0869  | 6.1565  | 6.0912  | 6.0215  | 5.9601  | 5.9862  | 5.9481  | 5.9419  | 5.9208  | 5.9110  | 5.9070  | 5.9066 |
 | 13B    | perplexity  | 5.8545  | 5.6033  | 5.4498  | 5.4063  | 5.3860  | 5.3608  | 5.3404  | 5.3002  | 5.2856  | 5.2706  | 5.2785  | 5.2638  | 5.2568  | 5.2548  | 5.2543 |
 
+### Embeddings
 
-You can use the `perplexity` example to measure perplexity over a given prompt (lower perplexity is better). For more information, see [https://huggingface.co/docs/transformers/perplexity](https://huggingface.co/docs/transformers/perplexity).
+Good intro [here](https://simonwillison.net/2023/Sep/4/llm-embeddings/). An embedding model lets you take a string of text - a word, sentence, paragraph or even a whole document - and turn that into an array of floating point numbers called an *embedding vector*.
 
-The perplexity measurements in table above are done against the `wikitext2` test dataset ([https://paperswithcode.com/dataset/wikitext-2](https://paperswithcode.com/dataset/wikitext-2)), with context length of 512. The time per token is measured on a MacBook M1 Pro 32GB RAM using 4 and 8 threads.
+I like to think of an embedding vector as a location in 1,536-dimensional space. The distance between two vectors is a measure of how semantically similar they are in meaning, at least according to the model that produced them.
+
+![](_assets/EmbeddingsInSpace.jpeg)
+
+“One happy dog” and “A playful hound” will end up close together, even though they don’t share any keywords. The embedding vector represents the language model’s interpretation of the meaning of the text.
 
 ### System Requirements
 
@@ -146,7 +179,7 @@ The perplexity measurements in table above are done against the `wikitext2` test
 	- 13B q4_0 (or q4_k_m) model (any 7B model above q4_0 if it's not super complex is likely fine)
 
 - Machine specs:
-	- 3060 TI, 8 GB GDDR6 VRAM (capable of PCIe Gen 4.0 x16 = 31.5 GT/s)
+	- 3060 TI, 8 GB GDDR6 VRAM (capable of PCIe Gen 4.0 x16 = 31.5 GT/)
 	- 32 GB DDR4-3200 RAM (running at 2666 MHz)
 	- i5-104000 processor
 	- ROG Strix B460-i motherboard (only PCIe 3.0 x16 = 15.75 GT/s)
@@ -184,7 +217,7 @@ The perplexity measurements in table above are done against the `wikitext2` test
 		- First token: 18.58 s
 		- Speed: 3.68 tok/s
 
-## Llama.cpp
+### Llama.cpp
 
 This covers how to build for Windows (or at least what worked for me) if you have an NVIDIA GPU. You'll also need [Git](https://git-scm.com/download/win) installed.
 
