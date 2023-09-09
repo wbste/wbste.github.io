@@ -1,11 +1,11 @@
-# AI
+# Chat
 
-This section has to do with text generation models (same ideas as ChatGPT). See [Stable Diffusion](Stable%20Diffusion.md) for the drawing bit of AI.
+This section has to do with text generation models (same ideas as ChatGPT). See [Stable Diffusion](Draw.md) for the drawing bit of AI.
 
 **Want the TL;DR on how to run a model 100% locally?**
 
 1. Regardless if you have a CPU or GPU, download [LM Studio](https://lmstudio.ai/). It's the best GUI I've found, and integrates with HuggingFace, can act as a API server, and allows for running on CPU, GPU, or a mix of both.
-2. Open the app, and search (for example) *TheBloke/CodeLlama-7B-Instruct-GGUF* for coding, or *TheBloke/Llama-2-7B-Chat-GGM* for general chat.
+2. Open the app, and search (for example) *TheBloke/CodeLlama-7B-Instruct-GGUF* for coding, or *TheBloke/Llama-2-7B-Chat-GGUF* for general chat.
 3. Download the model **Quantization Q4_K_M** to start with. We can get smaller or larger ones after seeing how this one performs.
 4. After it's downloaded it will appear in LM Studio under the 📂 icon in the app.
 5. Make sure the code one says **CodeLlama Instruct** and the chat says **MetaAI Llama 2 Chat** in the dropdown. This loads some settings on how to interact with the model.
@@ -33,14 +33,33 @@ This section has to do with text generation models (same ideas as ChatGPT). See 
 
 ### Coding
 
-Can use LM studio for local APIs, then something like [Wingman](https://github.com/nvms/wingman) in VS Code to get support during programming. Also have [Continue](https://github.com/continuedev/continue), but need to make sure Wingman isn't installed with it, and that the `settings.json` file in `%appdata%\code\<username>\` doesn't have any wingman info. Seems to interfere. Can you LM studio to act as server, just make sure ports match (8000 is what Continue defaults to).
+Can use LM studio as a local API with a VS Code extension like [Continue](https://github.com/continuedev/continue). The dev made a custom class for it to work. Here's an example `config.py`.
+
+```python
+from continuedev.src.continuedev.libs.llm.queued import QueuedLLM
+from continuedev.src.continuedev.libs.llm.ggml import GGML
+...
+config = ContinueConfig(
+    allow_anonymous_telemetry=False,
+    models=Models(
+		default=QueuedLLM(
+            llm=GGML(
+			context_length=4096,
+			model="LMStudio",
+			timeout=300,
+			prompt_templates={'edit': '[INST] Consider the following code:\n```\n{{code_to_edit}}\n```\nEdit the code to perfectly satisfy the following user request:\n{{user_input}}\nOutput nothing except for the code. No code block, no English explanation, no start/end tags.\n[/INST]'},
+			server_url="http://localhost:8000"
+		),
+		unused=[]
+    )
+    ),
+    system_message="",
+```
 
 ### Models
 
 - Leaderboards [here](https://chat.lmsys.org/?leaderboard) and [here](https://tatsu-lab.github.io/alpaca_eval/)
 - [TheBloke](https://huggingface.co/TheBloke) on HuggingFace offers great models.
-	- [CodeLlama 13B](https://huggingface.co/models?search=thebloke/codellama)
-	- [Llama 2 13B](https://huggingface.co/models?sort=trending&search=thebloke%2Fllama-2-13b)
 
 Code Llama comes in three model sizes, and three variants, and have been trained between January 2023 and July 2023.
 
@@ -140,7 +159,36 @@ I like to think of an embedding vector as a location in 1,536-dimensional space.
 
 “One happy dog” and “A playful hound” will end up close together, even though they don’t share any keywords. The embedding vector represents the language model’s interpretation of the meaning of the text.
 
+### Parameters
+
+See [AI - Llama.cpp](Llama.cpp.md) for details on what dials there are to tweak.
+
+| Name                 | Type                    | Description                                                                                                     | Default    |
+| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- | ---------- |
+| `embedding`          | `bool`                  | Embedding mode only.                                                                                            | `False`    |
+| `f16_kv`             | `bool`                  | Use half-precision for key/value cache.                                                                         | `True`     |
+| `last_n_tokens_size` | `int`                   | Maximum number of tokens to keep in the last_n_tokens deque.                                                    | `64`       |
+| `logits_all`         | `bool`                  | Return logits for all tokens, not just the last token.                                                          | `False`    |
+| `lora_base`          | `Optional[str]`         | Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model. | `None`     |
+| `lora_path`          | `Optional[str]`         | Path to a LoRA file to apply to the model.                                                                      | `None`     |
+| `model_path`         | `str`                   | Path to the model.                                                                                              | _required_ |
+| `n_batch`            | `int`                   | Maximum number of prompt tokens to batch together when calling llama_eval.                                      | `512`      |
+| `n_ctx`              | `int`                   | Maximum context size.                                                                                           | `512`      |
+| `n_gpu_layers`       | `int`                   | Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded.                                     | `0`        |
+| `n_parts`            | `int`                   | Number of parts to split the model into. If -1, the number of parts is automatically determined.                | `-1`       |
+| `n_threads`          | `Optional[int]`         | Number of threads to use. If None, the number of threads is automatically determined.                           | `None`     |
+| `rope_freq_base`     | `float`                 | Base frequency for rope sampling.                                                                               | `10000.0`  |
+| `rope_freq_scale`    | `float`                 | Scale factor for rope sampling.                                                                                 | `1.0`      |
+| `seed`               | `int`                   | Random seed. -1 for random.                                                                                     | `1337`     |
+| `tensor_split`       | `Optional[List[float]]` | List of floats to split the model across multiple GPUs. If None, the model is not split.                        | `None`     |
+| `use_mlock`          | `bool`                  | Force the system to keep the model in RAM.                                                                      | `False`    |
+| `use_mmap`           | `bool`                  | Use mmap if possible.                                                                                           | `True`     |
+| `verbose`            | `bool`                  | Print verbose output to stderr.                                                                                 | `True`     |
+| `vocab_only`         | `bool`                  | Only load the vocabulary no weights.                                                                            | `False`    |
+
 ### System Requirements
+
+Note the below is *system* RAM.
 
 **8-bit Model Requirements for GPU inference**
 
@@ -171,52 +219,6 @@ I like to think of an embedding vector as a location in 1,536-dimensional space.
 | 33B    | 60 GB          | 19.5 GB                |
 | 65B    | 120 GB         | 38.5 GB                |
 
-### Testing
-
-- TL;DR. For **my** setup...
-	- 33 gpu layers
-	- 5 cpu threads
-	- 13B q4_0 (or q4_k_m) model (any 7B model above q4_0 if it's not super complex is likely fine)
-
-- Machine specs:
-	- 3060 TI, 8 GB GDDR6 VRAM (capable of PCIe Gen 4.0 x16 = 31.5 GT/)
-	- 32 GB DDR4-3200 RAM (running at 2666 MHz)
-	- i5-104000 processor
-	- ROG Strix B460-i motherboard (only PCIe 3.0 x16 = 15.75 GT/s)
-
-> [!examples]
-> All the 7B Llama 2 run quick and start quick, even up to the q8 version. For quality responses, 7B q5_k_m and up seem to be best in the 7B range. For 13B models seems 30 `n_gpu_layers` is best for quick startup, while 32-33 is a good balance of startup and speed; q4_0 provides best experience on this hardware. `n_threads` is best at 4. 2 and 6 took longer to start and had minimal impact on speed for 13B models.
-
-- Seems about 10 tokens/second is a good pace. Fast enough to generate and read at the same time. All the below examples are for one question/answer session. Adding additional content on top of this will draw out the first token response.
-- With the prompt `Summarize the founding of the United States of America.`, 40 for `n_gpu_layers` (unless noted otherwise) and 4 `n_threads` and `mlock` set to `true`. Each test below is a new chat.
-	- Llama 2 Chat 7B q4_0 ggml
-		- First token: 0.59 s
-		- Speed: 50.83 tok/s
-	- Llama 2 Chat 7B q5_k_m ggml
-		- First token: 0.62 s
-		- Speed: 42.55 tok/s
-	- Llama 2 Chat 13B q2_k ggml
-		- First token: 1.5 s
-		- Speed: 13.61 tok/s
-	- Llama 2 Chat 13B q4_0 ggml `30 GPU layers`
-		- First token: 1.39 s
-		- Speed: 6.41 tok/s
-	- Llama 2 Chat 13B q4_0 ggml `35 GPU layers`
-		- First token: 12.52 s
-		- Speed: 10.42 tok/s
-	- Llama 2 Chat 13B q4_0 ggml `40 GPU layers`
-		- First token: 13.57 s (Changing from Default LM Studio to Llama 2 Chat prompt make this `15.10 s`).
-		- Speed: 10.61 tok/s
-	- Llama 2 Chat 13B q4_0 ggml `45 GPU layers`
-		- First token: 15.87 s
-		- Speed: 10.68 tok/s
-	- Llama 2 Chat 13B q4_0 ggml `50 GPU layers`
-		- First token: 18.87 s
-		- Speed: 11.02 tok/s
-	- Llama 2 Chat 13B q5_k_m ggml
-		- First token: 18.58 s
-		- Speed: 3.68 tok/s
-
 ### Llama.cpp
 
 This covers how to build for Windows (or at least what worked for me) if you have an NVIDIA GPU. You'll also need [Git](https://git-scm.com/download/win) installed.
@@ -228,7 +230,7 @@ This covers how to build for Windows (or at least what worked for me) if you hav
 		3. `C++ AddressSanitizer`
 		4. `Windows 11 SDK...`
 2. Install the [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
-3. I had to copy the 4 files from CUDA to VS manually
+3. Copy the 4 files from CUDA to VS manually
 	1. Copy the files from `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\extras\visual_studio_integration\MSBuildExtensions`
 	2. To `C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations`
 4. Navigate to where you want the files extracted.
@@ -242,9 +244,9 @@ cmake .. -DLLAMA_CUBLAS=ON
 cmake --build . --config Release
 ```
 
-Once installed I ran a script like this: `D:\AI\llama.cpp\build\bin\Release\server.exe -c 4096 -ngl 100 --host 0.0.0.0 -t 16 --mlock --threads 6 -m "D:\AI\TheBloke\phind-codellama-34B-v2-GGUF\phind-codellama-34b-v2.Q4_K_M.gguf"`
+Once installed you can ran a script like this: `D:\AI\llama.cpp\build\bin\Release\server.exe -c 4096 -ngl 100 --host 0.0.0.0 -t 16 --mlock --threads 6 -m "D:\AI\TheBloke\phind-codellama-34B-v2-GGUF\phind-codellama-34b-v2.Q4_K_M.gguf"`
 
-All this was to get a server so I could use [Continue](https://continue.dev/) on VS Code. You can see examples of what it can do [here](https://continue.dev/docs/how-to-use-continue). The `config.py` looks like the below, which is slightly different than the [docs](https://continue.dev/docs/customization#llamacpp). Note the `server_url`.
+All this was to get a server that could communicate with [Continue](https://continue.dev/) on VS Code. You can see examples of what it can do [here](https://continue.dev/docs/how-to-use-continue). The `config.py` looks like the below, which is slightly different than the [docs](https://continue.dev/docs/customization#llamacpp). Note the `server_url`.
 
 ```python
 
