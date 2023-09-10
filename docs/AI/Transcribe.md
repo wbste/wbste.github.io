@@ -13,34 +13,28 @@ Purpose: These instructions cover the steps not explicitly set out on the main [
 
 ## Installation
 
-### Step 1: Unlisted Pre-Requisites
+### Unlisted Pre-Requisites
 
-- Before you can run whisper you must download and install the follopwing items. (For offline installation just download the files on another machine and move them to your offline machine to install them.) 
+- Before you can run whisper you must download and install the following items. (For offline installation just download the files on another machine and move them to your offline machine to install them.) 
     - NVIDIA CUDA drivers: https://developer.nvidia.com/cuda-downloads 
     -  Python 3.9 or 3.10 (x64 version) from https://www.python.org/ (Whisper claims to run with >3.7 but as of 2023-01-18 some dependencies require >3.7 but <3.11).
     - FFMPEG
-        - To install via Scoop (https://scoop.sh/), in powershell run
-            - Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-            - irm get.scoop.sh | iex
-            - scoop install ffmpeg
+        - To install via Scoop (https://scoop.sh/), in PowerShell run
+            - `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
+            - `irm get.scoop.sh | iex`
+            - `scoop install ffmpeg`
         - OPTIONAL/OFFLINE: Follow instructions here: [How to install and use FFMPEG](https://www.thewindowsclub.com/how-to-install-ffmpeg-on-windows-10) and make sure not to skip the part about adding FFMPEG to the Windows PATH variable. 
     -  Git for windows from https://gitforwindows.org/
 - Reboot after installing these items.
 
-### Step 2B: Whipser Install (Online Install for Online Use)
-
--  Open a command prompt and type this command:
-    - `pip install git+https://github.com/openai/whisper.git`
-- You may now use Whisper online and no further steps are required. 
-
-### Step 2B: Whipser Install (Online Install for later Offline Use)
+### Whisper Install (Online Install for later Offline Use)
 
 - Open a command prompt and type these commands:
   - `pip install git+https://github.com/openai/whisper.git`
   - `pip install blobfile`
 - Continue to **Step 3: Download Other Required Files**
 
-### Step 2C: Whipser Install (Offline Install for later Offline Use)
+### Whisper Install (Offline Install for later Offline Use)
 
 - **Option 1:** Get the most up to date version of Whisper: 
     - Install Python and Git from Step 1 on an second computer you can connect to the internet and reboot to ensure both are working. 
@@ -53,7 +47,7 @@ Purpose: These instructions cover the steps not explicitly set out on the main [
     - `pip install blobfile-2.0.2-py3-none-any.whl`. (note the version may have changed if you used Option 1 above).
 - Continue to **Step 3: Download Other Required Files**
 
-### Step 3: Download Other Required Files (for Offline Use)
+### Download Other Required Files (for Offline Use)
 
 - Download Whisper's Language Model files place them in `C:\Users\[Username]\.cache\whisper` Note: If the links are dead updated links can be found at lines 17-27 here: [__init__.py]( https://github.com/openai/whisper/blob/main/whisper/__init__.py) 
     -  [Tiny.En](https://openaipublic.azureedge.net/main/whisper/models/d3dd57d32accea0b295c96e26691aa14d8822fac7d9d27d5dc00b4ca2826dd03/tiny.en.pt)

@@ -19,46 +19,17 @@ This example program allows you to use various LLaMA language models in an easy 
 
 To get started right away, run the following command, making sure to use the correct path for the model you have:
 
-#### Unix-based systems (Linux, macOS, etc.):
-
-```bash
-./main -m models/7B/ggml-model.bin --prompt "Once upon a time"
-```
-
-#### Windows:
-
 ```powershell
 main.exe -m models\7B\ggml-model.bin --prompt "Once upon a time"
 ```
 
 For an interactive experience, try this command:
 
-#### Unix-based systems (Linux, macOS, etc.):
-
-```bash
-./main -m models/7B/ggml-model.bin -n -1 --color -r "User:" --in-prefix " " -i -p \
-'User: Hi
-AI: Hello. I am an AI chatbot. Would you like to talk?
-User: Sure!
-AI: What would you like to talk about?
-User:'
-```
-
-#### Windows:
-
 ```powershell
 main.exe -m models\7B\ggml-model.bin -n -1 --color -r "User:" --in-prefix " " -i -e -p "User: Hi\nAI: Hello. I am an AI chatbot. Would you like to talk?\nUser: Sure!\nAI: What would you like to talk about?\nUser:"
 ```
 
 The following command generates "infinite" text from a starting prompt (you can use `Ctrl-C` to stop it):
-
-#### Unix-based systems (Linux, macOS, etc.):
-
-```bash
-./main -m models/7B/ggml-model.bin --ignore-eos -n -1 --random-prompt
-```
-
-#### Windows:
 
 ```powershell
 main.exe -m models\7B\ggml-model.bin --ignore-eos -n -1 --random-prompt

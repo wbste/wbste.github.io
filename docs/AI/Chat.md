@@ -1,6 +1,6 @@
 # Chat
 
-This section has to do with text generation models (same ideas as ChatGPT). See [Stable Diffusion](Draw.md) for the drawing bit of AI.
+This section has to do with text generation models (same ideas as ChatGPT) that can run **100% local**. See [Stable Diffusion](Draw.md) for the information on image generation AI, 100% local.
 
 **Want the TL;DR on how to run a model 100% locally?**
 
@@ -15,48 +15,78 @@ This section has to do with text generation models (same ideas as ChatGPT). See 
 9. Chat away!
 
 > [!tip]
-> This app can run GGML and GGUF models (GGUF is the new format, while GGML is being phased out). Anything from [TheBloke](https://huggingface.co/TheBloke) seems to be good. You can add layers to the GPU if you have one. You'll notice a point of no returns as you tweak it. For a 3060 TI (8 GB), I got to about 35 layers on average before it didn't matter. For a 3090 (24 GB) I'm at 100, but I didn't creep up to it at all so the real number of layers is likely much less.
+> This app can run GGML and GGUF models (GGUF is the new format, while GGML is being phased out). Anything from [TheBloke](https://huggingface.co/TheBloke) seems to be good.
 
 > [!info]
-> There is another format called GPTQ that this software can't run. GPTQ is meant for 100% GPU, while the others can be a mix (or 100% CPU). [Oobaboga](https://github.com/oobabooga/text-generation-webui) and [ExLlama](https://github.com/turboderp/exllama) can run those, but I don't like the GUI or UX as much. I have 32 GB ram which helps a lot for larger models to load into memory.
+> There is another format called GPTQ that LM Studio can't run. GPTQ is meant for 100% GPU, while the others can be a mix (or 100% CPU). [Oobaboga](https://github.com/oobabooga/text-generation-webui) and [ExLlama](https://github.com/turboderp/exllama) can run those, but I don't like the GUI or UX as much. I have 32 GB ram which helps a lot for larger models to load into memory.
 
 > [!example]
-> On the 3060 TI, 7B of any quantization is great. I could do up to 13B at Q4_K_M and it was good too (started quick and wrote faster than I could read). Above that quant. or higher parameters was not great. On the 3090 Any of the 30-34B Q4_K_M are super fast.
+> What size model should you get? See the below table **4-bit Model Requirements for GPU inference** for a starting point. For example, assuming you have at least 32GB RAM and a 3090, you can run a 4-bit 34B with good performance.
 
-## Local Models
-
-### GUIs
+## GUIs
 
 - [LM Studio](https://lmstudio.ai/)
 	- Beta versions [here](https://lmstudio.ai/beta-releases.html).
 - [Oobabooga](https://github.com/oobabooga/text-generation-webui)
 
-### Coding
+## System Requirements
 
-Can use LM studio as a local API with a VS Code extension like [Continue](https://github.com/continuedev/continue). The dev made a custom class for it to work. Here's an example `config.py`.
+Note the below is *system* RAM.
+
+**8-bit Model Requirements for GPU inference**
+
+| Model                    | VRAM Used  | Card examples          | RAM/Swap to Load* |
+|--------------------------|------------|------------------------|-------------------|
+| LLaMA 7B / Llama 2 7B    | 10GB       | 3060 12GB, 3080 10GB   | 24 GB             |
+| LLaMA 13B / Llama 2 13B  | 20GB       | 3090, 3090 Ti, 4090    | 32 GB             |
+| LLaMA 33B / Llama 2 34B  | ~40GB      | A6000 48GB, A100 40GB  | ~64 GB            |
+| LLaMA 65B / Llama 2 70B  | ~80GB      | A100 80GB              | ~128 GB           |
+
+**4-bit Model Requirements for GPU inference**
+
+| Model                   | Minimum Total VRAM | Card examples                                             | RAM/Swap to Load* |
+| ----------------------- | ------------------ | --------------------------------------------------------- | ----------------- |
+| LLaMA 7B / Llama 2 7B   | 6GB                | GTX 1660, 2060, AMD 5700 XT, RTX 3050, 3060               | 6 GB              |
+| LLaMA 13B / Llama 2 13B | 10GB               | AMD 6900 XT, RTX 2060 12GB, 3060 12GB, 3080, A2000        | 12 GB             |
+| LLaMA 33B / Llama 2 34B | ~20GB              | RTX 3080 20GB, A4500, A5000, 3090, 4090, 6000, Tesla V100 | ~32 GB            |
+| LLaMA 65B / Llama 2 70B | ~40GB              | A100 40GB, 2x3090, 2x4090, A40, RTX A6000, 8000           | ~64 GB            |
+
+**System RAM, not VRAM, required to load the model, in addition to having enough VRAM. Not required to run the model.*
+
+**llama.cpp Requirements for CPU inference**
+
+| Model  | Original Size  | Quantized Size (4-bit) |
+|--------|----------------|------------------------|
+| 7B     | 13 GB          | 3.9 GB                 |
+| 13B    | 24 GB          | 7.8 GB                 |
+| 33B    | 60 GB          | 19.5 GB                |
+| 65B    | 120 GB         | 38.5 GB                |
+
+## Coding
+
+Can use LM studio as a local API with a VS Code extension like [Continue](https://github.com/continuedev/continue). Just make sure *Request Queuing* is **ON** . Here's an example `config.py` (you can get to this file by typing `/config` into Continue).
+
+![](_assets/ContinueBox.png)
 
 ```python
-from continuedev.src.continuedev.libs.llm.queued import QueuedLLM
 from continuedev.src.continuedev.libs.llm.ggml import GGML
 ...
 config = ContinueConfig(
     allow_anonymous_telemetry=False,
     models=Models(
-		default=QueuedLLM(
-            llm=GGML(
+		default=GGML(
 			context_length=4096,
-			model="LMStudio",
-			timeout=300,
+			model="LM Studio",
+			timeout=200,
 			prompt_templates={'edit': '[INST] Consider the following code:\n```\n{{code_to_edit}}\n```\nEdit the code to perfectly satisfy the following user request:\n{{user_input}}\nOutput nothing except for the code. No code block, no English explanation, no start/end tags.\n[/INST]'},
 			server_url="http://localhost:8000"
 		),
 		unused=[]
-    )
-    ),
+	),
     system_message="",
 ```
 
-### Models
+## Models
 
 - Leaderboards [here](https://chat.lmsys.org/?leaderboard) and [here](https://tatsu-lab.github.io/alpaca_eval/)
 - [TheBloke](https://huggingface.co/TheBloke) on HuggingFace offers great models.
@@ -67,16 +97,24 @@ Code Llama comes in three model sizes, and three variants, and have been trained
 - Code Llama - Python: designed specifically for Python
 - Code Llama - Instruct: for instruction following and safer deployment
 
-### Quantization
+## Model Size
+
+More parameters (i.e. more data) in the model, the higher quality the output. Consumer hardware typically doesn't have the capability to fit the largest models and run them. With some exceptions the typical parameters you can run locally is up to 34B with nice hardware (3090, 32GB Ram). Some do run 70B and 180B parameter models, but that gets into custom built AI machines (64GB+ RAM and 2+ GPUs, or professional level GPUs like the NVIDIA A100). Here's an example of where things stand today. [Source](https://lifearchitect.ai/models/).
+
+![](_assets/2023-Alan-D-Thompson-AI-Bubbles-Optimal-Rev-5.png)
+
+## Quantization
 
 Good read on what this means [here](https://postgresml.org/blog/announcing-gptq-and-ggml-quantized-llm-support-for-huggingface-transformers).
 
-- GGUF: Successor to GGML, CPU + GPU inference (but mostly CPU).
+**My dumbed down take is this.** Imagine the "full" model stores a bunch of numbers. BILLIONS of them. Those numbers have a lot of digits hanging off the back (i.e. 3.123982709717963...). That's a lot of data to store when you store a lot of digits like that. but do we need them all? What if we just dropped a bunch of digits towards the end of those numbers? So our new number we store is 3.123982. What if we did it again? At some point the number isn't really close enough to the original number from the full model to be useful. Basically how long can you go on rounding the numbers until they lose their meaning? That's where **quantization** comes in. Smaller files are easier to run on hardware, but at what point does the model spit out gibberish?
+
+- GGUF: Successor to GGML, CPU + GPU inference (you can adjust what percentage of the model is processed by which part). 
 	- GGUF is a new format introduced by the llama.cpp team on August 21st 2023. It is a replacement for GGML, which is no longer supported by llama.cpp. The key benefit of GGUF is that it is a extensible, future-proof format which stores more information about the model as metadata. It also includes significantly improved tokenization code, including for the first time full support for special tokens. This should improve performance, especially with models that use new special tokens and implement custom prompt templates.
-- GGML: CPU + GPU inference (but mostly CPU). No longer supported by [llama.cpp](https://github.com/ggerganov/llama.cpp).
+- GGML: CPU + GPU inference (but mostly CPU). No longer supported by [llama.cpp](https://github.com/ggerganov/llama.cpp), which is the foundation of most of these desktop applications.
 - GPTQ: GPU inference
 
-Note the RAM below can be split between GPU and "CPU" RAM, depending on the quantization method used. The below is an extract on a specific model, but should serve as a good guideline.
+Note the RAM below can be split between GPU and system RAM, depending on the quantization method used. The below is an extract on a specific model, but should serve as a good guideline in terms of what model quantization are best. The reason a model like `Q5_K_M` is preferred over `Q8_0` is because the quality different between the two is so small, loading the larger model doesn't really provide any benefit (it's less than half a percent "better" go to with the full model, at the expense of requiring more resources to load and use).
 
 | Quant method | Bits | Use case                                                 |
 | ------------ | ---- | -------------------------------------------------------- |
@@ -121,7 +159,7 @@ As the models are currently fully loaded into memory, you will need adequate dis
 | 30B    | 60 GB          | 19.5 GB                |
 | 65B    | 120 GB         | 38.5 GB                |
 
-### Perplexity
+## Perplexity
 
 Simply, perplexity means to be surprised. We measure how much the model is surprised by seeing new data. The lower the perplexity, the better the training is. The take away here is it's *always* better to use a larger model, even if the quantization is greater. From a functional perspective, get the largest model (parameter-wise) you can, with the largest bit quantization until it's too slow for you to want to use.
 
@@ -149,7 +187,7 @@ Shown another way...
 | 7B     | perplexity  | 6.7764  | 6.4571  | 6.1503  | 6.0869  | 6.1565  | 6.0912  | 6.0215  | 5.9601  | 5.9862  | 5.9481  | 5.9419  | 5.9208  | 5.9110  | 5.9070  | 5.9066 |
 | 13B    | perplexity  | 5.8545  | 5.6033  | 5.4498  | 5.4063  | 5.3860  | 5.3608  | 5.3404  | 5.3002  | 5.2856  | 5.2706  | 5.2785  | 5.2638  | 5.2568  | 5.2548  | 5.2543 |
 
-### Embeddings
+## Embeddings
 
 Good intro [here](https://simonwillison.net/2023/Sep/4/llm-embeddings/). An embedding model lets you take a string of text - a word, sentence, paragraph or even a whole document - and turn that into an array of floating point numbers called an *embedding vector*.
 
@@ -159,67 +197,7 @@ I like to think of an embedding vector as a location in 1,536-dimensional space.
 
 “One happy dog” and “A playful hound” will end up close together, even though they don’t share any keywords. The embedding vector represents the language model’s interpretation of the meaning of the text.
 
-### Parameters
-
-See [AI - Llama.cpp](Llama.cpp.md) for details on what dials there are to tweak.
-
-| Name                 | Type                    | Description                                                                                                     | Default    |
-| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- | ---------- |
-| `embedding`          | `bool`                  | Embedding mode only.                                                                                            | `False`    |
-| `f16_kv`             | `bool`                  | Use half-precision for key/value cache.                                                                         | `True`     |
-| `last_n_tokens_size` | `int`                   | Maximum number of tokens to keep in the last_n_tokens deque.                                                    | `64`       |
-| `logits_all`         | `bool`                  | Return logits for all tokens, not just the last token.                                                          | `False`    |
-| `lora_base`          | `Optional[str]`         | Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model. | `None`     |
-| `lora_path`          | `Optional[str]`         | Path to a LoRA file to apply to the model.                                                                      | `None`     |
-| `model_path`         | `str`                   | Path to the model.                                                                                              | _required_ |
-| `n_batch`            | `int`                   | Maximum number of prompt tokens to batch together when calling llama_eval.                                      | `512`      |
-| `n_ctx`              | `int`                   | Maximum context size.                                                                                           | `512`      |
-| `n_gpu_layers`       | `int`                   | Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded.                                     | `0`        |
-| `n_parts`            | `int`                   | Number of parts to split the model into. If -1, the number of parts is automatically determined.                | `-1`       |
-| `n_threads`          | `Optional[int]`         | Number of threads to use. If None, the number of threads is automatically determined.                           | `None`     |
-| `rope_freq_base`     | `float`                 | Base frequency for rope sampling.                                                                               | `10000.0`  |
-| `rope_freq_scale`    | `float`                 | Scale factor for rope sampling.                                                                                 | `1.0`      |
-| `seed`               | `int`                   | Random seed. -1 for random.                                                                                     | `1337`     |
-| `tensor_split`       | `Optional[List[float]]` | List of floats to split the model across multiple GPUs. If None, the model is not split.                        | `None`     |
-| `use_mlock`          | `bool`                  | Force the system to keep the model in RAM.                                                                      | `False`    |
-| `use_mmap`           | `bool`                  | Use mmap if possible.                                                                                           | `True`     |
-| `verbose`            | `bool`                  | Print verbose output to stderr.                                                                                 | `True`     |
-| `vocab_only`         | `bool`                  | Only load the vocabulary no weights.                                                                            | `False`    |
-
-### System Requirements
-
-Note the below is *system* RAM.
-
-**8-bit Model Requirements for GPU inference**
-
-| Model                    | VRAM Used  | Card examples          | RAM/Swap to Load* |
-|--------------------------|------------|------------------------|-------------------|
-| LLaMA 7B / Llama 2 7B    | 10GB       | 3060 12GB, 3080 10GB   | 24 GB             |
-| LLaMA 13B / Llama 2 13B  | 20GB       | 3090, 3090 Ti, 4090    | 32 GB             |
-| LLaMA 33B / Llama 2 34B  | ~40GB      | A6000 48GB, A100 40GB  | ~64 GB            |
-| LLaMA 65B / Llama 2 70B  | ~80GB      | A100 80GB              | ~128 GB           |
-
-**4-bit Model Requirements for GPU inference**
-
-| Model                   | Minimum Total VRAM | Card examples                                             | RAM/Swap to Load* |
-| ----------------------- | ------------------ | --------------------------------------------------------- | ----------------- |
-| LLaMA 7B / Llama 2 7B   | 6GB                | GTX 1660, 2060, AMD 5700 XT, RTX 3050, 3060               | 6 GB              |
-| LLaMA 13B / Llama 2 13B | 10GB               | AMD 6900 XT, RTX 2060 12GB, 3060 12GB, 3080, A2000        | 12 GB             |
-| LLaMA 33B / Llama 2 34B | ~20GB              | RTX 3080 20GB, A4500, A5000, 3090, 4090, 6000, Tesla V100 | ~32 GB            |
-| LLaMA 65B / Llama 2 70B | ~40GB              | A100 40GB, 2x3090, 2x4090, A40, RTX A6000, 8000           | ~64 GB            |
-
-**System RAM, not VRAM, required to load the model, in addition to having enough VRAM. Not required to run the model.*
-
-**llama.cpp Requirements for CPU inference**
-
-| Model  | Original Size  | Quantized Size (4-bit) |
-|--------|----------------|------------------------|
-| 7B     | 13 GB          | 3.9 GB                 |
-| 13B    | 24 GB          | 7.8 GB                 |
-| 33B    | 60 GB          | 19.5 GB                |
-| 65B    | 120 GB         | 38.5 GB                |
-
-### Llama.cpp
+## Llama.cpp
 
 This covers how to build for Windows (or at least what worked for me) if you have an NVIDIA GPU. You'll also need [Git](https://git-scm.com/download/win) installed.
 
@@ -246,6 +224,9 @@ cmake --build . --config Release
 
 Once installed you can ran a script like this: `D:\AI\llama.cpp\build\bin\Release\server.exe -c 4096 -ngl 100 --host 0.0.0.0 -t 16 --mlock --threads 6 -m "D:\AI\TheBloke\phind-codellama-34B-v2-GGUF\phind-codellama-34b-v2.Q4_K_M.gguf"`
 
+> [!note]
+> No longer needed as LM Studio works as is with VS Code with latest update.
+
 All this was to get a server that could communicate with [Continue](https://continue.dev/) on VS Code. You can see examples of what it can do [here](https://continue.dev/docs/how-to-use-continue). The `config.py` looks like the below, which is slightly different than the [docs](https://continue.dev/docs/customization#llamacpp). Note the `server_url`.
 
 ```python
@@ -260,3 +241,29 @@ config = ContinueConfig(
             name="test",
 ```
 
+### Settings
+
+See [AI - Llama.cpp](Llama.cpp.md) for details on what dials there are to tweak.
+
+| Name                 | Type                    | Description                                                                                                     | Default    |
+| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- | ---------- |
+| `embedding`          | `bool`                  | Embedding mode only.                                                                                            | `False`    |
+| `f16_kv`             | `bool`                  | Use half-precision for key/value cache.                                                                         | `True`     |
+| `last_n_tokens_size` | `int`                   | Maximum number of tokens to keep in the last_n_tokens deque.                                                    | `64`       |
+| `logits_all`         | `bool`                  | Return logits for all tokens, not just the last token.                                                          | `False`    |
+| `lora_base`          | `Optional[str]`         | Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model. | `None`     |
+| `lora_path`          | `Optional[str]`         | Path to a LoRA file to apply to the model.                                                                      | `None`     |
+| `model_path`         | `str`                   | Path to the model.                                                                                              | _required_ |
+| `n_batch`            | `int`                   | Maximum number of prompt tokens to batch together when calling llama_eval.                                      | `512`      |
+| `n_ctx`              | `int`                   | Maximum context size.                                                                                           | `512`      |
+| `n_gpu_layers`       | `int`                   | Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded.                                     | `0`        |
+| `n_parts`            | `int`                   | Number of parts to split the model into. If -1, the number of parts is automatically determined.                | `-1`       |
+| `n_threads`          | `Optional[int]`         | Number of threads to use. If None, the number of threads is automatically determined.                           | `None`     |
+| `rope_freq_base`     | `float`                 | Base frequency for rope sampling.                                                                               | `10000.0`  |
+| `rope_freq_scale`    | `float`                 | Scale factor for rope sampling.                                                                                 | `1.0`      |
+| `seed`               | `int`                   | Random seed. -1 for random.                                                                                     | `1337`     |
+| `tensor_split`       | `Optional[List[float]]` | List of floats to split the model across multiple GPUs. If None, the model is not split.                        | `None`     |
+| `use_mlock`          | `bool`                  | Force the system to keep the model in RAM.                                                                      | `False`    |
+| `use_mmap`           | `bool`                  | Use mmap if possible.                                                                                           | `True`     |
+| `verbose`            | `bool`                  | Print verbose output to stderr.                                                                                 | `True`     |
+| `vocab_only`         | `bool`                  | Only load the vocabulary no weights.                                                                            | `False`    |
