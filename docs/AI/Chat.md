@@ -86,10 +86,12 @@ config = ContinueConfig(
     system_message="",
 ```
 
+To keep the whole file in the query, use `@file`. You can also highlight the desired sections and that part will be in the query. Use the 🔎 to see what is being sent.
+
 ## Models
 
 - Leaderboards [here](https://chat.lmsys.org/?leaderboard) and [here](https://tatsu-lab.github.io/alpaca_eval/)
-- [TheBloke](https://huggingface.co/TheBloke) on HuggingFace offers great models.
+- [TheBloke](https://huggingface.co/TheBloke) on 🤗 offers great models.
 
 Code Llama comes in three model sizes, and three variants, and have been trained between January 2023 and July 2023.
 
@@ -197,73 +199,89 @@ I like to think of an embedding vector as a location in 1,536-dimensional space.
 
 “One happy dog” and “A playful hound” will end up close together, even though they don’t share any keywords. The embedding vector represents the language model’s interpretation of the meaning of the text.
 
-## Llama.cpp
+## Parameters
 
-This covers how to build for Windows (or at least what worked for me) if you have an NVIDIA GPU. You'll also need [Git](https://git-scm.com/download/win) installed.
+**Temperature** is like a knob that adjusts how creative or focused the output becomes. Higher temperatures (eg., 1.2) increase randomness, resulting in more imaginative and diverse text. Lower temperatures (eg., 0.5) make the output more focused, predictable, and conservative. When the temperature is set to 0, the output becomes completely deterministic, always selecting the most probable next token and producing identical results each time. A safe range would be around 0.6 - 0.85, but you are free to search what value fits best for you.
 
-1. Install [Visual Studio 2022 Community](https://visualstudio.microsoft.com/vs/community/)
-	1. Install **Desktop development with C++**, with the *Optional* features:
-		1. `MSVC v143 - VS Code C++ x64/x86 build tools (latest)`
-		2. `C++ CMake tools for Windows`
-		3. `C++ AddressSanitizer`
-		4. `Windows 11 SDK...`
-2. Install the [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
-3. Copy the 4 files from CUDA to VS manually
-	1. Copy the files from `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\extras\visual_studio_integration\MSBuildExtensions`
-	2. To `C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations`
-4. Navigate to where you want the files extracted.
-5. Run `git clone https://github.com/ggerganov/llama.cpp`, then `cd llama.cpp`
-6. Finally run the below.
+**Top-P** limits the selection of the next token to a subset of tokens with a cumulative probability above a threshold P. This method, also known as nucleus sampling, finds a balance between diversity and quality by considering both token probabilities and the number of tokens available for sampling. When using a higher value for top-P (eg., 0.95), the generated text becomes more diverse. On the other hand, a lower value (eg., 0.1) produces more focused and conservative text. The default value is 0.4, which is aimed to be the middle ground between focus and diversity, but for more creative tasks a higher top-p value will be beneficial, about 0.5-0.9 is a good range for that.
 
-```bash
-mkdir build
-cd build
-cmake .. -DLLAMA_CUBLAS=ON
-cmake --build . --config Release
+**Top-K** sampling selects the next token only from the top K most likely tokens predicted by the model. It helps reduce the risk of generating low-probability or nonsensical tokens, but it may also limit the diversity of the output. A higher value for top-K (eg., 100) will consider more tokens and lead to more diverse text, while a lower value (eg., 10) will focus on the most probable tokens and generate more conservative text. 30 - 60 is a good range for most tasks.
+
+## Frontend
+
+> [!danger]
+> CORS and `host.docker.internal` have security implications. Make sure you understand them before enabling!
+
+We'll use LM Studio for the backend. For the frontend (that can work on the web) you can use docker and [Chatbot-UI](https://github.com/mckaywrigley/chatbot-ui). Assuming LM Studio is in server mode and it's on (with CORS on as well) just run `docker run --add-host host.docker.internal:host-gateway -e OPENAI_API_HOST='http://192.168.106.7:8000' -p 3000:3000 ghcr.io/mckaywrigley/chatbot-ui:main`.
+
+Other options that have a web frontend already that could work are Oobabooga's [text-generation-webui](https://github.com/oobabooga/text-generation-webui) and  [Llama.cpp](Llama.cpp.md#Server) 
+
+## Prompts
+
+All data below from [🤗](https://huggingface.co/). The prompt and formatting applies to all sizes of the same model. Also make sure you're using them *exactly* as shown, including whitespaces, returns, etc. It makes a difference.
+
+Note the below are the default system prompts (if any) the models were trained on, but it's **highly recommended** to tweak them, as the behavior can wildly change. For example, with coding models I use something like, `You always display all code when it's modified. Explain the files that need to be created and where in the folder structure they reside and provide all necessary information to create them, including how to install them, reference them etc. Assume the person asking you questions isn't familiar with the programming language or format. If you see a way to make the code easier to read, more efficient, better, or see an error, point it out and correct the mistake.`.
+
+Just make sure you don't change the overall formatting. Also ensure you maintain any extra returns (`/n`) in the system prompt if you modify it.
+
+### Chat
+
+**TheBloke/WizardLM-13B-V1.2-GGUF** ([Link](https://huggingface.co/TheBloke/WizardLM-13B-V1.2-GGUF))
+
+```
+A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. USER: {prompt} ASSISTANT:
 ```
 
-Once installed you can ran a script like this: `D:\AI\llama.cpp\build\bin\Release\server.exe -c 4096 -ngl 100 --host 0.0.0.0 -t 16 --mlock --threads 6 -m "D:\AI\TheBloke\phind-codellama-34B-v2-GGUF\phind-codellama-34b-v2.Q4_K_M.gguf"`
+**TheBloke/Llama-2-13B-chat-GGUF** ([Link](https://huggingface.co/TheBloke/Llama-2-13B-chat-GGUF))
 
-> [!note]
-> No longer needed as LM Studio works as is with VS Code with latest update.
-
-All this was to get a server that could communicate with [Continue](https://continue.dev/) on VS Code. You can see examples of what it can do [here](https://continue.dev/docs/how-to-use-continue). The `config.py` looks like the below, which is slightly different than the [docs](https://continue.dev/docs/customization#llamacpp). Note the `server_url`.
-
-```python
-
-config = ContinueConfig(
-    allow_anonymous_telemetry=False,
-    models=Models(default=LlamaCpp(context_length=4096, model="llamacpp", timeout=300, prompt_templates={'edit': '[INST] Consider the following code:\n```\n{{code_to_edit}}\n```\nEdit the code to perfectly satisfy the following user request:\n{{user_input}}\nOutput nothing except for the code. No code block, no English explanation, no start/end tags.\n[/INST]'}, server_url="http://localhost:8080", llama_cpp_args={'stop': ['[INST]']}), unused=[]),
-    system_message="",
-    temperature=0.5,
-    custom_commands=[
-        CustomCommand(
-            name="test",
+```
+[INST] <<SYS>>
+You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+<</SYS>>
+{prompt}[/INST]
 ```
 
-### Settings
+**TheBloke/vicuna-13B-v1.5-16K-GGUF** ([Link](https://huggingface.co/TheBloke/vicuna-13B-v1.5-16K-GGUF))
 
-See [AI - Llama.cpp](Llama.cpp.md) for details on what dials there are to tweak.
+Applies to **TheBloke/vicuna-13B-v1.5-GGUF** as well.
 
-| Name                 | Type                    | Description                                                                                                     | Default    |
-| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- | ---------- |
-| `embedding`          | `bool`                  | Embedding mode only.                                                                                            | `False`    |
-| `f16_kv`             | `bool`                  | Use half-precision for key/value cache.                                                                         | `True`     |
-| `last_n_tokens_size` | `int`                   | Maximum number of tokens to keep in the last_n_tokens deque.                                                    | `64`       |
-| `logits_all`         | `bool`                  | Return logits for all tokens, not just the last token.                                                          | `False`    |
-| `lora_base`          | `Optional[str]`         | Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model. | `None`     |
-| `lora_path`          | `Optional[str]`         | Path to a LoRA file to apply to the model.                                                                      | `None`     |
-| `model_path`         | `str`                   | Path to the model.                                                                                              | _required_ |
-| `n_batch`            | `int`                   | Maximum number of prompt tokens to batch together when calling llama_eval.                                      | `512`      |
-| `n_ctx`              | `int`                   | Maximum context size.                                                                                           | `512`      |
-| `n_gpu_layers`       | `int`                   | Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded.                                     | `0`        |
-| `n_parts`            | `int`                   | Number of parts to split the model into. If -1, the number of parts is automatically determined.                | `-1`       |
-| `n_threads`          | `Optional[int]`         | Number of threads to use. If None, the number of threads is automatically determined.                           | `None`     |
-| `rope_freq_base`     | `float`                 | Base frequency for rope sampling.                                                                               | `10000.0`  |
-| `rope_freq_scale`    | `float`                 | Scale factor for rope sampling.                                                                                 | `1.0`      |
-| `seed`               | `int`                   | Random seed. -1 for random.                                                                                     | `1337`     |
-| `tensor_split`       | `Optional[List[float]]` | List of floats to split the model across multiple GPUs. If None, the model is not split.                        | `None`     |
-| `use_mlock`          | `bool`                  | Force the system to keep the model in RAM.                                                                      | `False`    |
-| `use_mmap`           | `bool`                  | Use mmap if possible.                                                                                           | `True`     |
-| `verbose`            | `bool`                  | Print verbose output to stderr.                                                                                 | `True`     |
-| `vocab_only`         | `bool`                  | Only load the vocabulary no weights.                                                                            | `False`    |
+```
+A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. USER: {prompt} ASSISTANT:
+```
+
+### Coding
+
+**TheBloke/Phind-CodeLlama-34B-v2-GGUF** ([Link](https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GGUF))
+
+```
+### System Prompt
+{system_message}
+
+### User Message
+{prompt}
+
+### Assistant
+```
+
+**TheBloke/CodeLlama-34B-Instruct-GGUF** ([Link](https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF))
+
+```
+[INST] Write code to solve the following coding problem that obeys the constraints and passes the example test cases. Please wrap your code answer using ```:
+{prompt}
+[/INST]
+```
+
+### Math
+
+**TheBloke/WizardMath-13B-V1.0-GGUF** ([Link](https://huggingface.co/TheBloke/WizardMath-13B-V1.0-GGUF))
+
+```
+Below is an instruction that describes a task. Write a response that appropriately completes the request.
+
+
+### Instruction:
+{prompt}
+
+
+### Response: Let's think step by step.
+```

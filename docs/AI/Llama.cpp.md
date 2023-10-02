@@ -4,16 +4,65 @@ Content from [here](https://github.com/ggerganov/llama.cpp/blob/master/examples/
 
 This example program allows you to use various LLaMA language models in an easy and efficient way. It is specifically designed to work with the [llama.cpp](https://github.com/ggerganov/llama.cpp) project, which provides a plain C/C++ implementation with optional 4-bit quantization support for faster, lower memory inference, and is optimized for desktop CPUs. This program can be used to perform various inference tasks with LLaMA models, including generating text based on user-provided prompts and chat-like interactions with reverse prompts.
 
-## Table of Contents
+## Build
 
-1. [Quick Start](#quick-start)
-2. [Common Options](#common-options)
-3. [Input Prompts](#input-prompts)
-4. [Interaction](#interaction)
-5. [Context Management](#context-management)
-6. [Generation Flags](#generation-flags)
-7. [Performance Tuning and Memory Options](#performance-tuning-and-memory-options)
-8. [Additional Options](#additional-options)
+This covers how to build for Windows (or at least what worked for me) if you have an NVIDIA GPU. You'll also need [Git](https://git-scm.com/download/win) installed.
+
+1. Install [Visual Studio 2022 Community](https://visualstudio.microsoft.com/vs/community/)
+	1. Install **Desktop development with C++**, with the *Optional* features:
+		1. `MSVC v143 - VS Code C++ x64/x86 build tools (latest)`
+		2. `C++ CMake tools for Windows`
+		3. `C++ AddressSanitizer`
+		4. `Windows 11 SDK...`
+2. Install the [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
+3. Copy the 4 files from CUDA to VS manually
+	1. Copy the files from `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\extras\visual_studio_integration\MSBuildExtensions`
+	2. To `C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations`
+4. Navigate to where you want the files extracted.
+5. Run `git clone https://github.com/ggerganov/llama.cpp`, then `cd llama.cpp`
+6. Finally run the below.
+
+```bash
+mkdir build
+cd build
+cmake .. -DLLAMA_CUBLAS=ON
+cmake --build . --config Release
+
+```
+
+To update the local download to the latest run `git fetch origin`, then `git status`, and finally `git pull` from the working directory. Then you can run the `cmake` commands again from above. Don't forget to run them from an empty `build` directory, so you should back up or delete the original.
+
+### Settings
+
+More details below; this is just a quick summary view
+
+| Name                 | Type                    | Description                                                                                                     | Default    |
+| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- | ---------- |
+| `embedding`          | `bool`                  | Embedding mode only.                                                                                            | `False`    |
+| `f16_kv`             | `bool`                  | Use half-precision for key/value cache.                                                                         | `True`     |
+| `last_n_tokens_size` | `int`                   | Maximum number of tokens to keep in the last_n_tokens deque.                                                    | `64`       |
+| `logits_all`         | `bool`                  | Return logits for all tokens, not just the last token.                                                          | `False`    |
+| `lora_base`          | `Optional[str]`         | Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model. | `None`     |
+| `lora_path`          | `Optional[str]`         | Path to a LoRA file to apply to the model.                                                                      | `None`     |
+| `model_path`         | `str`                   | Path to the model.                                                                                              | _required_ |
+| `n_batch`            | `int`                   | Maximum number of prompt tokens to batch together when calling llama_eval.                                      | `512`      |
+| `n_ctx`              | `int`                   | Maximum context size.                                                                                           | `512`      |
+| `n_gpu_layers`       | `int`                   | Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded.                                     | `0`        |
+| `n_parts`            | `int`                   | Number of parts to split the model into. If -1, the number of parts is automatically determined.                | `-1`       |
+| `n_threads`          | `Optional[int]`         | Number of threads to use. If None, the number of threads is automatically determined.                           | `None`     |
+| `rope_freq_base`     | `float`                 | Base frequency for rope sampling.                                                                               | `10000.0`  |
+| `rope_freq_scale`    | `float`                 | Scale factor for rope sampling.                                                                                 | `1.0`      |
+| `seed`               | `int`                   | Random seed. -1 for random.                                                                                     | `1337`     |
+| `tensor_split`       | `Optional[List[float]]` | List of floats to split the model across multiple GPUs. If None, the model is not split.                        | `None`     |
+| `use_mlock`          | `bool`                  | Force the system to keep the model in RAM.                                                                      | `False`    |
+| `use_mmap`           | `bool`                  | Use mmap if possible.                                                                                           | `True`     |
+| `verbose`            | `bool`                  | Print verbose output to stderr.                                                                                 | `True`     |
+| `vocab_only`         | `bool`                  | Only load the vocabulary no weights.                                                                            | `False`    |
+
+
+## Server
+
+Once installed you can run a script like this (make sure to change the server and model path): `D:\AI\llama.cpp\build\bin\Release\server.exe -c 4096 -ngl 100 --host 0.0.0.0 -t 16 --mlock --threads 6 -m "D:\AI\TheBloke\phind-codellama-34B-v2-GGUF\phind-codellama-34b-v2.Q4_K_M.gguf"`
 
 ## Quick Start
 
@@ -282,3 +331,30 @@ These options provide extra functionality and customization when running the LLa
 -   `-lv, --low-vram`: Do not allocate a VRAM scratch buffer for holding temporary results. Reduces VRAM usage at the cost of performance, particularly prompt processing speed. Requires cuBLAS.
 -   `--lora FNAME`: Apply a LoRA (Low-Rank Adaptation) adapter to the model (implies --no-mmap). This allows you to adapt the pretrained model to specific tasks or domains.
 -   `--lora-base FNAME`: Optional model to use as a base for the layers modified by the LoRA adapter. This flag is used in conjunction with the `--lora` flag, and specifies the base model for the adaptation.
+
+## Convert
+
+Outlines how to take a *supported* pytorch bin file and convert it to GGUF.
+
+```powershell
+# run the below from the root folder where llama.cpp was built/installed
+# obtain the original model and all the corresponding files, and create a new folder inside models (i.e. 7B)
+
+# install Python dependencies
+python3 -m pip install -r requirements.txt
+
+# convert the 7B model to ggml FP16 format
+python3 convert.py models/7B/
+
+  # [Optional] for models using BPE tokenizers
+  python convert.py models/7B/ --vocabtype bpe
+
+# quantize the model to 4-bits (using q4_k_m method)
+./quantize ./models/7B/ggml-model-f16.gguf ./models/7B/ggml-model-q4_k_m.gguf q4_k_m
+
+  # update the gguf filetype to current if older version is unsupported by another application
+  ./quantize ./models/7B/ggml-model-q4_k_m.gguf ./models/7B/ggml-model-q4_k_m-v2.gguf COPY
+
+# run the inference
+./main -m ./models/7B/ggml-model-q4_k_m.gguf -n 128
+```

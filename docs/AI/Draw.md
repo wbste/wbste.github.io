@@ -14,6 +14,8 @@ AUTOMATIC1111's (A1111) Stable Diffusion web UI [here](https://github.com/AUTOMA
 
 A1111 has some very nice extensions. I recommend *StyleSelectorXL*, which has a number of predefined styles. Also a good idea to modify `webui-user.bat` and replace the existing `set COMMANDLINE_ARGS` with `set COMMANDLINE_ARGS=--no-half-vae --xformers --autolaunch`.
 
+There's also InfiniteZoom. Details on how to load [here](https://github.com/v8hid/infinite-zoom-automatic1111-webui). Note I had to replace `from webui import wrap_gradio_gpu_call` with `from modules.call_queue import wrap_gradio_gpu_call` in the file `\stable-diffusion-webui\extensions\infinite-zoom-automatic1111-webui\iz_helpers\ui.py` to get it to load.
+
 ## Models
 
 There are custom models everywhere. The best all purpose thus far seems to be [SD XL](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0). You'll want both `sd_xl_base_1.0_0.9vae.safetensors` and the [refiner](https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0) of the same type (`sd_xl_refiner_1.0_0.9vae.safetensors`). The `VAE` version seems to result in better color and saturation, and the refiner adds more detail as the image completes.
