@@ -36,6 +36,18 @@ Make sure there are no protection rules under **Settings > Branches** first.
 
 ## Python
 
+### Setup
+
+1. Navigate to folder where you want to place files.
+2. Clone repo with `git clone https://github.com/URL/PROJECT.git`
+3. Create a virtual environment with `python -m venv venv`
+4. Activate with `.\venv\Scripts\Activate.ps1`
+5. Install requirements with `pip install -r requirements.txt`
+6. Deactivate when done with `deactivate`
+7. If needed (and assuming our virtual environment is in a directory called `venv`), `rm -r venv`.
+
+### Tips
+
 1. Don’t install the latest major version of Python
 2. Use only the [python.org](https://python.org) installer on Windows and Mac, or official repositories on Linux.
 3. Never install or run anything outside of a virtual environment
