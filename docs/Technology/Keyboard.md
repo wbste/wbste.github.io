@@ -22,12 +22,17 @@
 
 https://choc.brianlow.com/ - useful but outdated.
 
+## Things to check
+
+- [KMonad](https://github.com/kmonad/kmonad)
+- [xcape](https://github.com/alols/xcape)
+
 ## Custom Firmware
 
-All based on the great guide [here](https://docs.qmk.fm/#/newbs_getting_started). I couldn't get QMK toolbox to flash correctly so I just used MSYS.
+All based on **the great guide** [here](https://docs.qmk.fm/#/newbs_getting_started). I couldn't get QMK toolbox to flash correctly so I just used MSYS.
 
 > [!info]
-> In `../sofle/keymaps/via/rules.mk`, setting `RGBLIGHT_ENABLE = no` saved a lot of space. I don't have any RGB so no issues there.
+> In `qmk_firmware/keyboards/sofle/keymaps/via/rules.mk`, setting `RGBLIGHT_ENABLE = no` saved a lot of space. I don't have any RGB so no issues there. I also had to change `#define TAPPING_TERM 200` in `qmk_firmware/keyboards/sofle/rev1/config.h` so I could get [this](https://precondition.github.io/home-row-mods) to work for me. The default value is `100` from the repo.
 
 1. Open [VIA](https://www.caniusevia.com/) in Chrome, backup your layout.
 2. Clone the official QMK [repo](https://github.com/qmk/qmk_firmware).
@@ -36,23 +41,45 @@ All based on the great guide [here](https://docs.qmk.fm/#/newbs_getting_started)
 5. Set the default keyboard with `qmk config user.keyboard=sofle/rev1`
 6. Set the default keymap with `qmk config user.keymap=via`
 7. Make some tweaks. Even thought I have the Sofle V1 *choc* version, the [Sofle V1 VIA](https://github.com/qmk/qmk_firmware/tree/master/keyboards/sofle/keymaps/via) version worked fine.
-9. Run `qmk compile` when done. Note this compiles based on the defaults set earlier.
-10. Some sites say to disconnect the cable connecting the two halves, others don't. I had no problem keeping them connected.
-11. I only have to hit the reset button **Once** to get it into bootloader mode to flash.
-12. Now run `qmk flash`, which will flash the firmware you just built.
-13. Disconnect the USB cable and reconnect to the other half.
-14. Run it again.
-15. Disconnect and reconnect to left half.
-16. Open VIA and import your saved layout.
-17. Done!
+8. Run `qmk compile` when done. Note this compiles based on the defaults set earlier.
+	1. Some sites say to disconnect the cable connecting the two halves, others don't. I had no problem keeping them connected.
+9. If using VIA, make **sure you backup** your profile at this point.
+10. Now run `qmk flash`. Wait until prompted to hit the reset button.
+	1. I only have to hit the reset button **Once** to get it into bootloader mode to flash.
+11. Disconnect the USB cable and reconnect to the other half.
+12. Run it again.
+13. Disconnect and reconnect to left half.
+14. Open VIA and import your saved layout.
+15. Done!
+
+## Modifiers on home row
+
+Used the following for modifiers. Note the order is based on how often the key is used as well as what it's used with. See this [blog](https://precondition.github.io/home-row-mods) for an *extremely detailed* write-up.
+
+Things have been working pretty good, but even with `#define TAPPING_TERM 200`, my pinky was still too slow to release sometimes. Since I have the Windows key mapped already and I'm comfortable with it, I just removed it from the mod-tap. I'll work on tapping faster with my pinky, but I use GUI so little it's not a big deal to not have it on the home row at this time. I'll leave the key codes below, however.
+
+| Full Modifier Name | Abbreviation | Symbol |
+| ------------------ | ------------ | ------ |
+| Shift              | S            | ⇧      |
+| Control            | C            | ⎈      |
+| Alt/Option         | A            | ⎇      |
+| GUI/Win/Command    | G            | ◆      |
+
+![](_assets/HomeRowMods.png)
+
+```c
+MT(MOD_LGUI, KC_A), MT(MOD_LALT, KC_S), MT(MOD_LSFT, KC_D), MT(MOD_LCTL, KC_F),
+
+MT(MOD_RCTL, KC_J), MT(MOD_RSFT, KC_K), MT(MOD_RALT, KC_L), MT(MOD_RGUI, KC_SCLN)
+```
 
 ## Custom Display
 
 ### Links
 
-- https://joric.github.io/qle/
-- https://javl.github.io/image2cpp/
-- https://docs.splitkb.com/hc/en-us/articles/360013811280-How-do-I-convert-an-image-for-use-on-an-OLED-display-
+- [QMK Logo Editor](https://joric.github.io/qle/)
+- [Image to CPP](https://javl.github.io/image2cpp/)
+- [How to use the above](https://docs.splitkb.com/hc/en-us/articles/360013811280-How-do-I-convert-an-image-for-use-on-an-OLED-display-)
 
 ### WPM
 
@@ -301,5 +328,296 @@ if (clockwise) {
   tap_code(KC_F3);  
 } else {  
   tap_code16(S(KC_F3));  
+}
+```
+
+## VIA JSON
+
+```json
+{
+  "name": "Sofle",
+  "vendorProductId": 4231135879,
+  "macros": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "layers": [
+    [
+      "KC_GRV",
+      "KC_1",
+      "KC_2",
+      "KC_3",
+      "KC_4",
+      "KC_5",
+      "KC_ESC",
+      "KC_Q",
+      "KC_W",
+      "KC_E",
+      "KC_R",
+      "KC_T",
+      "KC_TAB",
+      "KC_A",
+      "MT(MOD_LALT,KC_S)",
+      "MT(MOD_LSFT,KC_D)",
+      "MT(MOD_LCTL,KC_F)",
+      "KC_G",
+      "KC_LSFT",
+      "KC_Z",
+      "KC_X",
+      "KC_C",
+      "KC_V",
+      "KC_B",
+      "KC_LCTL",
+      "KC_LALT",
+      "KC_LGUI",
+      "MO(1)",
+      "KC_ENT",
+      "LAG(KC_K)",
+      "KC_MINS",
+      "KC_0",
+      "KC_9",
+      "KC_8",
+      "KC_7",
+      "KC_6",
+      "KC_BSPC",
+      "KC_P",
+      "KC_O",
+      "KC_I",
+      "KC_U",
+      "KC_Y",
+      "KC_QUOT",
+      "KC_SCLN",
+      "MT(MOD_LALT | MOD_RALT,KC_L)",
+      "MT(MOD_LSFT | MOD_RSFT,KC_K)",
+      "MT(MOD_LCTL | MOD_RCTL,KC_J)",
+      "KC_H",
+      "KC_APP",
+      "KC_SLSH",
+      "KC_DOT",
+      "KC_COMM",
+      "KC_M",
+      "KC_N",
+      "KC_DOWN",
+      "KC_UP",
+      "KC_RGHT",
+      "KC_LEFT",
+      "KC_SPC",
+      "KC_PSCR"
+    ],
+    [
+      "LCA(KC_DEL)",
+      "KC_F1",
+      "KC_F2",
+      "KC_F3",
+      "KC_F4",
+      "KC_F5",
+      "KC_NO",
+      "KC_NO",
+      "KC_PGUP",
+      "KC_UP",
+      "KC_PGDN",
+      "KC_NO",
+      "KC_TRNS",
+      "KC_NO",
+      "KC_LEFT",
+      "KC_DOWN",
+      "KC_RGHT",
+      "KC_DEL",
+      "KC_TRNS",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_TRNS",
+      "KC_TRNS",
+      "KC_TRNS",
+      "KC_TRNS",
+      "KC_TRNS",
+      "KC_MUTE",
+      "KC_EQL",
+      "KC_F10",
+      "KC_F9",
+      "KC_F8",
+      "KC_F7",
+      "KC_F6",
+      "KC_BSLS",
+      "KC_RBRC",
+      "KC_LBRC",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_TRNS",
+      "KC_TRNS",
+      "KC_TRNS",
+      "KC_TRNS",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_END",
+      "KC_HOME",
+      "KC_PGDN",
+      "KC_PGUP",
+      "KC_TRNS",
+      "KC_HOME"
+    ],
+    [
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO"
+    ],
+    [
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_TRNS",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_NO",
+      "KC_TRNS",
+      "KC_NO",
+      "KC_NO"
+    ]
+  ],
+  "encoders": [
+    [
+      ["KC_PGDN", "KC_PGUP"],
+      ["KC_VOLU", "KC_VOLD"],
+      ["KC_PGUP", "KC_PGDN"],
+      ["KC_PGUP", "KC_PGDN"]
+    ],
+    [
+      ["KC_RGHT", "KC_LEFT"],
+      ["KC_DOWN", "KC_UP"],
+      ["KC_RGHT", "KC_LEFT"],
+      ["KC_RGHT", "KC_LEFT"]
+    ]
+  ]
 }
 ```

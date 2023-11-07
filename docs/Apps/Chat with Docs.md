@@ -5,7 +5,7 @@ Based on [this](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sourc
 ```python
 ...
 import openai, os
-os.environ["OPENAI_API_BASE"] = "http://localhost:8000"
+os.environ["OPENAI_API_BASE"] = "http://localhost:8000/v1"
 openai.api_key = "nothing"
 ...
 ```

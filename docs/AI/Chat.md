@@ -216,6 +216,42 @@ We'll use LM Studio for the backend. For the frontend (that can work on the web)
 
 Other options that have a web frontend already that could work are Oobabooga's [text-generation-webui](https://github.com/oobabooga/text-generation-webui) and  [Llama.cpp](Llama.cpp.md#Server) 
 
+## Continue
+
+Details from their [VS Code plugin](https://marketplace.visualstudio.com/items?itemName=Continue.continue) page.
+
+### Get possible explanations
+
+Ask Continue about a part of your code to get another perspective
+
+- “how can I set up a Prisma schema that cascades deletes?”
+- “where in the page should I be making this request to the backend?”
+- “how can I communicate between these iframes?”
+
+### Edit in natural language
+
+Highlight a section of code and instruct Continue to refactor it
+
+- “/edit migrate this digital ocean terraform file into one that works for GCP”
+- “/edit change this plot into a bar chart in this dashboard component”
+- “/edit rewrite this function to be async”
+
+### Generate files from scratch
+
+Open a blank file and let Continue start new Python scripts, React components, etc.
+
+- “/edit here is a connector for postgres, now write one for kafka”
+- “/edit make an IAM policy that creates a user with read-only access to S3”
+- “/edit use this schema to write me a SQL query that gets recently churned users”
+
+### Getting Started
+
+By default, Continue uses GPT-4 and GPT-3.5-turbo via the OpenAI API.
+
+You can adjust the config to use different LLMs, including local, private models. Read more [here](https://continue.dev/docs/customization#change-the-default-llm).
+
+To see the keyboard shortcuts offered by Continue, see the "Feature Contributions" tab above.
+
 ## Prompts
 
 All data below from [🤗](https://huggingface.co/). The prompt and formatting applies to all sizes of the same model. Also make sure you're using them *exactly* as shown, including whitespaces, returns, etc. It makes a difference.
