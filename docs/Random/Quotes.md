@@ -37,3 +37,5 @@
 `75% of the Time We Spend With Our Kids in Our Lifetime Will Be Spent By Age 12`
 
 `It’s a dangerous thing to mistake speaking without thought for speaking the truth.`
+
+`Good habits have a price. Bad habits have a cost. Either way, you pay.`
