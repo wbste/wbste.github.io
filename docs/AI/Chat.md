@@ -16,6 +16,17 @@ This section has to do with text generation models (same ideas as ChatGPT) that 
 > [!example]
 > What size model should you get? See the below table **4-bit Model Requirements for GPU inference** for a starting point. For example, assuming you have at least 32GB RAM and a 3090, you can run a 4-bit 34B with good performance.
 
+## Models
+
+- Leaderboards [here](https://chat.lmsys.org/?leaderboard) and [here](https://tatsu-lab.github.io/alpaca_eval/)
+- [TheBloke](https://huggingface.co/TheBloke) on 🤗 offers great models.
+
+More parameters (i.e. more data) in the model, the higher quality the output. Consumer hardware typically doesn't have the capability to fit the largest models and run them. With some exceptions the typical parameters you can run locally is up to 34B with nice hardware (3090, 32GB Ram). Some do run 70B and 180B parameter models, but that gets into custom built AI machines (64GB+ RAM and 2+ GPUs, or professional level GPUs like the NVIDIA A100). Here's an example of where things stand today. [Source](https://lifearchitect.ai/models/).
+
+![](_assets/2024-Alan-D-Thompson-AI-Bubbles-Planets-Rev-1.png)
+
+![](_assets/2023-Alan-D-Thompson-LLM-Emerging-Rev-0.png)
+
 ## GUIs
 
 - [LM Studio](https://lmstudio.ai/)
@@ -58,17 +69,6 @@ Note the below is *system* RAM.
 ## Coding
 
 Can use LM studio as a local API with a VS Code extension like [Continue](https://github.com/continuedev/continue).
-
-## Models
-
-- Leaderboards [here](https://chat.lmsys.org/?leaderboard) and [here](https://tatsu-lab.github.io/alpaca_eval/)
-- [TheBloke](https://huggingface.co/TheBloke) on 🤗 offers great models.
-
-## Model Size
-
-More parameters (i.e. more data) in the model, the higher quality the output. Consumer hardware typically doesn't have the capability to fit the largest models and run them. With some exceptions the typical parameters you can run locally is up to 34B with nice hardware (3090, 32GB Ram). Some do run 70B and 180B parameter models, but that gets into custom built AI machines (64GB+ RAM and 2+ GPUs, or professional level GPUs like the NVIDIA A100). Here's an example of where things stand today. [Source](https://lifearchitect.ai/models/).
-
-![](_assets/2023-Alan-D-Thompson-AI-Bubbles-Optimal-Rev-5.png)
 
 ## Quantization
 
