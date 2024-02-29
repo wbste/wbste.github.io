@@ -5,20 +5,13 @@ This section has to do with text generation models (same ideas as ChatGPT) that 
 **Want the TL;DR on how to run a model 100% locally?**
 
 1. Regardless if you have a CPU or GPU, download [LM Studio](https://lmstudio.ai/). It's the best GUI I've found, and integrates with HuggingFace, can act as a API server, and allows for running on CPU, GPU, or a mix of both.
-2. Open the app, and search (for example) *TheBloke/CodeLlama-7B-Instruct-GGUF* for coding, or *TheBloke/Llama-2-7B-Chat-GGUF* for general chat.
+2. Open the app, and download one of the models on the home page. Smaller models are a good start (something with 2B or 7B in the name).
 3. Download the model **Quantization Q4_K_M** to start with. We can get smaller or larger ones after seeing how this one performs.
 4. After it's downloaded it will appear in LM Studio under the 📂 icon in the app.
-5. Make sure the code one says **CodeLlama Instruct** and the chat says **MetaAI Llama 2 Chat** in the dropdown. This loads some settings on how to interact with the model.
-6. Click on the 💬 icon, **New Chat**.
-7. On the right you may want to select *GPU Acceleration* under **Model Initialization** if you have one, and start with **10 layers** (we can always modify later).
-8. From the top, select one of the models you downloaded and load it.
-9. Chat away!
-
-> [!tip]
-> This app can run GGML and GGUF models (GGUF is the new format, while GGML is being phased out). Anything from [TheBloke](https://huggingface.co/TheBloke) seems to be good.
-
-> [!info]
-> There is another format called GPTQ that LM Studio can't run. GPTQ is meant for 100% GPU, while the others can be a mix (or 100% CPU). [Oobaboga](https://github.com/oobabooga/text-generation-webui) and [ExLlama](https://github.com/turboderp/exllama) can run those, but I don't like the GUI or UX as much. I have 32 GB ram which helps a lot for larger models to load into memory.
+5. Click on the 💬 icon, **New Chat**.
+6. On the right you may want to select *GPU Acceleration* under **Model Initialization** if you have one, and start with **10 layers** (we can always modify later).
+7. From the top, select one of the models you downloaded and load it.
+8. Chat away!
 
 > [!example]
 > What size model should you get? See the below table **4-bit Model Requirements for GPU inference** for a starting point. For example, assuming you have at least 32GB RAM and a 3090, you can run a 4-bit 34B with good performance.
@@ -64,40 +57,12 @@ Note the below is *system* RAM.
 
 ## Coding
 
-Can use LM studio as a local API with a VS Code extension like [Continue](https://github.com/continuedev/continue). Just make sure *Request Queuing* is **ON** . Here's an example `config.py` (you can get to this file by typing `/config` into Continue).
-
-![](_assets/ContinueBox.png)
-
-```python
-from continuedev.src.continuedev.libs.llm.ggml import GGML
-...
-config = ContinueConfig(
-    allow_anonymous_telemetry=False,
-    models=Models(
-		default=GGML(
-			context_length=4096,
-			model="LM Studio",
-			timeout=200,
-			prompt_templates={'edit': '[INST] Consider the following code:\n```\n{{code_to_edit}}\n```\nEdit the code to perfectly satisfy the following user request:\n{{user_input}}\nOutput nothing except for the code. No code block, no English explanation, no start/end tags.\n[/INST]'},
-			server_url="http://localhost:8000"
-		),
-		unused=[]
-	),
-    system_message="",
-```
-
-To keep the whole file in the query, use `@file`. You can also highlight the desired sections and that part will be in the query. Use the 🔎 to see what is being sent.
+Can use LM studio as a local API with a VS Code extension like [Continue](https://github.com/continuedev/continue).
 
 ## Models
 
 - Leaderboards [here](https://chat.lmsys.org/?leaderboard) and [here](https://tatsu-lab.github.io/alpaca_eval/)
 - [TheBloke](https://huggingface.co/TheBloke) on 🤗 offers great models.
-
-Code Llama comes in three model sizes, and three variants, and have been trained between January 2023 and July 2023.
-
-- Code Llama: base models designed for general code synthesis and understanding
-- Code Llama - Python: designed specifically for Python
-- Code Llama - Instruct: for instruction following and safer deployment
 
 ## Model Size
 
@@ -206,118 +171,3 @@ I like to think of an embedding vector as a location in 1,536-dimensional space.
 **Top-P** limits the selection of the next token to a subset of tokens with a cumulative probability above a threshold P. This method, also known as nucleus sampling, finds a balance between diversity and quality by considering both token probabilities and the number of tokens available for sampling. When using a higher value for top-P (eg., 0.95), the generated text becomes more diverse. On the other hand, a lower value (eg., 0.1) produces more focused and conservative text. The default value is 0.4, which is aimed to be the middle ground between focus and diversity, but for more creative tasks a higher top-p value will be beneficial, about 0.5-0.9 is a good range for that.
 
 **Top-K** sampling selects the next token only from the top K most likely tokens predicted by the model. It helps reduce the risk of generating low-probability or nonsensical tokens, but it may also limit the diversity of the output. A higher value for top-K (eg., 100) will consider more tokens and lead to more diverse text, while a lower value (eg., 10) will focus on the most probable tokens and generate more conservative text. 30 - 60 is a good range for most tasks.
-
-## Frontend
-
-> [!danger]
-> CORS and `host.docker.internal` have security implications. Make sure you understand them before enabling!
-
-We'll use LM Studio for the backend. For the frontend (that can work on the web) you can use docker and [Chatbot-UI](https://github.com/mckaywrigley/chatbot-ui). Assuming LM Studio is in server mode and it's on (with CORS on as well) just run `docker run --add-host host.docker.internal:host-gateway -e OPENAI_API_HOST='http://192.168.106.7:8000' -p 3000:3000 ghcr.io/mckaywrigley/chatbot-ui:main`.
-
-Other options that have a web frontend already that could work are Oobabooga's [text-generation-webui](https://github.com/oobabooga/text-generation-webui) and  [Llama.cpp](Llama.cpp.md#Server) 
-
-## Continue
-
-Details from their [VS Code plugin](https://marketplace.visualstudio.com/items?itemName=Continue.continue) page.
-
-### Get possible explanations
-
-Ask Continue about a part of your code to get another perspective
-
-- “how can I set up a Prisma schema that cascades deletes?”
-- “where in the page should I be making this request to the backend?”
-- “how can I communicate between these iframes?”
-
-### Edit in natural language
-
-Highlight a section of code and instruct Continue to refactor it
-
-- “/edit migrate this digital ocean terraform file into one that works for GCP”
-- “/edit change this plot into a bar chart in this dashboard component”
-- “/edit rewrite this function to be async”
-
-### Generate files from scratch
-
-Open a blank file and let Continue start new Python scripts, React components, etc.
-
-- “/edit here is a connector for postgres, now write one for kafka”
-- “/edit make an IAM policy that creates a user with read-only access to S3”
-- “/edit use this schema to write me a SQL query that gets recently churned users”
-
-### Getting Started
-
-By default, Continue uses GPT-4 and GPT-3.5-turbo via the OpenAI API.
-
-You can adjust the config to use different LLMs, including local, private models. Read more [here](https://continue.dev/docs/customization#change-the-default-llm).
-
-To see the keyboard shortcuts offered by Continue, see the "Feature Contributions" tab above.
-
-## Prompts
-
-All data below from [🤗](https://huggingface.co/). The prompt and formatting applies to all sizes of the same model. Also make sure you're using them *exactly* as shown, including whitespaces, returns, etc. It makes a difference.
-
-Note the below are the default system prompts (if any) the models were trained on, but it's **highly recommended** to tweak them, as the behavior can wildly change. For example, with coding models I use something like, `You always display all code when it's modified. Explain the files that need to be created and where in the folder structure they reside and provide all necessary information to create them, including how to install them, reference them etc. Assume the person asking you questions isn't familiar with the programming language or format. If you see a way to make the code easier to read, more efficient, better, or see an error, point it out and correct the mistake.`.
-
-Just make sure you don't change the overall formatting. Also ensure you maintain any extra returns (`/n`) in the system prompt if you modify it.
-
-### Chat
-
-**TheBloke/WizardLM-13B-V1.2-GGUF** ([Link](https://huggingface.co/TheBloke/WizardLM-13B-V1.2-GGUF))
-
-```
-A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. USER: {prompt} ASSISTANT:
-```
-
-**TheBloke/Llama-2-13B-chat-GGUF** ([Link](https://huggingface.co/TheBloke/Llama-2-13B-chat-GGUF))
-
-```
-[INST] <<SYS>>
-You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
-<</SYS>>
-{prompt}[/INST]
-```
-
-**TheBloke/vicuna-13B-v1.5-16K-GGUF** ([Link](https://huggingface.co/TheBloke/vicuna-13B-v1.5-16K-GGUF))
-
-Applies to **TheBloke/vicuna-13B-v1.5-GGUF** as well.
-
-```
-A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. USER: {prompt} ASSISTANT:
-```
-
-### Coding
-
-**TheBloke/Phind-CodeLlama-34B-v2-GGUF** ([Link](https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GGUF))
-
-```
-### System Prompt
-{system_message}
-
-### User Message
-{prompt}
-
-### Assistant
-```
-
-**TheBloke/CodeLlama-34B-Instruct-GGUF** ([Link](https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF))
-
-```
-[INST] Write code to solve the following coding problem that obeys the constraints and passes the example test cases. Please wrap your code answer using ```:
-{prompt}
-[/INST]
-```
-
-### Math
-
-**TheBloke/WizardMath-13B-V1.0-GGUF** ([Link](https://huggingface.co/TheBloke/WizardMath-13B-V1.0-GGUF))
-
-```
-Below is an instruction that describes a task. Write a response that appropriately completes the request.
-
-
-### Instruction:
-{prompt}
-
-
-### Response: Let's think step by step.
-```

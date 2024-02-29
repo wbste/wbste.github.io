@@ -1,6 +1,8 @@
 # Shiori
 
-I was looking for a lightweight bookmark manager tool. Stumbled across [Shiori](https://github.com/go-shiori/shiori). The intent was to move my bookmarks over and add a bit more context to them. At first I was going to use AI to generate tags (and still may), but I figured since the extract is searchable, that's a better place to enter data. The below outlines the process from using my exported `bookmarks.html` file from Firefox, parsing it, sending the website's contents to a local LLM to summarize, and feeding back into the db. FYI I run the server in portable mode on Windows with `.\shiori.exe serve --portable`
+I was looking for a lightweight bookmark manager tool. Stumbled across [Shiori](https://github.com/go-shiori/shiori). The intent was to move my bookmarks over and add a bit more context to them. At first I was going to use AI to generate tags (and still may), but I figured since the extract is searchable, that's a better place to enter data. The below outlines the process from using my exported `bookmarks.html` file from Firefox, parsing it, sending the website's contents to a local LLM to summarize, and feeding back into the db. FYI I run the server in portable mode on Windows with `.\shiori.exe serve --portable`.
+
+There's a lot of optimization you could do with the below, but this works well enough for me.
 
 > [!tip]
 > Setup the software with the settings you want (metadata, archive, etc.) before you do the below.
@@ -15,6 +17,9 @@ I was looking for a lightweight bookmark manager tool. Stumbled across [Shiori](
 I ran the [CLI call](https://github.com/go-shiori/shiori/blob/master/docs/CLI.md) `.\shiori add https://example.com` (because PowerShell) to create the entries based on the extracted data. V1 is just the bookmark, V2 creates bookmarks and tags based on the folder name. The below just outputs to the terminal, and I copy/paste into another terminal to add them.
 
 I also used this to create a CSV with just the URLs in it, with the header `url`. I called the file `website-list.csv`.
+
+> [!tip]
+> If you're using the `--portable` flag don't forget to update the below to use it. So the CLI call would be `.\shiori add http://example.com --portable`. Otherwise it will write to the default database in `%LOCALAPPDATA%`.
 
 ### V1
 
@@ -35,7 +40,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 os.chdir(script_dir)
 
 # Open and read the file
-with open("bookmarks.html", "r") as file:
+with open("bookmarks.html", encoding='utf-8') as file:
     content = file.read()
 
 pattern = r'<H3.*?>(.*?)</H3>'
@@ -45,7 +50,7 @@ print("Bookmark folders\n")
 print("\n".join(formatted_folders))
 
 links = re.findall('<A HREF="([^"]*)"', content)
-formatted_links = [".\shiori add {}".format(link) for link in links]
+formatted_links = [".\shiori add {} --portable".format(link) for link in links]
 print("\n\nFormatting to make CLI calls\n")
 print("\n".join(formatted_links))
 
@@ -55,6 +60,9 @@ print("\n".join(formatted_links))
 ```
 
 ### V2
+
+> [!example]
+> This one is largely untested. Turns out I didn't organize my bookmarks into folders as well as I should have 😐.
 
 ```python
 import re
@@ -227,7 +235,7 @@ if __name__ == "__main__":
 
 ## Extract into DB
 
-I converted the CSV to XLSX (I don't get how Excel treats commas just fine within cells and CSVs struggle).
+I converted the CSV to XLSX (I don't get how Excel treats commas just fine within cells and CSVs struggle) and added the headers `url` and `excerpt`.
 
 > [!warning]
 > You're writing to your database! I recommend you write to a backup first, and see how it goes. You can always just browse the data with a tool like [DB Browser for SQLite](https://sqlitebrowser.org/).
