@@ -1,0 +1,3181 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://rs.omg.lol/AI/Llama.cpp/">
+      
+      
+        <link rel="prev" href="../Draw/">
+      
+      
+        <link rel="next" href="../The-Basics/">
+      
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>Llama.cpp - Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/modelviewer.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Llamacpp" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Notes" class="md-header__button md-logo" aria-label="Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v9.8c0 39-23.7 74-59.9 88.4C71.6 154.5 32 213 32 278.2V352c0 17.7 14.3 32 32 32s32-14.3 32-32v-73.8c0-10 1.6-19.8 4.5-29l160.6 248.2c9.6 14.8 29.4 19.1 44.3 9.5s19.1-29.4 9.5-44.3L222.6 320H304l38.4 51.2c10.6 14.1 30.7 17 44.8 6.4s17-30.7 6.4-44.8l-43.2-57.6c-9.1-12.1-23.3-19.2-38.4-19.2h-71.5l-56.8-80.2-.2-.3c44.7-29 72.5-79 72.5-133.6v-9.8zM96 80a48 48 0 1 0-96 0 48 48 0 1 0 96 0zm368 206.1 58.6 53.9c4.8 4.4 11.9 5.5 17.8 2.6s9.5-9 9-15.5l-5.6-79.4 78.7-12.2c6.5-1 11.7-5.9 13.1-12.2s-1.1-13-6.5-16.7l-65.6-45.1L603 92.2c3.3-5.7 2.7-12.8-1.4-17.9s-10.9-7.2-17.2-5.3l-76.1 23.1-29.4-74C476.4 12 470.6 8 464 8s-12.4 4-14.9 10.1l-29.4 74-76.1-23.2c-6.3-1.9-13.1.2-17.2 5.3s-4.6 12.2-1.4 17.9l39.5 69.1-65.6 45.1c-5.4 3.7-8 10.3-6.5 16.7.1.3.1.6.2.8H312c20.1 0 39.2 7.5 53.8 20.8l18.4 2.9-1.2 17.8 36.2 48.3c2.1 2.8 3.9 5.7 5.5 8.6l39.3-36.1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Llama.cpp
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Ask/" class="md-tabs__link">
+          
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Apps/Chat%20with%20Docs/" class="md-tabs__link">
+          
+  
+    
+  
+  Apps
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Markdown/Cheat%20Sheet/" class="md-tabs__link">
+          
+  
+    
+  
+  Markdown
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Random/Art/" class="md-tabs__link">
+          
+  
+    
+  
+  Random
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Reality%20Capture/" class="md-tabs__link">
+          
+  
+    
+  
+  Reality Capture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Shop/CNC%20Overview/" class="md-tabs__link">
+          
+  
+    
+  
+  Shop
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Technology/Affinity/" class="md-tabs__link">
+          
+  
+    
+  
+  Technology
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Travel/Hikes/" class="md-tabs__link">
+          
+  
+    
+  
+  Travel
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Vehicles/Motorcycle/" class="md-tabs__link">
+          
+  
+    
+  
+  Vehicles
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notes" class="md-nav__button md-logo" aria-label="Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v9.8c0 39-23.7 74-59.9 88.4C71.6 154.5 32 213 32 278.2V352c0 17.7 14.3 32 32 32s32-14.3 32-32v-73.8c0-10 1.6-19.8 4.5-29l160.6 248.2c9.6 14.8 29.4 19.1 44.3 9.5s19.1-29.4 9.5-44.3L222.6 320H304l38.4 51.2c10.6 14.1 30.7 17 44.8 6.4s17-30.7 6.4-44.8l-43.2-57.6c-9.1-12.1-23.3-19.2-38.4-19.2h-71.5l-56.8-80.2-.2-.3c44.7-29 72.5-79 72.5-133.6v-9.8zM96 80a48 48 0 1 0-96 0 48 48 0 1 0 96 0zm368 206.1 58.6 53.9c4.8 4.4 11.9 5.5 17.8 2.6s9.5-9 9-15.5l-5.6-79.4 78.7-12.2c6.5-1 11.7-5.9 13.1-12.2s-1.1-13-6.5-16.7l-65.6-45.1L603 92.2c3.3-5.7 2.7-12.8-1.4-17.9s-10.9-7.2-17.2-5.3l-76.1 23.1-29.4-74C476.4 12 470.6 8 464 8s-12.4 4-14.9 10.1l-29.4 74-76.1-23.2c-6.3-1.9-13.1.2-17.2 5.3s-4.6 12.2-1.4 17.9l39.5 69.1-65.6 45.1c-5.4 3.7-8 10.3-6.5 16.7.1.3.1.6.2.8H312c20.1 0 39.2 7.5 53.8 20.8l18.4 2.9-1.2 17.8 36.2 48.3c2.1 2.8 3.9 5.7 5.5 8.6l39.3-36.1z"/></svg>
+
+    </a>
+    Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    AI
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ask/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ask
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chat
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Draw/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Draw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Llama.cpp
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Llama.cpp
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Quick%20Start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Common%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Input%20Prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Prompts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interaction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interaction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Interaction%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interaction Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Reverse%20Prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reverse Prompts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#In-Prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-Prefix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#In-Suffix" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-Suffix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Instruction%20Mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instruction Mode
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Context%20Management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Context Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Context%20Size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Size
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Extended%20Context%20Size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended Context Size
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Keep%20Prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keep Prompt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Generation%20Flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generation Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generation Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Number%20of%20Tokens%20to%20Predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      Number of Tokens to Predict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Temperature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Repeat%20Penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      Repeat Penalty
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Top-K%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Top-K Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Top-P%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Top-P Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Tail%20Free%20Sampling%20TFS" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tail Free Sampling (TFS)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Locally%20Typical%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Locally Typical Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Mirostat%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mirostat Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Logit%20Bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logit Bias
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#RNG%20Seed" class="md-nav__link">
+    <span class="md-ellipsis">
+      RNG Seed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Performance%20Tuning%20and%20Memory%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Tuning and Memory Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Tuning and Memory Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Number%20of%20Threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      Number of Threads
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Mlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mlock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#No%20Memory%20Mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      No Memory Mapping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NUMA%20support" class="md-nav__link">
+    <span class="md-ellipsis">
+      NUMA support
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Memory%20Float%2032" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Float 32
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Batch%20Size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Size
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Prompt%20Caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Caching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Grammars" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grammars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Additional%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../The-Basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Transcribe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transcribe
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Vector-Search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Apps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Chat%20with%20Docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chat with Docs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Remove%20Background/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remove Background
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Shiori/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Shiori
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Markdown
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Markdown
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Cheat%20Sheet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cheat Sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Conversion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conversion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Example%20Callouts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example Callouts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Example%20Diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example Diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Getting%20Started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Publish%20to%20Website/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Publish to Website
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Random
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Random
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Art/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Art
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Links/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Links
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Online%20Classes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Online Classes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Quotes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quotes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Recipes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Recipes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../Reality%20Capture/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reality Capture
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Reality Capture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reality%20Capture/Capture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Capture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reality%20Capture/Display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Display
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reality%20Capture/Review%20and%20Edit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Review and Edit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Shop
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Shop/CNC%20Overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CNC Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Shop/Taig%20Micro%20Mill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taig Micro Mill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technology
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Technology
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Affinity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Affinity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Cyber%20Security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cyber Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Home%20Assistant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Keyboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keyboard
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/PC%20Build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Build
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Pixel%206a/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pixel 6a
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Programming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Programming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Proxmox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Proxmox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Travel
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Travel
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Travel/Hikes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hikes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Travel/Places%20To%20Visit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Places To Visit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Vehicles
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Vehicles
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vehicles/Motorcycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Motorcycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vehicles/Tacoma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tacoma
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Quick%20Start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Common%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Input%20Prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Prompts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interaction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interaction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Interaction%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interaction Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Reverse%20Prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reverse Prompts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#In-Prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-Prefix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#In-Suffix" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-Suffix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Instruction%20Mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instruction Mode
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Context%20Management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Context Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Context%20Size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Size
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Extended%20Context%20Size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended Context Size
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Keep%20Prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keep Prompt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Generation%20Flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generation Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generation Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Number%20of%20Tokens%20to%20Predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      Number of Tokens to Predict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Temperature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Repeat%20Penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      Repeat Penalty
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Top-K%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Top-K Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Top-P%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Top-P Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Tail%20Free%20Sampling%20TFS" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tail Free Sampling (TFS)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Locally%20Typical%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Locally Typical Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Mirostat%20Sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mirostat Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Logit%20Bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logit Bias
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#RNG%20Seed" class="md-nav__link">
+    <span class="md-ellipsis">
+      RNG Seed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Performance%20Tuning%20and%20Memory%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Tuning and Memory Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Tuning and Memory Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Number%20of%20Threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      Number of Threads
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Mlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mlock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#No%20Memory%20Mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      No Memory Mapping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NUMA%20support" class="md-nav__link">
+    <span class="md-ellipsis">
+      NUMA support
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Memory%20Float%2032" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Float 32
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Batch%20Size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Size
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Prompt%20Caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Caching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Grammars" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grammars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Additional%20Options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="Llamacpp">Llama.cpp<a class="headerlink" href="#Llamacpp" title="Permanent link">#</a></h1>
+<p>Content from <a href="https://github.com/ggerganov/llama.cpp/blob/master/examples/main/README.md">here</a>.</p>
+<p>This example program allows you to use various LLaMA language models in an easy and efficient way. It is specifically designed to work with the <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> project, which provides a plain C/C++ implementation with optional 4-bit quantization support for faster, lower memory inference, and is optimized for desktop CPUs. This program can be used to perform various inference tasks with LLaMA models, including generating text based on user-provided prompts and chat-like interactions with reverse prompts.</p>
+<h2 id="Build">Build<a class="headerlink" href="#Build" title="Permanent link">#</a></h2>
+<p>This covers how to build for Windows (or at least what worked for me) if you have an NVIDIA GPU. You'll also need <a href="https://git-scm.com/download/win">Git</a> installed.</p>
+<ol>
+<li>Install <a href="https://visualstudio.microsoft.com/vs/community/">Visual Studio 2022 Community</a><ol>
+<li>Install <strong>Desktop development with C++</strong>, with the <em>Optional</em> features:<ol>
+<li><code>MSVC v143 - VS Code C++ x64/x86 build tools (latest)</code></li>
+<li><code>C++ CMake tools for Windows</code></li>
+<li><code>C++ AddressSanitizer</code></li>
+<li><code>Windows 11 SDK...</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Install the <a href="https://developer.nvidia.com/cuda-downloads">CUDA Toolkit</a></li>
+<li>Copy the 4 files from CUDA to VS manually<ol>
+<li>Copy the files from <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\extras\visual_studio_integration\MSBuildExtensions</code></li>
+<li>To <code>C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations</code></li>
+</ol>
+</li>
+<li>Navigate to where you want the files extracted.</li>
+<li>Run <code>git clone https://github.com/ggerganov/llama.cpp</code>, then <code>cd llama.cpp</code></li>
+<li>Finally run the below.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>build
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>build
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>cmake<span class="w"> </span>..<span class="w"> </span>-DLLAMA_CUBLAS<span class="o">=</span>ON
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>cmake<span class="w"> </span>--build<span class="w"> </span>.<span class="w"> </span>--config<span class="w"> </span>Release
+</code></pre></div>
+<p>To update the local download to the latest run <code>git fetch origin</code>, then <code>git status</code>, and finally <code>git pull</code> from the working directory. Then you can run the <code>cmake</code> commands again from above. Don't forget to run them from an empty <code>build</code> directory, so you should back up or delete the original.</p>
+<h3 id="Settings">Settings<a class="headerlink" href="#Settings" title="Permanent link">#</a></h3>
+<p>More details below; this is just a quick summary view</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>embedding</code></td>
+<td><code>bool</code></td>
+<td>Embedding mode only.</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>f16_kv</code></td>
+<td><code>bool</code></td>
+<td>Use half-precision for key/value cache.</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>last_n_tokens_size</code></td>
+<td><code>int</code></td>
+<td>Maximum number of tokens to keep in the last_n_tokens deque.</td>
+<td><code>64</code></td>
+</tr>
+<tr>
+<td><code>logits_all</code></td>
+<td><code>bool</code></td>
+<td>Return logits for all tokens, not just the last token.</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>lora_base</code></td>
+<td><code>Optional[str]</code></td>
+<td>Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model.</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>lora_path</code></td>
+<td><code>Optional[str]</code></td>
+<td>Path to a LoRA file to apply to the model.</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>model_path</code></td>
+<td><code>str</code></td>
+<td>Path to the model.</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>n_batch</code></td>
+<td><code>int</code></td>
+<td>Maximum number of prompt tokens to batch together when calling llama_eval.</td>
+<td><code>512</code></td>
+</tr>
+<tr>
+<td><code>n_ctx</code></td>
+<td><code>int</code></td>
+<td>Maximum context size.</td>
+<td><code>512</code></td>
+</tr>
+<tr>
+<td><code>n_gpu_layers</code></td>
+<td><code>int</code></td>
+<td>Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded.</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>n_parts</code></td>
+<td><code>int</code></td>
+<td>Number of parts to split the model into. If -1, the number of parts is automatically determined.</td>
+<td><code>-1</code></td>
+</tr>
+<tr>
+<td><code>n_threads</code></td>
+<td><code>Optional[int]</code></td>
+<td>Number of threads to use. If None, the number of threads is automatically determined.</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>rope_freq_base</code></td>
+<td><code>float</code></td>
+<td>Base frequency for rope sampling.</td>
+<td><code>10000.0</code></td>
+</tr>
+<tr>
+<td><code>rope_freq_scale</code></td>
+<td><code>float</code></td>
+<td>Scale factor for rope sampling.</td>
+<td><code>1.0</code></td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td><code>int</code></td>
+<td>Random seed. -1 for random.</td>
+<td><code>1337</code></td>
+</tr>
+<tr>
+<td><code>tensor_split</code></td>
+<td><code>Optional[List[float]]</code></td>
+<td>List of floats to split the model across multiple GPUs. If None, the model is not split.</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>use_mlock</code></td>
+<td><code>bool</code></td>
+<td>Force the system to keep the model in RAM.</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>use_mmap</code></td>
+<td><code>bool</code></td>
+<td>Use mmap if possible.</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td><code>bool</code></td>
+<td>Print verbose output to stderr.</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>vocab_only</code></td>
+<td><code>bool</code></td>
+<td>Only load the vocabulary no weights.</td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Server">Server<a class="headerlink" href="#Server" title="Permanent link">#</a></h2>
+<p>Once installed you can run a script like this (make sure to change the server and model path): <code>D:\AI\llama.cpp\build\bin\Release\server.exe -c 4096 -ngl 100 --host 0.0.0.0 -t 16 --mlock --threads 6 -m "D:\AI\TheBloke\phind-codellama-34B-v2-GGUF\phind-codellama-34b-v2.Q4_K_M.gguf"</code></p>
+<h2 id="Quick%20Start">Quick Start<a class="headerlink" href="#Quick%20Start" title="Permanent link">#</a></h2>
+<p>To get started right away, run the following command, making sure to use the correct path for the model you have:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">main</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">models</span><span class="p">\</span><span class="n">7B</span><span class="p">\</span><span class="n">ggml-model</span><span class="p">.</span><span class="n">bin</span> <span class="p">-</span><span class="n">-prompt</span> <span class="s2">&quot;Once upon a time&quot;</span>
+</code></pre></div>
+<p>For an interactive experience, try this command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">main</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">models</span><span class="p">\</span><span class="n">7B</span><span class="p">\</span><span class="n">ggml-model</span><span class="p">.</span><span class="n">bin</span> <span class="n">-n</span> <span class="p">-</span><span class="n">1</span> <span class="p">-</span><span class="n">-color</span> <span class="n">-r</span> <span class="s2">&quot;User:&quot;</span> <span class="p">-</span><span class="n">-in-prefix</span> <span class="s2">&quot; &quot;</span> <span class="n">-i</span> <span class="n">-e</span> <span class="n">-p</span> <span class="s2">&quot;User: Hi\nAI: Hello. I am an AI chatbot. Would you like to talk?\nUser: Sure!\nAI: What would you like to talk about?\nUser:&quot;</span>
+</code></pre></div>
+<p>The following command generates "infinite" text from a starting prompt (you can use <code>Ctrl-C</code> to stop it):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">main</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">models</span><span class="p">\</span><span class="n">7B</span><span class="p">\</span><span class="n">ggml-model</span><span class="p">.</span><span class="n">bin</span> <span class="p">-</span><span class="n">-ignore-eos</span> <span class="n">-n</span> <span class="p">-</span><span class="n">1</span> <span class="p">-</span><span class="n">-random-prompt</span>
+</code></pre></div>
+<h2 id="Common%20Options">Common Options<a class="headerlink" href="#Common%20Options" title="Permanent link">#</a></h2>
+<p>In this section, we cover the most commonly used options for running the <code>main</code> program with the LLaMA models:</p>
+<ul>
+<li><code>-m FNAME, --model FNAME</code>: Specify the path to the LLaMA model file (e.g., <code>models/7B/ggml-model.bin</code>).</li>
+<li><code>-i, --interactive</code>: Run the program in interactive mode, allowing you to provide input directly and receive real-time responses.</li>
+<li><code>-ins, --instruct</code>: Run the program in instruction mode, which is particularly useful when working with Alpaca models.</li>
+<li><code>-n N, --n-predict N</code>: Set the number of tokens to predict when generating text. Adjusting this value can influence the length of the generated text.</li>
+<li><code>-c N, --ctx-size N</code>: Set the size of the prompt context. The default is 512, but LLaMA models were built with a context of 2048, which will provide better results for longer input/inference.</li>
+</ul>
+<h2 id="Input%20Prompts">Input Prompts<a class="headerlink" href="#Input%20Prompts" title="Permanent link">#</a></h2>
+<p>The <code>main</code> program provides several ways to interact with the LLaMA models using input prompts:</p>
+<ul>
+<li><code>--prompt PROMPT</code>: Provide a prompt directly as a command-line option.</li>
+<li><code>--file FNAME</code>: Provide a file containing a prompt or multiple prompts.</li>
+<li><code>--interactive-first</code>: Run the program in interactive mode and wait for input right away. (More on this below.)</li>
+<li><code>--random-prompt</code>: Start with a randomized prompt.</li>
+</ul>
+<h2 id="Interaction">Interaction<a class="headerlink" href="#Interaction" title="Permanent link">#</a></h2>
+<p>The <code>main</code> program offers a seamless way to interact with LLaMA models, allowing users to engage in real-time conversations or provide instructions for specific tasks. The interactive mode can be triggered using various options, including <code>--interactive</code>, <code>--interactive-first</code>, and <code>--instruct</code>.</p>
+<p>In interactive mode, users can participate in text generation by injecting their input during the process. Users can press <code>Ctrl+C</code> at any time to interject and type their input, followed by pressing <code>Return</code> to submit it to the LLaMA model. To submit additional lines without finalizing input, users can end the current line with a backslash (<code>\</code>) and continue typing.</p>
+<h3 id="Interaction%20Options">Interaction Options<a class="headerlink" href="#Interaction%20Options" title="Permanent link">#</a></h3>
+<ul>
+<li><code>-i, --interactive</code>: Run the program in interactive mode, allowing users to engage in real-time conversations or provide specific instructions to the model.</li>
+<li><code>--interactive-first</code>: Run the program in interactive mode and immediately wait for user input before starting the text generation.</li>
+<li><code>-ins, --instruct</code>: Run the program in instruction mode, which is specifically designed to work with Alpaca models that excel in completing tasks based on user instructions.</li>
+<li><code>--color</code>: Enable colorized output to differentiate visually distinguishing between prompts, user input, and generated text.</li>
+</ul>
+<p>By understanding and utilizing these interaction options, you can create engaging and dynamic experiences with the LLaMA models, tailoring the text generation process to your specific needs.</p>
+<h3 id="Reverse%20Prompts">Reverse Prompts<a class="headerlink" href="#Reverse%20Prompts" title="Permanent link">#</a></h3>
+<p>Reverse prompts are a powerful way to create a chat-like experience with a LLaMA model by pausing the text generation when specific text strings are encountered:</p>
+<ul>
+<li><code>-r PROMPT, --reverse-prompt PROMPT</code>: Specify one or multiple reverse prompts to pause text generation and switch to interactive mode. For example, <code>-r "User:"</code> can be used to jump back into the conversation whenever it's the user's turn to speak. This helps create a more interactive and conversational experience. However, the reverse prompt doesn't work when it ends with a space.</li>
+</ul>
+<p>To overcome this limitation, you can use the <code>--in-prefix</code> flag to add a space or any other characters after the reverse prompt.</p>
+<h3 id="In-Prefix">In-Prefix<a class="headerlink" href="#In-Prefix" title="Permanent link">#</a></h3>
+<p>The <code>--in-prefix</code> flag is used to add a prefix to your input, primarily, this is used to insert a space after the reverse prompt. Here's an example of how to use the <code>--in-prefix</code> flag in conjunction with the <code>--reverse-prompt</code> flag:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>./main<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;User:&quot;</span><span class="w"> </span>--in-prefix<span class="w"> </span><span class="s2">&quot; &quot;</span>
+</code></pre></div>
+<h3 id="In-Suffix">In-Suffix<a class="headerlink" href="#In-Suffix" title="Permanent link">#</a></h3>
+<p>The <code>--in-suffix</code> flag is used to add a suffix after your input. This is useful for adding an "Assistant:" prompt after the user's input. It's added after the new-line character (<code>\n</code>) that's automatically added to the end of the user's input. Here's an example of how to use the <code>--in-suffix</code> flag in conjunction with the <code>--reverse-prompt</code> flag:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>./main<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;User:&quot;</span><span class="w"> </span>--in-prefix<span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span>--in-suffix<span class="w"> </span><span class="s2">&quot;Assistant:&quot;</span>
+</code></pre></div>
+<h3 id="Instruction%20Mode">Instruction Mode<a class="headerlink" href="#Instruction%20Mode" title="Permanent link">#</a></h3>
+<p>Instruction mode is particularly useful when working with Alpaca models, which are designed to follow user instructions for specific tasks:</p>
+<ul>
+<li><code>-ins, --instruct</code>: Enable instruction mode to leverage the capabilities of Alpaca models in completing tasks based on user-provided instructions.</li>
+</ul>
+<p>Technical detail: the user's input is internally prefixed with the reverse prompt (or <code>### Instruction:</code> as the default), and followed by <code>### Response:</code> (except if you just press Return without any input, to keep generating a longer response).</p>
+<p>By understanding and utilizing these interaction options, you can create engaging and dynamic experiences with the LLaMA models, tailoring the text generation process to your specific needs.</p>
+<h2 id="Context%20Management">Context Management<a class="headerlink" href="#Context%20Management" title="Permanent link">#</a></h2>
+<p>During text generation, LLaMA models have a limited context size, which means they can only consider a certain number of tokens from the input and generated text. When the context fills up, the model resets internally, potentially losing some information from the beginning of the conversation or instructions. Context management options help maintain continuity and coherence in these situations.</p>
+<h3 id="Context%20Size">Context Size<a class="headerlink" href="#Context%20Size" title="Permanent link">#</a></h3>
+<p>The <code>--ctx-size</code> option allows you to set the size of the prompt context used by the LLaMA models during text generation. A larger context size helps the model to better comprehend and generate responses for longer input or conversations.</p>
+<ul>
+<li><code>-c N, --ctx-size N</code>: Set the size of the prompt context (default: 512). The LLaMA models were built with a context of 2048, which will yield the best results on longer input/inference. However, increasing the context size beyond 2048 may lead to unpredictable results.</li>
+</ul>
+<h3 id="Extended%20Context%20Size">Extended Context Size<a class="headerlink" href="#Extended%20Context%20Size" title="Permanent link">#</a></h3>
+<p>Some fine-tuned models have extened the context length by scaling RoPE. For example, if the original pretrained model have a context length (max sequence length) of 4096 (4k) and the fine-tuned model have 32k. That is a scaling factor of 8, and should work by setting the above <code>--ctx-size</code> to 32768 (32k) and <code>--rope-scale</code> to 8.</p>
+<ul>
+<li><code>--rope-scale N</code>: Where N is the linear scaling factor used by the fine-tuned model.</li>
+</ul>
+<h3 id="Keep%20Prompt">Keep Prompt<a class="headerlink" href="#Keep%20Prompt" title="Permanent link">#</a></h3>
+<p>The <code>--keep</code> option allows users to retain the original prompt when the model runs out of context, ensuring a connection to the initial instruction or conversation topic is maintained.</p>
+<ul>
+<li><code>--keep N</code>: Specify the number of tokens from the initial prompt to retain when the model resets its internal context. By default, this value is set to 0 (meaning no tokens are kept). Use <code>-1</code> to retain all tokens from the initial prompt.</li>
+</ul>
+<p>By utilizing context management options like <code>--ctx-size</code> and <code>--keep</code>, you can maintain a more coherent and consistent interaction with the LLaMA models, ensuring that the generated text remains relevant to the original prompt or conversation.</p>
+<h2 id="Generation%20Flags">Generation Flags<a class="headerlink" href="#Generation%20Flags" title="Permanent link">#</a></h2>
+<p>The following options allow you to control the text generation process and fine-tune the diversity, creativity, and quality of the generated text according to your needs. By adjusting these options and experimenting with different combinations of values, you can find the best settings for your specific use case.</p>
+<h3 id="Number%20of%20Tokens%20to%20Predict">Number of Tokens to Predict<a class="headerlink" href="#Number%20of%20Tokens%20to%20Predict" title="Permanent link">#</a></h3>
+<ul>
+<li><code>-n N, --n-predict N</code>: Set the number of tokens to predict when generating text (default: 128, -1 = infinity, -2 = until context filled)</li>
+</ul>
+<p>The <code>--n-predict</code> option controls the number of tokens the model generates in response to the input prompt. By adjusting this value, you can influence the length of the generated text. A higher value will result in longer text, while a lower value will produce shorter text.</p>
+<p>A value of -1 will enable infinite text generation, even though we have a finite context window. When the context window is full, some of the earlier tokens (half of the tokens after <code>--n-keep</code>) will be discarded. The context must then be re-evaluated before generation can resume. On large models and/or large context windows, this will result in significant pause in output.</p>
+<p>If the pause is undesirable, a value of -2 will stop generation immediately when the context is filled.</p>
+<p>It is important to note that the generated text may be shorter than the specified number of tokens if an End-of-Sequence (EOS) token or a reverse prompt is encountered. In interactive mode text generation will pause and control will be returned to the user. In non-interactive mode, the program will end. In both cases, the text generation may stop before reaching the specified <code>n-predict</code> value. If you want the model to keep going without ever producing End-of-Sequence on its own, you can use the <code>--ignore-eos</code> parameter.</p>
+<h3 id="Temperature">Temperature<a class="headerlink" href="#Temperature" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--temp N</code>: Adjust the randomness of the generated text (default: 0.8).</li>
+</ul>
+<p>Temperature is a hyperparameter that controls the randomness of the generated text. It affects the probability distribution of the model's output tokens. A higher temperature (e.g., 1.5) makes the output more random and creative, while a lower temperature (e.g., 0.5) makes the output more focused, deterministic, and conservative. The default value is 0.8, which provides a balance between randomness and determinism. At the extreme, a temperature of 0 will always pick the most likely next token, leading to identical outputs in each run.</p>
+<p>Example usage: <code>--temp 0.5</code></p>
+<h3 id="Repeat%20Penalty">Repeat Penalty<a class="headerlink" href="#Repeat%20Penalty" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--repeat-penalty N</code>: Control the repetition of token sequences in the generated text (default: 1.1).</li>
+<li><code>--repeat-last-n N</code>: Last n tokens to consider for penalizing repetition (default: 64, 0 = disabled, -1 = ctx-size).</li>
+<li><code>--no-penalize-nl</code>: Disable penalization for newline tokens when applying the repeat penalty.</li>
+</ul>
+<p>The <code>repeat-penalty</code> option helps prevent the model from generating repetitive or monotonous text. A higher value (e.g., 1.5) will penalize repetitions more strongly, while a lower value (e.g., 0.9) will be more lenient. The default value is 1.1.</p>
+<p>The <code>repeat-last-n</code> option controls the number of tokens in the history to consider for penalizing repetition. A larger value will look further back in the generated text to prevent repetitions, while a smaller value will only consider recent tokens. A value of 0 disables the penalty, and a value of -1 sets the number of tokens considered equal to the context size (<code>ctx-size</code>).</p>
+<p>Use the <code>--no-penalize-nl</code> option to disable newline penalization when applying the repeat penalty. This option is particularly useful for generating chat conversations, dialogues, code, poetry, or any text where newline tokens play a significant role in structure and formatting. Disabling newline penalization helps maintain the natural flow and intended formatting in these specific use cases.</p>
+<p>Example usage: <code>--repeat-penalty 1.15 --repeat-last-n 128 --no-penalize-nl</code></p>
+<h3 id="Top-K%20Sampling">Top-K Sampling<a class="headerlink" href="#Top-K%20Sampling" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--top-k N</code>: Limit the next token selection to the K most probable tokens (default: 40).</li>
+</ul>
+<p>Top-k sampling is a text generation method that selects the next token only from the top k most likely tokens predicted by the model. It helps reduce the risk of generating low-probability or nonsensical tokens, but it may also limit the diversity of the output. A higher value for top-k (e.g., 100) will consider more tokens and lead to more diverse text, while a lower value (e.g., 10) will focus on the most probable tokens and generate more conservative text. The default value is 40.</p>
+<p>Example usage: <code>--top-k 30</code></p>
+<h3 id="Top-P%20Sampling">Top-P Sampling<a class="headerlink" href="#Top-P%20Sampling" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--top-p N</code>: Limit the next token selection to a subset of tokens with a cumulative probability above a threshold P (default: 0.9).</li>
+</ul>
+<p>Top-p sampling, also known as nucleus sampling, is another text generation method that selects the next token from a subset of tokens that together have a cumulative probability of at least p. This method provides a balance between diversity and quality by considering both the probabilities of tokens and the number of tokens to sample from. A higher value for top-p (e.g., 0.95) will lead to more diverse text, while a lower value (e.g., 0.5) will generate more focused and conservative text. The default value is 0.9.</p>
+<p>Example usage: <code>--top-p 0.95</code></p>
+<h3 id="Tail%20Free%20Sampling%20TFS">Tail Free Sampling (TFS)<a class="headerlink" href="#Tail%20Free%20Sampling%20TFS" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--tfs N</code>: Enable tail free sampling with parameter z (default: 1.0, 1.0 = disabled).</li>
+</ul>
+<p>Tail free sampling (TFS) is a text generation technique that aims to reduce the impact of less likely tokens, which may be less relevant, less coherent, or nonsensical, on the output. Similar to Top-P it tries to determine the bulk of the most likely tokens dynamically. But TFS filters out logits based on the second derivative of their probabilities. Adding tokens is stopped after the sum of the second derivatives reaches the parameter z. In short: TFS looks how quickly the probabilities of the tokens decrease and cuts off the tail of unlikely tokens using the parameter z. Typical values for z are in the range of 0.9 to 0.95. A value of 1.0 would include all tokens, and thus disables the effect of TFS.</p>
+<p>Example usage: <code>--tfs 0.95</code></p>
+<h3 id="Locally%20Typical%20Sampling">Locally Typical Sampling<a class="headerlink" href="#Locally%20Typical%20Sampling" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--typical N</code>: Enable locally typical sampling with parameter p (default: 1.0, 1.0 = disabled).</li>
+</ul>
+<p>Locally typical sampling promotes the generation of contextually coherent and diverse text by sampling tokens that are typical or expected based on the surrounding context. By setting the parameter p between 0 and 1, you can control the balance between producing text that is locally coherent and diverse. A value closer to 1 will promote more contextually coherent tokens, while a value closer to 0 will promote more diverse tokens. A value equal to 1 disables locally typical sampling.</p>
+<p>Example usage: <code>--typical 0.9</code></p>
+<h3 id="Mirostat%20Sampling">Mirostat Sampling<a class="headerlink" href="#Mirostat%20Sampling" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--mirostat N</code>: Enable Mirostat sampling, controlling perplexity during text generation (default: 0, 0 = disabled, 1 = Mirostat, 2 = Mirostat 2.0).</li>
+<li><code>--mirostat-lr N</code>: Set the Mirostat learning rate, parameter eta (default: 0.1).</li>
+<li><code>--mirostat-ent N</code>: Set the Mirostat target entropy, parameter tau (default: 5.0).</li>
+</ul>
+<p>Mirostat is an algorithm that actively maintains the quality of generated text within a desired range during text generation. It aims to strike a balance between coherence and diversity, avoiding low-quality output caused by excessive repetition (boredom traps) or incoherence (confusion traps).</p>
+<p>The <code>--mirostat-lr</code> option sets the Mirostat learning rate (eta). The learning rate influences how quickly the algorithm responds to feedback from the generated text. A lower learning rate will result in slower adjustments, while a higher learning rate will make the algorithm more responsive. The default value is <code>0.1</code>.</p>
+<p>The <code>--mirostat-ent</code> option sets the Mirostat target entropy (tau), which represents the desired perplexity value for the generated text. Adjusting the target entropy allows you to control the balance between coherence and diversity in the generated text. A lower value will result in more focused and coherent text, while a higher value will lead to more diverse and potentially less coherent text. The default value is <code>5.0</code>.</p>
+<p>Example usage: <code>--mirostat 2 --mirostat-lr 0.05 --mirostat-ent 3.0</code></p>
+<h3 id="Logit%20Bias">Logit Bias<a class="headerlink" href="#Logit%20Bias" title="Permanent link">#</a></h3>
+<ul>
+<li><code>-l TOKEN_ID(+/-)BIAS, --logit-bias TOKEN_ID(+/-)BIAS</code>: Modify the likelihood of a token appearing in the generated text completion.</li>
+</ul>
+<p>The logit bias option allows you to manually adjust the likelihood of specific tokens appearing in the generated text. By providing a token ID and a positive or negative bias value, you can increase or decrease the probability of that token being generated.</p>
+<p>For example, use <code>--logit-bias 15043+1</code> to increase the likelihood of the token 'Hello', or <code>--logit-bias 15043-1</code> to decrease its likelihood. Using a value of negative infinity, <code>--logit-bias 15043-inf</code> ensures that the token <code>Hello</code> is never produced.</p>
+<p>A more practical use case might be to prevent the generation of <code>\code{begin}</code> and <code>\code{end}</code> by setting the <code>\</code> token (29905) to negative infinity with <code>-l 29905-inf</code>. (This is due to the prevalence of LaTeX codes that show up in LLaMA model inference.)</p>
+<p>Example usage: <code>--logit-bias 29905-inf</code></p>
+<h3 id="RNG%20Seed">RNG Seed<a class="headerlink" href="#RNG%20Seed" title="Permanent link">#</a></h3>
+<ul>
+<li><code>-s SEED, --seed SEED</code>: Set the random number generator (RNG) seed (default: -1, -1 = random seed).</li>
+</ul>
+<p>The RNG seed is used to initialize the random number generator that influences the text generation process. By setting a specific seed value, you can obtain consistent and reproducible results across multiple runs with the same input and settings. This can be helpful for testing, debugging, or comparing the effects of different options on the generated text to see when they diverge. If the seed is set to a value less than 0, a random seed will be used, which will result in different outputs on each run.</p>
+<h2 id="Performance%20Tuning%20and%20Memory%20Options">Performance Tuning and Memory Options<a class="headerlink" href="#Performance%20Tuning%20and%20Memory%20Options" title="Permanent link">#</a></h2>
+<p>These options help improve the performance and memory usage of the LLaMA models. By adjusting these settings, you can fine-tune the model's behavior to better suit your system's capabilities and achieve optimal performance for your specific use case.</p>
+<h3 id="Number%20of%20Threads">Number of Threads<a class="headerlink" href="#Number%20of%20Threads" title="Permanent link">#</a></h3>
+<ul>
+<li><code>-t N, --threads N</code>: Set the number of threads to use during computation. For optimal performance, it is recommended to set this value to the number of physical CPU cores your system has (as opposed to the logical number of cores). Using the correct number of threads can greatly improve performance.</li>
+</ul>
+<h3 id="Mlock">Mlock<a class="headerlink" href="#Mlock" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--mlock</code>: Lock the model in memory, preventing it from being swapped out when memory-mapped. This can improve performance but trades away some of the advantages of memory-mapping by requiring more RAM to run and potentially slowing down load times as the model loads into RAM.</li>
+</ul>
+<h3 id="No%20Memory%20Mapping">No Memory Mapping<a class="headerlink" href="#No%20Memory%20Mapping" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--no-mmap</code>: Do not memory-map the model. By default, models are mapped into memory, which allows the system to load only the necessary parts of the model as needed. However, if the model is larger than your total amount of RAM or if your system is low on available memory, using mmap might increase the risk of pageouts, negatively impacting performance. Disabling mmap results in slower load times but may reduce pageouts if you're not using <code>--mlock</code>. Note that if the model is larger than the total amount of RAM, turning off mmap would prevent the model from loading at all.</li>
+</ul>
+<h3 id="NUMA%20support">NUMA support<a class="headerlink" href="#NUMA%20support" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--numa</code>: Attempt optimizations that help on some systems with non-uniform memory access. This currently consists of pinning an equal proportion of the threads to the cores on each NUMA node, and disabling prefetch and readahead for mmap. The latter causes mapped pages to be faulted in on first access instead of all at once, and in combination with pinning threads to NUMA nodes, more of the pages end up on the NUMA node where they are used. Note that if the model is already in the system page cache, for example because of a previous run without this option, this will have little effect unless you drop the page cache first. This can be done by rebooting the system or on Linux by writing '3' to '/proc/sys/vm/drop_caches' as root.</li>
+</ul>
+<h3 id="Memory%20Float%2032">Memory Float 32<a class="headerlink" href="#Memory%20Float%2032" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--memory-f32</code>: Use 32-bit floats instead of 16-bit floats for memory key+value. This doubles the context memory requirement and cached prompt file size but does not appear to increase generation quality in a measurable way. Not recommended.</li>
+</ul>
+<h3 id="Batch%20Size">Batch Size<a class="headerlink" href="#Batch%20Size" title="Permanent link">#</a></h3>
+<ul>
+<li><code>-b N, --batch-size N</code>: Set the batch size for prompt processing (default: 512). This large batch size benefits users who have BLAS installed and enabled it during the build. If you don't have BLAS enabled ("BLAS=0"), you can use a smaller number, such as 8, to see the prompt progress as it's evaluated in some situations.</li>
+</ul>
+<h3 id="Prompt%20Caching">Prompt Caching<a class="headerlink" href="#Prompt%20Caching" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--prompt-cache FNAME</code>: Specify a file to cache the model state after the initial prompt. This can significantly speed up the startup time when you're using longer prompts. The file is created during the first run and is reused and updated in subsequent runs. <strong>Note</strong>: Restoring a cached prompt does not imply restoring the exact state of the session at the point it was saved. So even when specifying a specific seed, you are not guaranteed to get the same sequence of tokens as the original generation.</li>
+</ul>
+<h3 id="Grammars">Grammars<a class="headerlink" href="#Grammars" title="Permanent link">#</a></h3>
+<ul>
+<li><code>--grammar GRAMMAR</code>, <code>--grammar-file FILE</code>: Specify a grammar (defined inline or in a file) to constrain model output to a specific format. For example, you could force the model to output JSON or to speak only in emojis. See the <a href="../../grammars/README.md">GBNF guide</a> for details on the syntax.</li>
+</ul>
+<h3 id="Quantization">Quantization<a class="headerlink" href="#Quantization" title="Permanent link">#</a></h3>
+<p>For information about 4-bit quantization, which can significantly improve performance and reduce memory usage, please refer to llama.cpp's primary <a href="../../README.md#prepare-data--run">README</a>.</p>
+<h2 id="Additional%20Options">Additional Options<a class="headerlink" href="#Additional%20Options" title="Permanent link">#</a></h2>
+<p>These options provide extra functionality and customization when running the LLaMA models:</p>
+<ul>
+<li><code>-h, --help</code>: Display a help message showing all available options and their default values. This is particularly useful for checking the latest options and default values, as they can change frequently, and the information in this document may become outdated.</li>
+<li><code>--verbose-prompt</code>: Print the prompt before generating text.</li>
+<li><code>--mtest</code>: Test the model's functionality by running a series of tests to ensure it's working properly.</li>
+<li><code>-ngl N, --n-gpu-layers N</code>: When compiled with appropriate support (currently CLBlast or cuBLAS), this option allows offloading some layers to the GPU for computation. Generally results in increased performance.</li>
+<li><code>-mg i, --main-gpu i</code>: When using multiple GPUs this option controls which GPU is used for small tensors for which the overhead of splitting the computation across all GPUs is not worthwhile. The GPU in question will use slightly more VRAM to store a scratch buffer for temporary results. By default GPU 0 is used. Requires cuBLAS.</li>
+<li><code>-ts SPLIT, --tensor-split SPLIT</code>: When using multiple GPUs this option controls how large tensors should be split across all GPUs. <code>SPLIT</code> is a comma-separated list of non-negative values that assigns the proportion of data that each GPU should get in order. For example, "3,2" will assign 60% of the data to GPU 0 and 40% to GPU 1. By default the data is split in proportion to VRAM but this may not be optimal for performance. Requires cuBLAS.</li>
+<li><code>-lv, --low-vram</code>: Do not allocate a VRAM scratch buffer for holding temporary results. Reduces VRAM usage at the cost of performance, particularly prompt processing speed. Requires cuBLAS.</li>
+<li><code>--lora FNAME</code>: Apply a LoRA (Low-Rank Adaptation) adapter to the model (implies --no-mmap). This allows you to adapt the pretrained model to specific tasks or domains.</li>
+<li><code>--lora-base FNAME</code>: Optional model to use as a base for the layers modified by the LoRA adapter. This flag is used in conjunction with the <code>--lora</code> flag, and specifies the base model for the adaptation.</li>
+</ul>
+<h2 id="Convert">Convert<a class="headerlink" href="#Convert" title="Permanent link">#</a></h2>
+<p>Outlines how to take a <em>supported</em> pytorch bin file and convert it to GGUF.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c"># run the below from the root folder where llama.cpp was built/installed</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c"># obtain the original model and all the corresponding files, and create a new folder inside models (i.e. 7B)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c"># install Python dependencies</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">python3</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c"># convert the 7B model to ggml FP16 format</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">python3</span> <span class="n">convert</span><span class="p">.</span><span class="n">py</span> <span class="n">models</span><span class="p">/</span><span class="n">7B</span><span class="p">/</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>  <span class="c"># [Optional] for models using BPE tokenizers</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>  <span class="n">python</span> <span class="n">convert</span><span class="p">.</span><span class="n">py</span> <span class="n">models</span><span class="p">/</span><span class="n">7B</span><span class="p">/</span> <span class="p">-</span><span class="n">-vocabtype</span> <span class="n">bpe</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c"># quantize the model to 4-bits (using q4_k_m method)</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">./</span><span class="n">quantize</span> <span class="p">./</span><span class="n">models</span><span class="p">/</span><span class="n">7B</span><span class="p">/</span><span class="n">ggml-model-f16</span><span class="p">.</span><span class="n">gguf</span> <span class="p">./</span><span class="n">models</span><span class="p">/</span><span class="n">7B</span><span class="p">/</span><span class="n">ggml-model-q4_k_m</span><span class="p">.</span><span class="n">gguf</span> <span class="n">q4_k_m</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>  <span class="c"># update the gguf filetype to current if older version is unsupported by another application</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>  <span class="p">./</span><span class="n">quantize</span> <span class="p">./</span><span class="n">models</span><span class="p">/</span><span class="n">7B</span><span class="p">/</span><span class="n">ggml-model-q4_k_m</span><span class="p">.</span><span class="n">gguf</span> <span class="p">./</span><span class="n">models</span><span class="p">/</span><span class="n">7B</span><span class="p">/</span><span class="n">ggml-model-q4_k_m-v2</span><span class="p">.</span><span class="n">gguf</span> <span class="nb">COPY</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c"># run the inference</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="p">./</span><span class="n">main</span> <span class="n">-m</span> <span class="p">./</span><span class="n">models</span><span class="p">/</span><span class="n">7B</span><span class="p">/</span><span class="n">ggml-model-q4_k_m</span><span class="p">.</span><span class="n">gguf</span> <span class="n">-n</span> <span class="n">128</span>
+</code></pre></div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 11, 2024</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.indexes", "navigation.tabs", "navigation.sections", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

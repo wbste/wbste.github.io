@@ -1,0 +1,2636 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://rs.omg.lol/AI/Chat/">
+      
+      
+        <link rel="prev" href="../Ask/">
+      
+      
+        <link rel="next" href="../Draw/">
+      
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>Chat - Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/modelviewer.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Chat" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Notes" class="md-header__button md-logo" aria-label="Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v9.8c0 39-23.7 74-59.9 88.4C71.6 154.5 32 213 32 278.2V352c0 17.7 14.3 32 32 32s32-14.3 32-32v-73.8c0-10 1.6-19.8 4.5-29l160.6 248.2c9.6 14.8 29.4 19.1 44.3 9.5s19.1-29.4 9.5-44.3L222.6 320H304l38.4 51.2c10.6 14.1 30.7 17 44.8 6.4s17-30.7 6.4-44.8l-43.2-57.6c-9.1-12.1-23.3-19.2-38.4-19.2h-71.5l-56.8-80.2-.2-.3c44.7-29 72.5-79 72.5-133.6v-9.8zM96 80a48 48 0 1 0-96 0 48 48 0 1 0 96 0zm368 206.1 58.6 53.9c4.8 4.4 11.9 5.5 17.8 2.6s9.5-9 9-15.5l-5.6-79.4 78.7-12.2c6.5-1 11.7-5.9 13.1-12.2s-1.1-13-6.5-16.7l-65.6-45.1L603 92.2c3.3-5.7 2.7-12.8-1.4-17.9s-10.9-7.2-17.2-5.3l-76.1 23.1-29.4-74C476.4 12 470.6 8 464 8s-12.4 4-14.9 10.1l-29.4 74-76.1-23.2c-6.3-1.9-13.1.2-17.2 5.3s-4.6 12.2-1.4 17.9l39.5 69.1-65.6 45.1c-5.4 3.7-8 10.3-6.5 16.7.1.3.1.6.2.8H312c20.1 0 39.2 7.5 53.8 20.8l18.4 2.9-1.2 17.8 36.2 48.3c2.1 2.8 3.9 5.7 5.5 8.6l39.3-36.1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chat
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Ask/" class="md-tabs__link">
+          
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Apps/Chat%20with%20Docs/" class="md-tabs__link">
+          
+  
+    
+  
+  Apps
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Markdown/Cheat%20Sheet/" class="md-tabs__link">
+          
+  
+    
+  
+  Markdown
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Random/Art/" class="md-tabs__link">
+          
+  
+    
+  
+  Random
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Reality%20Capture/" class="md-tabs__link">
+          
+  
+    
+  
+  Reality Capture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Shop/CNC%20Overview/" class="md-tabs__link">
+          
+  
+    
+  
+  Shop
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Technology/Affinity/" class="md-tabs__link">
+          
+  
+    
+  
+  Technology
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Travel/Hikes/" class="md-tabs__link">
+          
+  
+    
+  
+  Travel
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Vehicles/Motorcycle/" class="md-tabs__link">
+          
+  
+    
+  
+  Vehicles
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notes" class="md-nav__button md-logo" aria-label="Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v9.8c0 39-23.7 74-59.9 88.4C71.6 154.5 32 213 32 278.2V352c0 17.7 14.3 32 32 32s32-14.3 32-32v-73.8c0-10 1.6-19.8 4.5-29l160.6 248.2c9.6 14.8 29.4 19.1 44.3 9.5s19.1-29.4 9.5-44.3L222.6 320H304l38.4 51.2c10.6 14.1 30.7 17 44.8 6.4s17-30.7 6.4-44.8l-43.2-57.6c-9.1-12.1-23.3-19.2-38.4-19.2h-71.5l-56.8-80.2-.2-.3c44.7-29 72.5-79 72.5-133.6v-9.8zM96 80a48 48 0 1 0-96 0 48 48 0 1 0 96 0zm368 206.1 58.6 53.9c4.8 4.4 11.9 5.5 17.8 2.6s9.5-9 9-15.5l-5.6-79.4 78.7-12.2c6.5-1 11.7-5.9 13.1-12.2s-1.1-13-6.5-16.7l-65.6-45.1L603 92.2c3.3-5.7 2.7-12.8-1.4-17.9s-10.9-7.2-17.2-5.3l-76.1 23.1-29.4-74C476.4 12 470.6 8 464 8s-12.4 4-14.9 10.1l-29.4 74-76.1-23.2c-6.3-1.9-13.1.2-17.2 5.3s-4.6 12.2-1.4 17.9l39.5 69.1-65.6 45.1c-5.4 3.7-8 10.3-6.5 16.7.1.3.1.6.2.8H312c20.1 0 39.2 7.5 53.8 20.8l18.4 2.9-1.2 17.8 36.2 48.3c2.1 2.8 3.9 5.7 5.5 8.6l39.3-36.1z"/></svg>
+
+    </a>
+    Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    AI
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ask/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ask
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Chat
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Chat
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#GUIs" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUIs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#System%20Requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Coding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Perplexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Perplexity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embeddings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Draw/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Draw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Llama.cpp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Llama.cpp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../The-Basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Transcribe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transcribe
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Vector-Search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Apps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Chat%20with%20Docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chat with Docs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Remove%20Background/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remove Background
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Apps/Shiori/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Shiori
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Markdown
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Markdown
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Cheat%20Sheet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cheat Sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Conversion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conversion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Example%20Callouts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example Callouts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Example%20Diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example Diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Getting%20Started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Markdown/Publish%20to%20Website/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Publish to Website
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Random
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Random
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Art/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Art
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Links/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Links
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Online%20Classes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Online Classes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Quotes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quotes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Recipes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Recipes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Random/Standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../Reality%20Capture/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reality Capture
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Reality Capture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reality%20Capture/Capture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Capture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reality%20Capture/Display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Display
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reality%20Capture/Review%20and%20Edit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Review and Edit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Shop
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Shop/CNC%20Overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CNC Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Shop/Taig%20Micro%20Mill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taig Micro Mill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technology
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Technology
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Affinity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Affinity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Cyber%20Security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cyber Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Home%20Assistant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home Assistant
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Keyboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keyboard
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/PC%20Build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Build
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Pixel%206a/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pixel 6a
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Programming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Programming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Proxmox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Proxmox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technology/Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Travel
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Travel
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Travel/Hikes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hikes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Travel/Places%20To%20Visit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Places To Visit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Vehicles
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Vehicles
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vehicles/Motorcycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Motorcycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vehicles/Tacoma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tacoma
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#GUIs" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUIs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#System%20Requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Coding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Perplexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Perplexity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embeddings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="Chat">Chat<a class="headerlink" href="#Chat" title="Permanent link">#</a></h1>
+<p>This section has to do with text generation models (same ideas as ChatGPT) that can run <strong>100% local</strong>. See <a href="../Draw/">Stable Diffusion</a> for the information on image generation AI, 100% local.</p>
+<p><strong>Want the TL;DR on how to run a model 100% locally?</strong></p>
+<ol>
+<li>Regardless if you have a CPU or GPU, download <a href="https://lmstudio.ai/">LM Studio</a>. It's the best GUI I've found, and integrates with HuggingFace, can act as a API server, and allows for running on CPU, GPU, or a mix of both.</li>
+<li>Open the app, and download one of the models on the home page. Smaller models are a good start (something with 2B or 7B in the name).</li>
+<li>Download the model <strong>Quantization Q4_K_M</strong> to start with. We can get smaller or larger ones after seeing how this one performs.</li>
+<li>After it's downloaded it will appear in LM Studio under the 📂 icon in the app.</li>
+<li>Click on the 💬 icon, <strong>New Chat</strong>.</li>
+<li>On the right you may want to select <em>GPU Acceleration</em> under <strong>Model Initialization</strong> if you have one, and start with <strong>10 layers</strong> (we can always modify later).</li>
+<li>From the top, select one of the models you downloaded and load it.</li>
+<li>Chat away!</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>What size model should you get? See the below table <strong>4-bit Model Requirements for GPU inference</strong> for a starting point. For example, assuming you have at least 32GB RAM and a 3090, you can run a 4-bit 34B with good performance.</p>
+</div>
+<h2 id="Models">Models<a class="headerlink" href="#Models" title="Permanent link">#</a></h2>
+<ul>
+<li>Leaderboards <a href="https://chat.lmsys.org/?leaderboard">here</a> and <a href="https://tatsu-lab.github.io/alpaca_eval/">here</a></li>
+<li><a href="https://huggingface.co/TheBloke">TheBloke</a> on 🤗 offers great models.</li>
+</ul>
+<p>More parameters (i.e. more data) in the model, the higher quality the output. Consumer hardware typically doesn't have the capability to fit the largest models and run them. With some exceptions the typical parameters you can run locally is up to 34B with nice hardware (3090, 32GB Ram). Some do run 70B and 180B parameter models, but that gets into custom built AI machines (64GB+ RAM and 2+ GPUs, or professional level GPUs like the NVIDIA A100). Here's an example of where things stand today. <a href="https://lifearchitect.ai/models/">Source</a>.</p>
+<p><a class="glightbox" href="../_assets/2024-Alan-D-Thompson-AI-Bubbles-Planets-Rev-1.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../_assets/2024-Alan-D-Thompson-AI-Bubbles-Planets-Rev-1.png" /></a></p>
+<p><a class="glightbox" href="../_assets/2023-Alan-D-Thompson-LLM-Emerging-Rev-0.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../_assets/2023-Alan-D-Thompson-LLM-Emerging-Rev-0.png" /></a></p>
+<h2 id="GUIs">GUIs<a class="headerlink" href="#GUIs" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="https://lmstudio.ai/">LM Studio</a><ul>
+<li>Beta versions <a href="https://lmstudio.ai/beta-releases.html">here</a>.</li>
+</ul>
+</li>
+<li><a href="https://github.com/oobabooga/text-generation-webui">Oobabooga</a></li>
+</ul>
+<h2 id="System%20Requirements">System Requirements<a class="headerlink" href="#System%20Requirements" title="Permanent link">#</a></h2>
+<p>Note the below is <em>system</em> RAM.</p>
+<p><strong>8-bit Model Requirements for GPU inference</strong></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>VRAM Used</th>
+<th>Card examples</th>
+<th>RAM/Swap to Load*</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLaMA 7B / Llama 2 7B</td>
+<td>10GB</td>
+<td>3060 12GB, 3080 10GB</td>
+<td>24 GB</td>
+</tr>
+<tr>
+<td>LLaMA 13B / Llama 2 13B</td>
+<td>20GB</td>
+<td>3090, 3090 Ti, 4090</td>
+<td>32 GB</td>
+</tr>
+<tr>
+<td>LLaMA 33B / Llama 2 34B</td>
+<td>~40GB</td>
+<td>A6000 48GB, A100 40GB</td>
+<td>~64 GB</td>
+</tr>
+<tr>
+<td>LLaMA 65B / Llama 2 70B</td>
+<td>~80GB</td>
+<td>A100 80GB</td>
+<td>~128 GB</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4-bit Model Requirements for GPU inference</strong></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Minimum Total VRAM</th>
+<th>Card examples</th>
+<th>RAM/Swap to Load*</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLaMA 7B / Llama 2 7B</td>
+<td>6GB</td>
+<td>GTX 1660, 2060, AMD 5700 XT, RTX 3050, 3060</td>
+<td>6 GB</td>
+</tr>
+<tr>
+<td>LLaMA 13B / Llama 2 13B</td>
+<td>10GB</td>
+<td>AMD 6900 XT, RTX 2060 12GB, 3060 12GB, 3080, A2000</td>
+<td>12 GB</td>
+</tr>
+<tr>
+<td>LLaMA 33B / Llama 2 34B</td>
+<td>~20GB</td>
+<td>RTX 3080 20GB, A4500, A5000, 3090, 4090, 6000, Tesla V100</td>
+<td>~32 GB</td>
+</tr>
+<tr>
+<td>LLaMA 65B / Llama 2 70B</td>
+<td>~40GB</td>
+<td>A100 40GB, 2x3090, 2x4090, A40, RTX A6000, 8000</td>
+<td>~64 GB</td>
+</tr>
+</tbody>
+</table>
+<p>*<em>System RAM, not VRAM, required to load the model, in addition to having enough VRAM. Not required to run the model.</em></p>
+<p><strong>llama.cpp Requirements for CPU inference</strong></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Original Size</th>
+<th>Quantized Size (4-bit)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7B</td>
+<td>13 GB</td>
+<td>3.9 GB</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>24 GB</td>
+<td>7.8 GB</td>
+</tr>
+<tr>
+<td>33B</td>
+<td>60 GB</td>
+<td>19.5 GB</td>
+</tr>
+<tr>
+<td>65B</td>
+<td>120 GB</td>
+<td>38.5 GB</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Coding">Coding<a class="headerlink" href="#Coding" title="Permanent link">#</a></h2>
+<p>Can use LM studio as a local API with a VS Code extension like <a href="https://github.com/continuedev/continue">Continue</a>.</p>
+<h2 id="Quantization">Quantization<a class="headerlink" href="#Quantization" title="Permanent link">#</a></h2>
+<p>Good read on what this means <a href="https://postgresml.org/blog/announcing-gptq-and-ggml-quantized-llm-support-for-huggingface-transformers">here</a>.</p>
+<p><strong>My dumbed down take is this.</strong> Imagine the "full" model stores a bunch of numbers. BILLIONS of them. Those numbers have a lot of digits hanging off the back (i.e. 3.123982709717963...). That's a lot of data to store when you store a lot of digits like that. but do we need them all? What if we just dropped a bunch of digits towards the end of those numbers? So our new number we store is 3.123982. What if we did it again? At some point the number isn't really close enough to the original number from the full model to be useful. Basically how long can you go on rounding the numbers until they lose their meaning? That's where <strong>quantization</strong> comes in. Smaller files are easier to run on hardware, but at what point does the model spit out gibberish?</p>
+<ul>
+<li>GGUF: Successor to GGML, CPU + GPU inference (you can adjust what percentage of the model is processed by which part). <ul>
+<li>GGUF is a new format introduced by the llama.cpp team on August 21st 2023. It is a replacement for GGML, which is no longer supported by llama.cpp. The key benefit of GGUF is that it is a extensible, future-proof format which stores more information about the model as metadata. It also includes significantly improved tokenization code, including for the first time full support for special tokens. This should improve performance, especially with models that use new special tokens and implement custom prompt templates.</li>
+</ul>
+</li>
+<li>GGML: CPU + GPU inference (but mostly CPU). No longer supported by <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a>, which is the foundation of most of these desktop applications.</li>
+<li>GPTQ: GPU inference</li>
+</ul>
+<p>Note the RAM below can be split between GPU and system RAM, depending on the quantization method used. The below is an extract on a specific model, but should serve as a good guideline in terms of what model quantization are best. The reason a model like <code>Q5_K_M</code> is preferred over <code>Q8_0</code> is because the quality different between the two is so small, loading the larger model doesn't really provide any benefit (it's less than half a percent "better" go to with the full model, at the expense of requiring more resources to load and use).</p>
+<table>
+<thead>
+<tr>
+<th>Quant method</th>
+<th>Bits</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q2_K</td>
+<td>2</td>
+<td>smallest, significant quality loss - not recommended</td>
+</tr>
+<tr>
+<td>Q3_K_S</td>
+<td>3</td>
+<td>very small, high quality loss</td>
+</tr>
+<tr>
+<td>Q3_K_M</td>
+<td>3</td>
+<td>very small, high quality loss</td>
+</tr>
+<tr>
+<td>Q3_K_L</td>
+<td>3</td>
+<td>small, substantial quality loss</td>
+</tr>
+<tr>
+<td>Q4_K_S</td>
+<td>4</td>
+<td>small, greater quality loss</td>
+</tr>
+<tr>
+<td>Q4_K_M</td>
+<td>4</td>
+<td>medium, balanced quality - <strong>recommended</strong></td>
+</tr>
+<tr>
+<td>Q5_K_S</td>
+<td>5</td>
+<td>large, low quality loss - <strong>recommended</strong></td>
+</tr>
+<tr>
+<td>Q5_K_M</td>
+<td>5</td>
+<td>large, very low quality loss - <strong>recommended</strong></td>
+</tr>
+<tr>
+<td>Q6_K</td>
+<td>6</td>
+<td>very large, extremely low quality loss</td>
+</tr>
+<tr>
+<td>Q8_0</td>
+<td>8</td>
+<td>very large, extremely low quality loss - not recommended</td>
+</tr>
+</tbody>
+</table>
+<p>The following new quantization types are added to <code>ggml</code>:</p>
+<ul>
+<li><code>GGML_TYPE_Q2_K</code> - "type-1" 2-bit quantization in super-blocks containing 16 blocks, each block having 16 weight. Block scales and mins are quantized with 4 bits. This ends up effectively using <code>2.5625</code> bits per weight (bpw)</li>
+<li><code>GGML_TYPE_Q3_K</code> - "type-0" 3-bit quantization in super-blocks containing 16 blocks, each block having 16 weights. Scales are quantized with 6 bits. This end up using <code>3.4375</code> bpw.</li>
+<li><code>GGML_TYPE_Q4_K</code> - "type-1" 4-bit quantization in super-blocks containing 8 blocks, each block having 32 weights. Scales and mins are quantized with 6 bits. This ends up using <code>4.5</code> bpw.</li>
+<li><code>GGML_TYPE_Q5_K</code> - "type-1" 5-bit quantization. Same super-block structure as <code>GGML_TYPE_Q4_K</code> resulting in <code>5.5</code> bpw</li>
+<li><code>GGML_TYPE_Q6_K</code> - "type-0" 6-bit quantization. Super-blocks with 16 blocks, each block having 16 weights. Scales are quantized with 8 bits. This ends up using <code>6.5625</code> bpw</li>
+<li><code>GGML_TYPE_Q8_K</code> - "type-0" 8-bit quantization. Only used for quantizing intermediate results. The difference to the existing <code>Q8_0</code> is that the block size is 256. All 2-6 bit dot products are implemented for this quantization type.</li>
+</ul>
+<p>This is exposed via <code>llama.cpp</code> quantization types that define various "quantization mixes" as follows:</p>
+<ul>
+<li><code>LLAMA_FTYPE_MOSTLY_Q2_K</code> - uses <code>GGML_TYPE_Q4_K</code> for the <code>attention.vw</code> and <code>feed_forward.w2</code> tensors, <code>GGML_TYPE_Q2_K</code> for the other tensors.</li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q3_K_S</code> - uses <code>GGML_TYPE_Q3_K</code> for all tensors</li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q3_K_M</code> - uses <code>GGML_TYPE_Q4_K</code> for the <code>attention.wv</code>, <code>attention.wo</code>, and <code>feed_forward.w2</code> tensors, else <code>GGML_TYPE_Q3_K</code></li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q3_K_L</code> - uses <code>GGML_TYPE_Q5_K</code> for the <code>attention.wv</code>, <code>attention.wo</code>, and <code>feed_forward.w2</code> tensors, else <code>GGML_TYPE_Q3_K</code></li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q4_K_S</code> - uses <code>GGML_TYPE_Q4_K</code> for all tensors</li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q4_K_M</code> - uses <code>GGML_TYPE_Q6_K</code> for half of the <code>attention.wv</code> and <code>feed_forward.w2</code> tensors, else <code>GGML_TYPE_Q4_K</code></li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q5_K_S</code> - uses <code>GGML_TYPE_Q5_K</code> for all tensors</li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q5_K_M</code> - uses <code>GGML_TYPE_Q6_K</code> for half of the <code>attention.wv</code> and <code>feed_forward.w2</code> tensors, else <code>GGML_TYPE_Q5_K</code></li>
+<li><code>LLAMA_FTYPE_MOSTLY_Q6_K</code>- uses 6-bit quantization (<code>GGML_TYPE_Q8_K</code>) for all tensors</li>
+</ul>
+<p>As the models are currently fully loaded into memory, you will need adequate disk space to save them and sufficient RAM to load them. At the moment, memory and disk requirements are the same.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Original size</th>
+<th>Quantized size (4-bit)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7B</td>
+<td>13 GB</td>
+<td>3.9 GB</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>24 GB</td>
+<td>7.8 GB</td>
+</tr>
+<tr>
+<td>30B</td>
+<td>60 GB</td>
+<td>19.5 GB</td>
+</tr>
+<tr>
+<td>65B</td>
+<td>120 GB</td>
+<td>38.5 GB</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Perplexity">Perplexity<a class="headerlink" href="#Perplexity" title="Permanent link">#</a></h2>
+<p>Simply, perplexity means to be surprised. We measure how much the model is surprised by seeing new data. The lower the perplexity, the better the training is. The take away here is it's <em>always</em> better to use a larger model, even if the quantization is greater. From a functional perspective, get the largest model (parameter-wise) you can, with the largest bit quantization until it's too slow for you to want to use.</p>
+<p><a class="glightbox" href="../_assets/Perplexity.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../_assets/Perplexity.png" /></a></p>
+<p>Here are a few charts showing various models and quantization levels.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Measure</th>
+<th>F16</th>
+<th>Q4_0</th>
+<th>Q4_1</th>
+<th>Q5_0</th>
+<th>Q5_1</th>
+<th>Q8_0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7B</td>
+<td>perplexity</td>
+<td>5.9066</td>
+<td>6.1565</td>
+<td>6.0912</td>
+<td>5.9862</td>
+<td>5.9481</td>
+<td>5.9070</td>
+</tr>
+<tr>
+<td>7B</td>
+<td>file size</td>
+<td>13.0G</td>
+<td>3.5G</td>
+<td>3.9G</td>
+<td>4.3G</td>
+<td>4.7G</td>
+<td>6.7G</td>
+</tr>
+<tr>
+<td>7B</td>
+<td>ms/tok @ 4th</td>
+<td>127</td>
+<td>55</td>
+<td>54</td>
+<td>76</td>
+<td>83</td>
+<td>72</td>
+</tr>
+<tr>
+<td>7B</td>
+<td>ms/tok @ 8th</td>
+<td>122</td>
+<td>43</td>
+<td>45</td>
+<td>52</td>
+<td>56</td>
+<td>67</td>
+</tr>
+<tr>
+<td>7B</td>
+<td>bits/weight</td>
+<td>16.0</td>
+<td>4.5</td>
+<td>5.0</td>
+<td>5.5</td>
+<td>6.0</td>
+<td>8.5</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>perplexity</td>
+<td>5.2543</td>
+<td>5.3860</td>
+<td>5.3608</td>
+<td>5.2856</td>
+<td>5.2706</td>
+<td>5.2548</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>file size</td>
+<td>25.0G</td>
+<td>6.8G</td>
+<td>7.6G</td>
+<td>8.3G</td>
+<td>9.1G</td>
+<td>13G</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>ms/tok @ 4th</td>
+<td>-</td>
+<td>103</td>
+<td>105</td>
+<td>148</td>
+<td>160</td>
+<td>131</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>ms/tok @ 8th</td>
+<td>-</td>
+<td>73</td>
+<td>82</td>
+<td>98</td>
+<td>105</td>
+<td>128</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>bits/weight</td>
+<td>16.0</td>
+<td>4.5</td>
+<td>5.0</td>
+<td>5.5</td>
+<td>6.0</td>
+<td>8.5</td>
+</tr>
+</tbody>
+</table>
+<p>Shown another way...</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Measure</th>
+<th>Q2_K</th>
+<th>Q3_K_S</th>
+<th>Q3_K_M</th>
+<th>Q3_K_L</th>
+<th>Q4_0</th>
+<th>Q4_1</th>
+<th>Q4_K_S</th>
+<th>Q4_K_M</th>
+<th>Q5_0</th>
+<th>Q5_1</th>
+<th>Q5_K_S</th>
+<th>Q5_K_M</th>
+<th>Q6_K</th>
+<th>Q8_0</th>
+<th>F16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7B</td>
+<td>perplexity</td>
+<td>6.7764</td>
+<td>6.4571</td>
+<td>6.1503</td>
+<td>6.0869</td>
+<td>6.1565</td>
+<td>6.0912</td>
+<td>6.0215</td>
+<td>5.9601</td>
+<td>5.9862</td>
+<td>5.9481</td>
+<td>5.9419</td>
+<td>5.9208</td>
+<td>5.9110</td>
+<td>5.9070</td>
+<td>5.9066</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>perplexity</td>
+<td>5.8545</td>
+<td>5.6033</td>
+<td>5.4498</td>
+<td>5.4063</td>
+<td>5.3860</td>
+<td>5.3608</td>
+<td>5.3404</td>
+<td>5.3002</td>
+<td>5.2856</td>
+<td>5.2706</td>
+<td>5.2785</td>
+<td>5.2638</td>
+<td>5.2568</td>
+<td>5.2548</td>
+<td>5.2543</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Embeddings">Embeddings<a class="headerlink" href="#Embeddings" title="Permanent link">#</a></h2>
+<p>Good intro <a href="https://simonwillison.net/2023/Sep/4/llm-embeddings/">here</a>. An embedding model lets you take a string of text - a word, sentence, paragraph or even a whole document - and turn that into an array of floating point numbers called an <em>embedding vector</em>.</p>
+<p>I like to think of an embedding vector as a location in 1,536-dimensional space. The distance between two vectors is a measure of how semantically similar they are in meaning, at least according to the model that produced them.</p>
+<p><a class="glightbox" href="../_assets/EmbeddingsInSpace.jpeg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../_assets/EmbeddingsInSpace.jpeg" /></a></p>
+<p>“One happy dog” and “A playful hound” will end up close together, even though they don’t share any keywords. The embedding vector represents the language model’s interpretation of the meaning of the text.</p>
+<h2 id="Parameters">Parameters<a class="headerlink" href="#Parameters" title="Permanent link">#</a></h2>
+<p><strong>Temperature</strong> is like a knob that adjusts how creative or focused the output becomes. Higher temperatures (eg., 1.2) increase randomness, resulting in more imaginative and diverse text. Lower temperatures (eg., 0.5) make the output more focused, predictable, and conservative. When the temperature is set to 0, the output becomes completely deterministic, always selecting the most probable next token and producing identical results each time. A safe range would be around 0.6 - 0.85, but you are free to search what value fits best for you.</p>
+<p><strong>Top-P</strong> limits the selection of the next token to a subset of tokens with a cumulative probability above a threshold P. This method, also known as nucleus sampling, finds a balance between diversity and quality by considering both token probabilities and the number of tokens available for sampling. When using a higher value for top-P (eg., 0.95), the generated text becomes more diverse. On the other hand, a lower value (eg., 0.1) produces more focused and conservative text. The default value is 0.4, which is aimed to be the middle ground between focus and diversity, but for more creative tasks a higher top-p value will be beneficial, about 0.5-0.9 is a good range for that.</p>
+<p><strong>Top-K</strong> sampling selects the next token only from the top K most likely tokens predicted by the model. It helps reduce the risk of generating low-probability or nonsensical tokens, but it may also limit the diversity of the output. A higher value for top-K (eg., 100) will consider more tokens and lead to more diverse text, while a lower value (eg., 10) will focus on the most probable tokens and generate more conservative text. 30 - 60 is a good range for most tasks.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 11, 2024</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.indexes", "navigation.tabs", "navigation.sections", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
